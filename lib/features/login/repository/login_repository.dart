@@ -34,8 +34,10 @@ class LoginRepository {
       } else if (e.code == 'wrong-password') {
         error = EnumLocale.wrongPasswordError.name.tr;
       } else {
-        error = e.message ?? EnumLocale.defaultError.name.tr;
+        error = EnumLocale.defaultError.name.tr;
       }
+    } catch (e) {
+      error = EnumLocale.defaultError.name.tr;
     }
     return null;
   }
@@ -56,7 +58,8 @@ class LoginRepository {
 
       return userCredential;
     } catch (e) {
-      error = e.toString();
+      error = EnumLocale.defaultError.name.tr;
+
       debugPrint(e.toString());
 
       //

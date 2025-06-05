@@ -11,10 +11,12 @@ class ProfileRepository {
   Future<ProfileModel?> fetchProfileData() async {
     try {
       final uid = FirebaseAuth.instance.currentUser!.uid;
-
+ if (uid.isEmpty) return null;
+   
+ 
       final QuerySnapshot<Map<String, dynamic>> snapshot =
           await firebaseFirestore
-              .collection('profile')
+              .collection('user')
               .where('id', isEqualTo: uid)
               .get();
 

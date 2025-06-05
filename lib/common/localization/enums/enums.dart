@@ -150,7 +150,27 @@ enum EnumLocale {
   more,
   blocked,
   addStory,
-}
+  like,
+  message,
+  Favorite,
+  blockTitle,
+
+  yesBlock,
+  cancel,
+  yourStory,
+  addPhoto,
+ savedToFavorites,
+ removedFromFavorites,
+ removed,
+ storyAdded,
+ noDataFound,
+ follow,
+ following
+ , noDataAvailable,
+  addedToBlock,
+ removedFromBlock,
+ unblock
+ }
 
 /*abstract class AppStrings {
   static const String appName = "TrueMatch";

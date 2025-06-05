@@ -12,7 +12,6 @@ final Map<String, String> frFR = {
   EnumLocale.emailAlreadyExists.name: 'Un compte existe déjà pour cet e-mail.',
   EnumLocale.emailRequiredText.name: 'L\'e-mail est obligatoire',
   EnumLocale.invalidEmailText.name: 'Adresse e-mail invalide',
-
   EnumLocale.passwordRequiredText.name: 'Veuillez saisir un mot de passe',
   EnumLocale.passwordLengthText.name:
       'Le mot de passe doit contenir au moins 5 caractères',
@@ -34,7 +33,6 @@ final Map<String, String> frFR = {
   EnumLocale.alreadyHaveAccount.name: "Vous avez déjà un compte ? ",
   EnumLocale.doNotHaveAccount.name: "Vous n'avez pas de compte ? ",
   EnumLocale.privacyTitle.name: "Politique de confidentialité d’Afriqueen",
-
   EnumLocale.privacyBody.name: """
 Chez Afriqueen, nous respectons et protégeons la vie privée de nos utilisateurs. Lorsque vous utilisez notre application, nous recueillons certaines informations afin d’améliorer votre expérience et de fournir des services de rencontre adaptés à vos préférences. Cela inclut les informations que vous fournissez, telles que votre nom, adresse e-mail, sexe, photos, biographie et préférences de rencontre. Nous collectons également des données sur votre activité dans l’application, comme les profils que vous consultez, les messages que vous envoyez et d’autres interactions, ainsi que des données techniques telles que le type d’appareil, la localisation (si activée) et les statistiques d’utilisation.
 
@@ -46,10 +44,8 @@ Afriqueen est strictement destiné aux personnes âgées de 18 ans ou plus. Nous
 
 Si vous avez des questions ou des préoccupations concernant l’utilisation de vos informations, vous pouvez nous contacter à l’adresse suivante : privacy@Afriqueen.app.
 """,
-
   EnumLocale.conditionOfUseTitle.name:
       "Afriqueen – Conditions générales d’utilisation\n",
-
   EnumLocale.conditionOfUseBody.name: """
 En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces conditions régissent votre accès et votre utilisation de l’application et des services Afriqueen. Veuillez les lire attentivement.
 
@@ -178,7 +174,6 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.cityBreaks.name: "Escapades urbaines",
   EnumLocale.selectLimit.name:
       "Vous ne pouvez en sélectionner que 2 au maximum",
-
   EnumLocale.uploadImageTitle.name: "Ajoutez au moins une photo",
   EnumLocale.uploadImageDescription.name:
       "Sélectionnez des photos qui expriment votre personnalité et vous montrent en train de faire ce que vous aimez.",
@@ -211,4 +206,24 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.more.name: "Plus",
   EnumLocale.blocked.name: "Bloqué(e)",
   EnumLocale.addStory.name: "Ajouter une histoire",
+  EnumLocale.like.name: "J'aime",
+  EnumLocale.message.name: "Message",
+  EnumLocale.Favorite.name: "Favori",
+  EnumLocale.blockTitle.name: "Voulez-vous bloquer cette personne ?",
+
+  EnumLocale.yesBlock.name: "Oui, bloquer",
+  EnumLocale.cancel.name: "Annuler",
+  EnumLocale.yourStory.name: "Votre histoire",
+  EnumLocale.addPhoto.name: "Ajouter une photo",
+  EnumLocale.savedToFavorites.name: "Ajouté(e) à vos favoris.",
+  EnumLocale.removedFromFavorites.name: "Supprimé(e) des favoris.",
+  EnumLocale.noDataFound.name: "Aucune donnée trouvée !",
+  EnumLocale.removed.name: "Supprimé(e)",
+  EnumLocale.storyAdded.name: "Votre histoire a été ajoutée !",
+  EnumLocale.following.name: "Abonné(e)",
+EnumLocale.follow.name: "Suivre",
+EnumLocale.noDataAvailable.name: 'Aucune donnée disponible',
+EnumLocale.addedToBlock.name: "Utilisateur bloqué.",
+EnumLocale.removedFromBlock.name: "Utilisateur débloqué.",
+EnumLocale.unblock.name: "Débloquer"
 };

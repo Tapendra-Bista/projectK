@@ -33,9 +33,11 @@ class SignupRepository {
         errorMessge = EnumLocale.weakPassword.name.tr;
       } else if (e.code == 'email-already-in-use') {
         errorMessge = EnumLocale.emailAlreadyExists.name.tr;
+      } else {
+        errorMessge = EnumLocale.defaultError.name.tr;
       }
     } catch (e) {
-      errorMessge = e.toString();
+      errorMessge = EnumLocale.defaultError.name.tr;
     }
 
     return null;
