@@ -40,15 +40,15 @@ class MainContainer extends StatelessWidget {
                     //---------------User Profile Image--------------------
                     ProfileImage(),
                     //-----------Account age----------------------
-                    UserSeniority(),
+                    const UserSeniority(),
 
                     //---------------User Profile Details--------------------
-                    UserDetails(),
+                    const UserDetails(),
 
                     //------------------------------ user interests------------------------------
-                    UserInterestsList(),
+                    const UserInterestsList(),
                     SizedBox(height: 10.h),
-                    DescriptionText(),
+                    const DescriptionText(),
                     SizedBox(height: 10.h),
                   ],
                 ),

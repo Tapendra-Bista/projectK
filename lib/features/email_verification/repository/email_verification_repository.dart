@@ -1,17 +1,16 @@
+import 'package:afriqueen/services/base_repository.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class EmailVerificationRepository {
-  final FirebaseAuth _firebaseAuth;
+class EmailVerificationRepository extends BaseRepository {
   final AppGetStorage appGetStorage = AppGetStorage();
   //------------------To control delete , emailverification----------------------------
-  EmailVerificationRepository({FirebaseAuth? auth})
-    : _firebaseAuth = auth ?? FirebaseAuth.instance;
+  EmailVerificationRepository({FirebaseAuth? auth});
   //----------------------Sending link for email verification--------------------------
   Future<void> sendEmailVerificationLink() async {
-    await _firebaseAuth.setLanguageCode(appGetStorage.getLanguageCode());
-    final currentUser = _firebaseAuth.currentUser;
+    await auth.setLanguageCode(appGetStorage.getLanguageCode());
+    final currentUser = auth.currentUser;
     try {
       if (!currentUser!.emailVerified) {
         await currentUser.sendEmailVerification();
@@ -25,11 +24,11 @@ class EmailVerificationRepository {
 
   //--------------checking whether user verified or not email-----------------------
   Future<bool> isEmailVerified() async {
-    await _firebaseAuth.currentUser!.reload();
-    return _firebaseAuth.currentUser!.emailVerified;
+    await auth.currentUser!.reload();
+    return auth.currentUser!.emailVerified;
   }
 
   Future deleteAccount() async {
-    await _firebaseAuth.currentUser!.delete();
+    await auth.currentUser!.delete();
   }
 }

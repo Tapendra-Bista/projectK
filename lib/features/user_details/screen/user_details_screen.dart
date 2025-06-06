@@ -1,10 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/widgets/seniority.dart';
+import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
+import 'package:afriqueen/features/archive/repository/archive_repository.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
-import 'package:afriqueen/features/favorite/bloc/favorite_event.dart';
 import 'package:afriqueen/features/favorite/repository/favorite_repository.dart';
 import 'package:afriqueen/features/home/model/home_model.dart';
+import 'package:afriqueen/features/like/bloc/like_bloc.dart';
+import 'package:afriqueen/features/like/bloc/like_event.dart';
+import 'package:afriqueen/features/like/repository/like_repository.dart';
 import 'package:afriqueen/features/user_details/widgets/user_details_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,14 +35,25 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           RepositoryProvider(
             create: (context) => FavoriteRepository(),
           ),
+          RepositoryProvider(
+            create: (context) => ArchiveRepository(),
+          ),
+          RepositoryProvider(
+            create: (context) => LikeRepository(),
+          ),
         ],
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) =>
-                  FavoriteBloc(repository: context.read<FavoriteRepository>())
-                    ..add(FavoriteUsersFetched()),
-            ),
+                create: (context) => FavoriteBloc(
+                    repository: context.read<FavoriteRepository>())),
+            BlocProvider(
+                create: (context) =>
+                    ArchiveBloc(repository: context.read<ArchiveRepository>())),
+            BlocProvider(
+                create: (context) =>
+                    LikeBloc(repository: context.read<LikeRepository>())
+                      ..add(LikeUsersFetched())),
           ],
           child: Scaffold(
             body: NotificationListener<ScrollNotification>(
@@ -57,9 +72,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 slivers: [
                   //----------------------AppBar------------------------------
                   UserDetailsAppBar(
-                      isScrollingUp: _isScrollingUp,
-                      name: widget.data.pseudo,
-                      id: widget.data.id),
+                      isScrollingUp: _isScrollingUp, data: widget.data),
                   SliverFillRemaining(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),

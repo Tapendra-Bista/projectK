@@ -2,7 +2,7 @@
 import 'package:afriqueen/features/home/model/home_model.dart';
 import 'package:equatable/equatable.dart';
 
-//-----------------------------Fav State-----------------------------
+//-----------------------------Block State-----------------------------
 class BlockState extends Equatable {
   final List<HomeModel> blockUserList;
   const BlockState({required this.blockUserList});

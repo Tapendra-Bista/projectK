@@ -210,7 +210,6 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.message.name: "Message",
   EnumLocale.Favorite.name: "Favori",
   EnumLocale.blockTitle.name: "Voulez-vous bloquer cette personne ?",
-
   EnumLocale.yesBlock.name: "Oui, bloquer",
   EnumLocale.cancel.name: "Annuler",
   EnumLocale.yourStory.name: "Votre histoire",
@@ -221,9 +220,12 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.removed.name: "Supprimé(e)",
   EnumLocale.storyAdded.name: "Votre histoire a été ajoutée !",
   EnumLocale.following.name: "Abonné(e)",
-EnumLocale.follow.name: "Suivre",
-EnumLocale.noDataAvailable.name: 'Aucune donnée disponible',
-EnumLocale.addedToBlock.name: "Utilisateur bloqué.",
-EnumLocale.removedFromBlock.name: "Utilisateur débloqué.",
-EnumLocale.unblock.name: "Débloquer"
+  EnumLocale.follow.name: "Suivre",
+  EnumLocale.noDataAvailable.name: 'Aucune donnée disponible',
+  EnumLocale.addedToBlock.name: "a été bloqué(e).",
+  EnumLocale.removedFromBlock.name: "a été débloqué(e).",
+  EnumLocale.unblock.name: "Débloquer",
+  EnumLocale.addedToArchive.name: "Cet utilisateur est maintenant archivé(e).",
+EnumLocale.removedFromArchive.name: "Cet utilisateur est maintenant désarchivé(e).",
+EnumLocale.unArchive.name: "Désarchiver",
 };

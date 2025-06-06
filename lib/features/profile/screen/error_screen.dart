@@ -10,7 +10,7 @@ class ProfileErrorContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<ProfileBloc, ProfileState, String?>(
+    return  BlocSelector<ProfileBloc, ProfileState, String?>(
       selector: (state) {
         {
           if (state is Error) {

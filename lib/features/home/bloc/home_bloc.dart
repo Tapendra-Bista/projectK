@@ -1,3 +1,7 @@
+import 'package:afriqueen/features/archive/model/archive_model.dart';
+import 'package:afriqueen/features/archive/repository/archive_repository.dart';
+import 'package:afriqueen/features/block/model/block_model.dart';
+import 'package:afriqueen/features/block/repository/block_repository.dart';
 import 'package:afriqueen/features/favorite/model/favorite_model.dart';
 import 'package:afriqueen/features/favorite/repository/favorite_repository.dart';
 import 'package:afriqueen/features/home/bloc/home_event.dart';
@@ -9,7 +13,8 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
   final HomeRepository __repository;
   final FavoriteRepository _favoriteRepository = FavoriteRepository();
-
+  final BlockRepository _blockRepository = BlockRepository();
+  final ArchiveRepository _archiveRepository = ArchiveRepository();
   HomeBloc({required HomeRepository repo})
       : __repository = repo,
         super(HomeInitial()) {
@@ -48,13 +53,22 @@ class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
         final FavoriteModel? favData =
             await _favoriteRepository.fetchFavorites();
 
-        if (favData == null) {
+        final BlockModel? blockData = await _blockRepository.fetchblocks();
+        final ArchiveModel? archiveData =
+            await _archiveRepository.fetchArchives();
+
+        if (favData == null && blockData == null) {
           emit(state.copyWith(profileList: data));
         } else {
           final filterData = data
               .where((item) =>
-                  item!.id.isNotEmpty && !favData.favId.contains(item.id))
+                  item != null &&
+                  item.id.isNotEmpty &&
+                  !(favData?.favId.contains(item.id) ?? false) &&
+                  !(blockData?.blockId.contains(item.id) ?? false) &&
+                  !(archiveData?.archiveId.contains(item.id) ?? false))
               .toList();
+
           emit(state.copyWith(profileList: filterData));
         }
       } catch (e) {

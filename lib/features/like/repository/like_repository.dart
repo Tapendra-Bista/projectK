@@ -1,13 +1,12 @@
-import 'package:afriqueen/features/block/model/block_model.dart';
+import 'package:afriqueen/features/like/model/like_model.dart';
 import 'package:afriqueen/services/base_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
-class BlockRepository extends BaseRepository {
-  BlockRepository({FirebaseFirestore? firestore});
-
-  //--------------------------adding block--------------------------
-  Future<void> addblock(String blockId) async {
+class LikeRepository extends BaseRepository {
+  LikeRepository({FirebaseFirestore? firestore});
+  //--------------------------adding favourite--------------------------
+  Future<void> addLike(String likeId) async {
     // Find the user document where 'id' == Firebase UID
     final userQuery = await firestore
         .collection('user')
@@ -18,29 +17,29 @@ class BlockRepository extends BaseRepository {
 
     final userDocId = userQuery.docs.first.id;
 
-    // Use fixed document 'main' under block subcollection
-    final blockDocRef = firestore
+    // Use fixed document 'main' under favourite subcollection
+    final favouriteDocRef = firestore
         .collection('user')
         .doc(userDocId)
-        .collection('block')
+        .collection('like')
         .doc('main');
 
-    final docSnapshot = await blockDocRef.get();
+    final docSnapshot = await favouriteDocRef.get();
 
     if (!docSnapshot.exists) {
-      await blockDocRef.set({
+      await favouriteDocRef.set({
         'id': currentUserId,
-        'blockId': [blockId],
+        'likeId': [likeId],
       });
     } else {
-      await blockDocRef.update({
-        'blockId': FieldValue.arrayUnion([blockId]),
+      await favouriteDocRef.update({
+        'likeId': FieldValue.arrayUnion([likeId]),
       });
     }
   }
 
-  //-----------------deleting block user or removing  block
-  Future<void> removeblock(String blockId) async {
+  //-----------------deleting block user or removing  favourite
+  Future<void> removeLike(String likeId) async {
     // Find the correct user document using 'id' == currentUserId
     final userQuery = await firestore
         .collection('user')
@@ -51,35 +50,35 @@ class BlockRepository extends BaseRepository {
 
     final userDocId = userQuery.docs.first.id;
 
-    final blockDocRef = firestore
+    final favouriteDocRef = firestore
         .collection('user')
         .doc(userDocId)
-        .collection('block')
+        .collection('like')
         .doc('main');
 
-    final docSnapshot = await blockDocRef.get();
+    final docSnapshot = await favouriteDocRef.get();
 
     if (!docSnapshot.exists) return;
 
-    // Remove the blockId from the list
-    await blockDocRef.update({
-      'blockId': FieldValue.arrayRemove([blockId]),
+    // Remove the likeId from the list
+    await favouriteDocRef.update({
+      'likeId': FieldValue.arrayRemove([likeId]),
     });
 
     // Re-check the updated document to see if list is now empty
-    final updatedDoc = await blockDocRef.get();
+    final updatedDoc = await favouriteDocRef.get();
     final data = updatedDoc.data();
 
     if (data != null) {
-      final List<dynamic>? favIds = data['blockId'];
+      final List<dynamic>? favIds = data['likeId'];
       if (favIds == null || favIds.isEmpty) {
         // Delete the 'main' document if no more blocked IDs
-        await blockDocRef.delete();
+        await favouriteDocRef.delete();
       }
     }
   }
-//----------------------- fetch------------------------
-  Future<BlockModel?> fetchblocks() async {
+
+  Future<LikeModel?> fetchLikes() async {
     debugPrint("currentUserId : ${currentUserId}");
     final userQuery = await firestore
         .collection('user')
@@ -90,16 +89,16 @@ class BlockRepository extends BaseRepository {
 
     final userDocId = userQuery.docs.first.id;
 
-    final blockDocRef = firestore
+    final favouriteDocRef = firestore
         .collection('user')
         .doc(userDocId)
-        .collection('block')
+        .collection('like')
         .doc('main');
 
-    final docSnapshot = await blockDocRef.get();
+    final docSnapshot = await favouriteDocRef.get();
 
     if (!docSnapshot.exists || docSnapshot.data() == null) return null;
 
-    return BlockModel.fromMap(docSnapshot.data()!);
+    return LikeModel.fromMap(docSnapshot.data()!);
   }
 }

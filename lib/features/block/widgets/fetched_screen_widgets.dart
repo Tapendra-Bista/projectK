@@ -16,16 +16,9 @@ class UserImage extends StatelessWidget {
   final HomeModel? Homedata;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 50.w,
-      height: 50.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.6),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: CachedNetworkImageProvider(Homedata!.imgURL),
-        ),
-      ),
+    return CircleAvatar(
+      radius: 25.r,
+      backgroundImage: CachedNetworkImageProvider(Homedata!.imgURL),
     );
   }
 }
@@ -43,6 +36,7 @@ class UserName extends StatelessWidget {
       style: Theme.of(
         context,
       ).textTheme.bodyMedium,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
@@ -53,14 +47,14 @@ class UnBlockedButton extends StatelessWidget {
   final HomeModel homeModel;
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return  TextButton(
         onPressed: () {
           context
               .read<BlockBloc>()
               .add(BlockUserRemoved(blockId: homeModel.id));
           snackBarMessage(
             context,
-            EnumLocale.removedFromBlock.name.tr,
+            "${homeModel.pseudo} ${EnumLocale.removedFromBlock.name.tr}",
             Theme.of(context),
           );
         },
@@ -68,7 +62,7 @@ class UnBlockedButton extends StatelessWidget {
           EnumLocale.unblock.name.tr,
           style: Theme.of(
             context,
-          ).textTheme.bodyLarge!.copyWith(color: AppColors.primaryColor),
+          ).textTheme.bodyMedium!.copyWith(color: AppColors.primaryColor),
         ));
   }
 }

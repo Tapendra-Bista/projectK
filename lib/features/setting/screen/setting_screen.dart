@@ -20,6 +20,7 @@ class SettingScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 30.h),
+                CustomDivider(),
                 //--------------Archive user list----------------------------
                 ArchiveListTile(),
                 CustomDivider(),

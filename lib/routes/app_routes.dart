@@ -23,4 +23,5 @@ class AppRoutes {
   static const profile = '/profile';
   static const favorite = '/favorite';
   static const block = '/block';
+  static const archive = '/archive';
 }

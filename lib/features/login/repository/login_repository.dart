@@ -1,4 +1,5 @@
 import 'package:afriqueen/common/localization/enums/enums.dart';
+import 'package:afriqueen/services/base_repository.dart';
 import 'package:afriqueen/features/login/models/login_model.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,21 +9,22 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 // -------------------------Login logic-----------------------------
-class LoginRepository {
-  final FirebaseAuth _auth;
+class LoginRepository extends BaseRepository {
   final AppGetStorage appGetStorage = AppGetStorage();
+
   String? error;
   bool? isNewUser;
-  LoginRepository({FirebaseAuth? firebaseauth})
-    : _auth = firebaseauth ?? FirebaseAuth.instance;
+  LoginRepository({FirebaseAuth? firebaseauth});
+
   //------------------------------login with Email ------------------------------------------
   Future<UserCredential?> loginWithEmail(LoginModel loginModel) async {
     try {
-      await _auth.setLanguageCode(appGetStorage.getLanguageCode());
-      final UserCredential credential = await _auth.signInWithEmailAndPassword(
+      await auth.setLanguageCode(appGetStorage.getLanguageCode());
+      final UserCredential credential = await auth.signInWithEmailAndPassword(
         email: loginModel.email,
         password: loginModel.password,
       );
+
       debugPrint("Current user ID :${credential.user!.uid}");
       return credential;
     } on FirebaseAuthException catch (e) {

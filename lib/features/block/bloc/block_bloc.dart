@@ -7,12 +7,12 @@ import 'package:afriqueen/features/block/repository/block_repository.dart';
 import 'package:afriqueen/features/home/model/home_model.dart';
 import 'package:afriqueen/features/home/repository/home_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+//------------------------Block Bloc--------------------------
 class BlockBloc extends Bloc<BlockEvent, BlockState> {
-  final BlockRepository _favouriteRepository;
+  final BlockRepository _blockRepository;
   final HomeRepository _homeRepository = HomeRepository();
   BlockBloc({required BlockRepository repository})
-    : _favouriteRepository = repository,
+    : _blockRepository = repository,
       super(BlockInitial()) {
     on<BlockUserAdded>(_onblockUserAdded);
 
@@ -27,7 +27,7 @@ class BlockBloc extends Bloc<BlockEvent, BlockState> {
   ) async {
     emit(BlockUsersLoading());
     try {
-      final BlockModel? data = await _favouriteRepository.fetchblocks();
+      final BlockModel? data = await _blockRepository.fetchblocks();
       final List<HomeModel> homeModelData = await _homeRepository
           .fetchAllExceptCurrentUser();
 
@@ -49,7 +49,7 @@ class BlockBloc extends Bloc<BlockEvent, BlockState> {
     BlockUserRemoved event,
     Emitter<BlockState> emit,
   ) async {
-    await _favouriteRepository.removeblock(event.blockId);
+    await _blockRepository.removeblock(event.blockId);
 
     add(BlockUsersFetched());
   }
@@ -59,6 +59,6 @@ class BlockBloc extends Bloc<BlockEvent, BlockState> {
     BlockUserAdded event,
     Emitter<BlockState> emit,
   ) async {
-    await _favouriteRepository.addblock(event.blockId);
+    await _blockRepository.addblock(event.blockId);
   }
 }

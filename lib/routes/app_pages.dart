@@ -1,3 +1,7 @@
+import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
+import 'package:afriqueen/features/archive/bloc/archive_event.dart';
+import 'package:afriqueen/features/archive/repository/archive_repository.dart';
+import 'package:afriqueen/features/archive/screen/archive_screen.dart';
 import 'package:afriqueen/features/block/bloc/block_bloc.dart';
 import 'package:afriqueen/features/block/bloc/block_event.dart';
 import 'package:afriqueen/features/block/repository/block_repository.dart';
@@ -26,6 +30,9 @@ import 'package:afriqueen/features/forgot_password/screen/forgot_password_screen
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_event.dart';
 import 'package:afriqueen/features/home/repository/home_repository.dart';
+import 'package:afriqueen/features/like/bloc/like_bloc.dart';
+import 'package:afriqueen/features/like/bloc/like_event.dart';
+import 'package:afriqueen/features/like/repository/like_repository.dart';
 import 'package:afriqueen/features/login/bloc/login_bloc.dart';
 import 'package:afriqueen/features/login/repository/login_repository.dart';
 import 'package:afriqueen/features/login/screen/login_screen.dart';
@@ -273,17 +280,59 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       );
     case AppRoutes.favorite:
       return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (_) => FavoriteRepository(),
-          child: BlocProvider(
-            create: (context) => FavoriteBloc(
-              repository: context.read<FavoriteRepository>(),
-            )..add(FavoriteUsersFetched()),
+        builder: (_) => MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(
+              create: (_) => FavoriteRepository(),
+            ),
+            RepositoryProvider(
+              create: (context) => LikeRepository(),
+            ),
+          ],
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => FavoriteBloc(
+                  repository: context.read<FavoriteRepository>(),
+                )..add(FavoriteUsersFetched()),
+              ),
+              BlocProvider(
+                  create: (context) =>
+                      LikeBloc(repository: context.read<LikeRepository>())
+                        ..add(LikeUsersFetched())),
+            ],
             child: FavoriteScreen(),
           ),
         ),
       );
-          case AppRoutes.block:
+    case AppRoutes.archive:
+      return MaterialPageRoute(
+        builder: (_) => MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(
+              create: (_) => ArchiveRepository(),
+            ),
+            RepositoryProvider(
+              create: (context) => LikeRepository(),
+            ),
+          ],
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    ArchiveBloc(repository: context.read<ArchiveRepository>())
+                      ..add(ArchiveUsersFetched()),
+              ),
+              BlocProvider(
+                  create: (context) =>
+                      LikeBloc(repository: context.read<LikeRepository>())
+                        ..add(LikeUsersFetched())),
+            ],
+            child: ArchiveScreen(),
+          ),
+        ),
+      );
+    case AppRoutes.block:
       return MaterialPageRoute(
         builder: (_) => RepositoryProvider(
           create: (_) => BlockRepository(),

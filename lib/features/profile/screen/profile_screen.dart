@@ -13,16 +13,14 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
-        //----------Loading--------------------
-        if (state is Loading) {
-          return CustomCircularIndicator();
-        } else if (state is Error) {
+        return switch (state) {
+          //----------Loading--------------------
+          Loading() => const CustomCircularIndicator(),
           //----------------- Get Error--------------------
-          return ProfileErrorContent();
-        } else {
+          Error() => const ProfileErrorContent(),
           //---------------After Data Fetched--------------------
-          return ProfileDataContent();
-        }
+          _ => const ProfileDataContent(),
+        };
       },
     );
   }

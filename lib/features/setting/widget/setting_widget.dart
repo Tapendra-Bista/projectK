@@ -46,7 +46,7 @@ class ArchiveListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+   onTap: ()=> Get.toNamed(AppRoutes.archive),
       trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedArchive),
       title: Text(
@@ -65,7 +65,7 @@ class BlockedListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      onTap: ()=> Get.toNamed(AppRoutes.block),
       trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedBlocked),
       title: Text(

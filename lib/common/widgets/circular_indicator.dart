@@ -9,8 +9,8 @@ class CustomCircularIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(color: AppColors.primaryColor),
+      body:const Center(
+        child: const CircularProgressIndicator(color: AppColors.primaryColor),
       ),
     );
   }

@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
             }
 
             final String initialRoute = snapshot.hasData
-                ?routeNameFromPageNumber()! 
+                ? routeNameFromPageNumber()!
                 : (_appGetStorage.hasOpenedApp()
                     ? AppRoutes.login
                     : AppRoutes.wellcome);

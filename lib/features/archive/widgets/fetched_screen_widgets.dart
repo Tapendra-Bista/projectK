@@ -4,8 +4,8 @@ import 'package:afriqueen/common/widgets/like_button.dart';
 import 'package:afriqueen/common/widgets/seniority.dart';
 import 'package:afriqueen/common/widgets/snackbar_message.dart';
 import 'package:afriqueen/common/widgets/user_status.dart';
-import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
-import 'package:afriqueen/features/favorite/bloc/favorite_event.dart';
+import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
+import 'package:afriqueen/features/archive/bloc/archive_event.dart';
 import 'package:afriqueen/features/home/model/home_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,19 +55,23 @@ class CreatedDate extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 20.w),
       child: Container(
-          padding: EdgeInsets.all(8.r),
-          decoration: BoxDecoration(
-              color: AppColors.blue.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12.r)),
-          child: Text(Seniority.formatJoinedTime(Homedata!.createdDate),
-              style: Theme.of(context).textTheme.bodyMedium)),
+        padding: EdgeInsets.all(8.r),
+        decoration: BoxDecoration(
+          color: AppColors.blue.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        child: Text(
+          Seniority.formatJoinedTime(Homedata!.createdDate),
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ),
     );
   }
 }
 
 //---------button list----------------------
 
-//----------------Like, Chat, Favorites, Achieve----------------
+//----------------Like, Chat, Archives, Achieve----------------
 class ButtonsList extends StatelessWidget {
   const ButtonsList({super.key, required this.Homedata});
   final HomeModel? Homedata;
@@ -76,12 +80,16 @@ class ButtonsList extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(8.r),
       decoration: BoxDecoration(
-          color: AppColors.blue.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(12.r)),
+        color: AppColors.blue.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(12.r),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          LikeButton(id: Homedata!.id),
+          //------------ like button----------
+          LikeButton(
+            id: Homedata!.id,
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,11 +104,10 @@ class ButtonsList extends StatelessWidget {
               ),
               Text(
                 EnumLocale.message.name.tr,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: AppColors.black),
-              )
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall!.copyWith(color: AppColors.black),
+              ),
             ],
           ),
           Column(
@@ -108,27 +115,25 @@ class ButtonsList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconButton(
-                  onPressed: () {
-                    context
-                        .read<FavoriteBloc>()
-                        .add(FavoriteUserRemoved(favId: Homedata!.id));
-                    snackBarMessage(
-                        context,
-                        EnumLocale.removedFromFavorites.name.tr,
-                        Theme.of(context));
-                  },
-                  icon: Icon(
-                    Icons.favorite,
-                    color: AppColors.red,
-                    size: 30,
-                  )),
+                onPressed: () {
+                  context.read<ArchiveBloc>().add(
+                        ArchiveUserRemoved(archiveId: Homedata!.id),
+                      );
+                  snackBarMessage(
+                    context,
+                    EnumLocale.removedFromArchive.name.tr,
+                    Theme.of(context),
+                  );
+                },
+                icon:
+                    Icon(Icons.archive_sharp, color: AppColors.blue, size: 30),
+              ),
               Text(
-                EnumLocale.removed.name.tr,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: AppColors.black),
-              )
+                EnumLocale.unArchive.name.tr,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall!.copyWith(color: AppColors.black),
+              ),
             ],
           ),
         ],
@@ -154,10 +159,7 @@ class UserDetails extends StatelessWidget {
             context,
           ).textTheme.bodyLarge!.copyWith(color: AppColors.primaryColor),
         ),
-        Text(
-          "${homeModel.age}",
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
+        Text("${homeModel.age}", style: Theme.of(context).textTheme.bodyMedium),
         Text(
           homeModel.city,
           style: Theme.of(context).textTheme.bodyMedium,
@@ -181,8 +183,9 @@ class Description extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
-            color: AppColors.blue.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(12.r)),
+          color: AppColors.blue.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
         child: Text(
           homeModel.description,
           style: Theme.of(context).textTheme.bodyMedium,

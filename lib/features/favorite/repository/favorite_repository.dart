@@ -1,22 +1,17 @@
 import 'package:afriqueen/features/favorite/model/favorite_model.dart';
+import 'package:afriqueen/services/base_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 
-class FavoriteRepository {
-  final FirebaseFirestore _firebaseFirestore;
+class FavoriteRepository extends BaseRepository {
+
 
   FavoriteRepository({FirebaseFirestore? firestore})
-      : _firebaseFirestore = firestore ?? FirebaseFirestore.instance;
+  ;
 //--------------------------adding favourite--------------------------
   Future<void> addFavorite(String favId) async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser == null) return;
-
-    final currentUserId = currentUser.uid;
-
     // Find the user document where 'id' == Firebase UID
-    final userQuery = await _firebaseFirestore
+    final userQuery = await firestore
         .collection('user')
         .where('id', isEqualTo: currentUserId)
         .get();
@@ -26,7 +21,7 @@ class FavoriteRepository {
     final userDocId = userQuery.docs.first.id;
 
     // Use fixed document 'main' under favourite subcollection
-    final favouriteDocRef = _firebaseFirestore
+    final favouriteDocRef = firestore
         .collection('user')
         .doc(userDocId)
         .collection('favourite')
@@ -48,13 +43,8 @@ class FavoriteRepository {
 
 //-----------------deleting block user or removing  favourite
   Future<void> removeFavorite(String favId) async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser == null) return;
-
-    final currentUserId = currentUser.uid;
-
     // Find the correct user document using 'id' == currentUserId
-    final userQuery = await _firebaseFirestore
+    final userQuery = await firestore
         .collection('user')
         .where('id', isEqualTo: currentUserId)
         .get();
@@ -63,7 +53,7 @@ class FavoriteRepository {
 
     final userDocId = userQuery.docs.first.id;
 
-    final favouriteDocRef = _firebaseFirestore
+    final favouriteDocRef = firestore
         .collection('user')
         .doc(userDocId)
         .collection('favourite')
@@ -92,13 +82,8 @@ class FavoriteRepository {
   }
 
   Future<FavoriteModel?> fetchFavorites() async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-
-    if (currentUser == null) return null;
-
-    final currentUserId = currentUser.uid;
     debugPrint("currentUserId : ${currentUserId}");
-    final userQuery = await _firebaseFirestore
+    final userQuery = await firestore
         .collection('user')
         .where('id', isEqualTo: currentUserId)
         .get();
@@ -107,7 +92,7 @@ class FavoriteRepository {
 
     final userDocId = userQuery.docs.first.id;
 
-    final favouriteDocRef = _firebaseFirestore
+    final favouriteDocRef = firestore
         .collection('user')
         .doc(userDocId)
         .collection('favourite')

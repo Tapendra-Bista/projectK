@@ -14,7 +14,7 @@ class ProfileDataContent extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           //-------------------app bar-------------------
-          ProfileAppBar(),
+          const ProfileAppBar(),
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -25,7 +25,7 @@ class ProfileDataContent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //----------Main Container--------------
-                  MainContainer(),
+                  const MainContainer(),
                   SizedBox(height: 30.h),
                 ],
               ),

@@ -25,14 +25,14 @@ class HomeDataContent extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           //-------------------app bar-------------------
-          HomeAppBar(),
+        const  HomeAppBar(),
           //-------------------Stories-------------------
-          StoriesScreen(),
+       const   StoriesScreen(),
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 3.w),
               //-----------User profile grid-------------------------
-              child: UserImageGrid(),
+              child: const UserImageGrid(),
             ),
           ),
         ],
