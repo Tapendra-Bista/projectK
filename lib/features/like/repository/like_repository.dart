@@ -5,97 +5,73 @@ import 'package:flutter/widgets.dart';
 
 class LikeRepository extends BaseRepository {
   LikeRepository({FirebaseFirestore? firestore});
-  //--------------------------adding favourite--------------------------
+
+  //--------------------------adding like--------------------------
   Future<void> addLike(String likeId) async {
-    // Find the user document where 'id' == Firebase UID
-    final userQuery = await firestore
-        .collection('user')
-        .where('id', isEqualTo: currentUserId)
-        .get();
+    final userDocId = currentUserId;
 
-    if (userQuery.docs.isEmpty) return; // User not found
-
-    final userDocId = userQuery.docs.first.id;
-
-    // Use fixed document 'main' under favourite subcollection
-    final favouriteDocRef = firestore
-        .collection('user')
+    final likeDocRef = firestore
+        .collection('users')
         .doc(userDocId)
         .collection('like')
         .doc('main');
 
-    final docSnapshot = await favouriteDocRef.get();
+    final docSnapshot = await likeDocRef.get();
 
     if (!docSnapshot.exists) {
-      await favouriteDocRef.set({
-        'id': currentUserId,
+      await likeDocRef.set({
+        'id': userDocId,
         'likeId': [likeId],
       });
     } else {
-      await favouriteDocRef.update({
+      await likeDocRef.update({
         'likeId': FieldValue.arrayUnion([likeId]),
       });
     }
   }
 
-  //-----------------deleting block user or removing  favourite
+  //-----------------removing like--------------------------
   Future<void> removeLike(String likeId) async {
-    // Find the correct user document using 'id' == currentUserId
-    final userQuery = await firestore
-        .collection('user')
-        .where('id', isEqualTo: currentUserId)
-        .get();
+    final userDocId = currentUserId;
 
-    if (userQuery.docs.isEmpty) return; // User not found
-
-    final userDocId = userQuery.docs.first.id;
-
-    final favouriteDocRef = firestore
-        .collection('user')
+    final likeDocRef = firestore
+        .collection('users')
         .doc(userDocId)
         .collection('like')
         .doc('main');
 
-    final docSnapshot = await favouriteDocRef.get();
+    final docSnapshot = await likeDocRef.get();
 
     if (!docSnapshot.exists) return;
 
-    // Remove the likeId from the list
-    await favouriteDocRef.update({
+    await likeDocRef.update({
       'likeId': FieldValue.arrayRemove([likeId]),
     });
 
-    // Re-check the updated document to see if list is now empty
-    final updatedDoc = await favouriteDocRef.get();
+    final updatedDoc = await likeDocRef.get();
     final data = updatedDoc.data();
 
     if (data != null) {
-      final List<dynamic>? favIds = data['likeId'];
-      if (favIds == null || favIds.isEmpty) {
-        // Delete the 'main' document if no more blocked IDs
-        await favouriteDocRef.delete();
+      final List<dynamic>? likeIds = data['likeId'];
+      if (likeIds == null || likeIds.isEmpty) {
+        await likeDocRef.delete();
       }
     }
   }
 
+  //-----------------fetching likes--------------------------
   Future<LikeModel?> fetchLikes() async {
-    debugPrint("currentUserId : ${currentUserId}");
-    final userQuery = await firestore
-        .collection('user')
-        .where('id', isEqualTo: currentUserId)
-        .get();
+    debugPrint("currentUserId : $currentUserId");
 
-    if (userQuery.docs.isEmpty) return null;
+    final userDocId = currentUserId;
 
-    final userDocId = userQuery.docs.first.id;
-
-    final favouriteDocRef = firestore
-        .collection('user')
+    final likeDocRef = firestore
+        .collection('users')
         .doc(userDocId)
         .collection('like')
         .doc('main');
 
-    final docSnapshot = await favouriteDocRef.get();
+    final docSnapshot = await likeDocRef.get();
 
     if (!docSnapshot.exists || docSnapshot.data() == null) return null;
 

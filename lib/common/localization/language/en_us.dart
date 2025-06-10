@@ -220,4 +220,11 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
   EnumLocale.addedToArchive.name: "This user is now archived.",
   EnumLocale.removedFromArchive.name: "This user is now unarchived.",
   EnumLocale.unArchive.name: 'Unarchive',
+  EnumLocale.chats.name: "Chats",
+  EnumLocale.online.name: "Online",
+  EnumLocale.messagesHint.name: "Messages",
+  EnumLocale.lastSeen.name: 'last seen at',
+  EnumLocale.typing.name: 'typing...',
+  EnumLocale.offline.name: "Offline",
+  EnumLocale.noRecentChats.name: "No recent chats",
 };

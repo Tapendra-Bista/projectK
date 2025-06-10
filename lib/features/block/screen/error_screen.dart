@@ -1,6 +1,6 @@
 import 'package:afriqueen/features/block/bloc/block_bloc.dart';
 import 'package:afriqueen/features/block/bloc/block_state.dart';
-import 'package:afriqueen/features/block/widgets/favorite_widgets.dart';
+import 'package:afriqueen/features/block/widgets/block_widgets.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

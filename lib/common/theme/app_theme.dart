@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // --------------------light Theme Of App------------------------
 ThemeData lightTheme = ThemeData(
+  primaryColor: AppColors.primaryColor,
   scaffoldBackgroundColor: AppColors.floralWhite,
-
   appBarTheme: const AppBarTheme(
     backgroundColor: AppColors.floralWhite,
     elevation: 0.0,

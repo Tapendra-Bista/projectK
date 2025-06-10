@@ -5,6 +5,7 @@ import 'package:afriqueen/features/email_verification/bloc/email_verification_st
 import 'package:afriqueen/features/email_verification/repository/email_verification_repository.dart';
 import 'package:afriqueen/features/email_verification/widget/email_verification_widget.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,11 +20,9 @@ class EmailVerificationScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: false),
       body: SafeArea(
-        child: RepositoryProvider(
-          create: (context) => EmailVerificationRepository(),
-          child: BlocProvider(
+        child:  BlocProvider(
             create: (context) => EmailVerificationBloc(
-              repository: context.read<EmailVerificationRepository>(),
+              repository: getIt<EmailVerificationRepository>(),
             ),
             child: BlocListener<EmailVerificationBloc, EmailVerificationState>(
               listener: _listener,
@@ -56,8 +55,8 @@ class EmailVerificationScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      )
+    ;
   }
 
   void _listener(context, state) {

@@ -4,8 +4,8 @@ import 'package:afriqueen/features/favorite/bloc/favorite_event.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_state.dart';
 import 'package:afriqueen/features/favorite/model/favorite_model.dart';
 import 'package:afriqueen/features/favorite/repository/favorite_repository.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
 import 'package:afriqueen/features/home/repository/home_repository.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
@@ -26,11 +26,11 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     emit(FavoriteUsersLoading());
     try {
       final FavoriteModel? data = await _favouriteRepository.fetchFavorites();
-      final List<HomeModel> homeModelData =
+      final List<ProfileModel> homeModelData =
           await _homeRepository.fetchAllExceptCurrentUser();
 
       if (data != null) {
-        final List<HomeModel> favUserData = homeModelData
+        final List<ProfileModel> favUserData = homeModelData
             .where((e) => e.id.isNotEmpty && data.favId.contains(e.id))
             .toList();
         emit(FavoriteState(favUserList: favUserData));

@@ -3,12 +3,12 @@ import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/like_button.dart';
 import 'package:afriqueen/common/widgets/seniority.dart';
 import 'package:afriqueen/common/widgets/snackbar_message.dart';
+import 'package:afriqueen/common/widgets/start_chat.dart';
 import 'package:afriqueen/common/widgets/user_status.dart';
 import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
 import 'package:afriqueen/features/archive/bloc/archive_event.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 //-------------------- user Image--------------------
 class UserImage extends StatelessWidget {
   const UserImage({super.key, required this.Homedata});
-  final HomeModel? Homedata;
+  final ProfileModel? Homedata;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -49,7 +49,7 @@ class UserImage extends StatelessWidget {
 //-----------Seniority------------------------------
 class CreatedDate extends StatelessWidget {
   const CreatedDate({super.key, required this.Homedata});
-  final HomeModel? Homedata;
+  final ProfileModel? Homedata;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -74,7 +74,7 @@ class CreatedDate extends StatelessWidget {
 //----------------Like, Chat, Archives, Achieve----------------
 class ButtonsList extends StatelessWidget {
   const ButtonsList({super.key, required this.Homedata});
-  final HomeModel? Homedata;
+  final ProfileModel? Homedata;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -90,26 +90,7 @@ class ButtonsList extends StatelessWidget {
           LikeButton(
             id: Homedata!.id,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  CupertinoIcons.chat_bubble,
-                  color: AppColors.black,
-                  size: 30,
-                ),
-              ),
-              Text(
-                EnumLocale.message.name.tr,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall!.copyWith(color: AppColors.black),
-              ),
-            ],
-          ),
+          StartChat(profileModel: Homedata!),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,9 +125,9 @@ class ButtonsList extends StatelessWidget {
 
 // ---------pesudo, age and City--------------------------
 class UserDetails extends StatelessWidget {
-  const UserDetails({super.key, required this.homeModel});
+  const UserDetails({super.key, required this.profileModel});
 
-  final HomeModel homeModel;
+  final ProfileModel profileModel;
 
   @override
   Widget build(BuildContext context) {
@@ -154,14 +135,15 @@ class UserDetails extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(
-          homeModel.pseudo,
+          profileModel.pseudo,
           style: Theme.of(
             context,
           ).textTheme.bodyLarge!.copyWith(color: AppColors.primaryColor),
         ),
-        Text("${homeModel.age}", style: Theme.of(context).textTheme.bodyMedium),
+        Text("${profileModel.age}",
+            style: Theme.of(context).textTheme.bodyMedium),
         Text(
-          homeModel.city,
+          profileModel.city,
           style: Theme.of(context).textTheme.bodyMedium,
           overflow: TextOverflow.ellipsis,
         ),
@@ -172,9 +154,9 @@ class UserDetails extends StatelessWidget {
 
 //---------------User description-------------------------
 class Description extends StatelessWidget {
-  const Description({super.key, required this.homeModel});
+  const Description({super.key, required this.profileModel});
 
-  final HomeModel homeModel;
+  final ProfileModel profileModel;
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +169,7 @@ class Description extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
         ),
         child: Text(
-          homeModel.description,
+          profileModel.description,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ),
@@ -198,9 +180,9 @@ class Description extends StatelessWidget {
 //--------------- interests Grid--------------
 //-----------------------Interest grid------------------------
 class Interests extends StatelessWidget {
-  const Interests({super.key, required this.homeModel});
+  const Interests({super.key, required this.profileModel});
 
-  final HomeModel homeModel;
+  final ProfileModel profileModel;
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +190,7 @@ class Interests extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 5.w),
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: homeModel.interests.length,
+      itemCount: profileModel.interests.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         mainAxisSpacing: 8.h,
@@ -235,7 +217,7 @@ class Interests extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              homeModel.interests[index],
+              profileModel.interests[index],
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium!.copyWith(fontSize: 14.sp),

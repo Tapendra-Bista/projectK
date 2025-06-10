@@ -18,3 +18,4 @@ class WellcomeState extends Equatable {
 }
 
 class WellcomeInitial extends WellcomeState {}
+

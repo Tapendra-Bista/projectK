@@ -2,103 +2,68 @@ import 'package:afriqueen/features/archive/model/archive_model.dart';
 import 'package:afriqueen/services/base_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
-//-------------------------Archive Repository---------------------------
+
 class ArchiveRepository extends BaseRepository {
-  final FirebaseFirestore firestore;
+  ArchiveRepository({FirebaseFirestore? firestore});
 
-  ArchiveRepository({FirebaseFirestore? firestore})
-      : firestore = firestore ?? FirebaseFirestore.instance;
-  //--------------------------adding archive--------------------------
+  //-------------------------- Add Archive --------------------------
   Future<void> addArchive(String archiveId) async {
-    // Find the user document where 'id' == Firebase UID
-    final userQuery = await firestore
-        .collection('user')
-        .where('id', isEqualTo: currentUserId)
-        .get();
-
-    if (userQuery.docs.isEmpty) return; // User not found
-
-    final userDocId = userQuery.docs.first.id;
-
-    // Use fixed document 'main' under archive subcollection
-    final favouriteDocRef = firestore
-        .collection('user')
-        .doc(userDocId)
+    final archiveDocRef = firestore
+        .collection('users')
+        .doc(currentUserId)
         .collection('archive')
         .doc('main');
 
-    final docSnapshot = await favouriteDocRef.get();
-
+    final docSnapshot = await archiveDocRef.get();
+       ArchiveModel   archiveModel = ArchiveModel(id: currentUserId, archiveId: [archiveId]);
     if (!docSnapshot.exists) {
-      await favouriteDocRef.set({
-        'id': currentUserId,
-        'archiveId': [archiveId],
-      });
+      await archiveDocRef.set(archiveModel.toMap());
     } else {
-      await favouriteDocRef.update({
+      await archiveDocRef.update({
         'archiveId': FieldValue.arrayUnion([archiveId]),
       });
     }
   }
 
-  //-----------------deleting block user or removing  archive
+  //-------------------------- Remove Archive --------------------------
   Future<void> removeArchive(String archiveId) async {
-    // Find the correct user document using 'id' == currentUserId
-    final userQuery = await firestore
-        .collection('user')
-        .where('id', isEqualTo: currentUserId)
-        .get();
-
-    if (userQuery.docs.isEmpty) return; // User not found
-
-    final userDocId = userQuery.docs.first.id;
-
-    final favouriteDocRef = firestore
-        .collection('user')
-        .doc(userDocId)
+    final archiveDocRef = firestore
+        .collection('users')
+        .doc(currentUserId)
         .collection('archive')
         .doc('main');
 
-    final docSnapshot = await favouriteDocRef.get();
+    final docSnapshot = await archiveDocRef.get();
 
     if (!docSnapshot.exists) return;
 
-    // Remove the archiveId from the list
-    await favouriteDocRef.update({
+    await archiveDocRef.update({
       'archiveId': FieldValue.arrayRemove([archiveId]),
     });
 
-    // Re-check the updated document to see if list is now empty
-    final updatedDoc = await favouriteDocRef.get();
+    // Clean up if list is now empty
+    final updatedDoc = await archiveDocRef.get();
     final data = updatedDoc.data();
 
     if (data != null) {
       final List<dynamic>? archiveIds = data['archiveId'];
       if (archiveIds == null || archiveIds.isEmpty) {
-        // Delete the 'main' document if no more blocked IDs
-        await favouriteDocRef.delete();
+        await archiveDocRef.delete();
       }
     }
   }
-//---------------fetch-------------------------------
+
+  //-------------------------- Fetch Archives --------------------------
   Future<ArchiveModel?> fetchArchives() async {
-    debugPrint("currentUserId : ${currentUserId}");
-    final userQuery = await firestore
-        .collection('user')
-        .where('id', isEqualTo: currentUserId)
-        .get();
+    debugPrint("currentUserId : $currentUserId");
 
-    if (userQuery.docs.isEmpty) return null;
-
-    final userDocId = userQuery.docs.first.id;
-
-    final favouriteDocRef = firestore
-        .collection('user')
-        .doc(userDocId)
+    final archiveDocRef = firestore
+        .collection('users')
+        .doc(currentUserId)
         .collection('archive')
         .doc('main');
 
-    final docSnapshot = await favouriteDocRef.get();
+    final docSnapshot = await archiveDocRef.get();
 
     if (!docSnapshot.exists || docSnapshot.data() == null) return null;
 

@@ -4,6 +4,7 @@ import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/common_button.dart';
 import 'package:afriqueen/common/widgets/like_button.dart';
 import 'package:afriqueen/common/widgets/snackbar_message.dart';
+import 'package:afriqueen/common/widgets/start_chat.dart';
 import 'package:afriqueen/common/widgets/user_status.dart';
 import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
 import 'package:afriqueen/features/archive/bloc/archive_event.dart';
@@ -12,11 +13,12 @@ import 'package:afriqueen/features/block/bloc/block_event.dart';
 import 'package:afriqueen/features/block/repository/block_repository.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_event.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/features/user_details/screen/user_details_screen.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -195,7 +197,7 @@ class UserDetails extends StatelessWidget {
 //----------------Like, Chat, Favorites, Achieve----------------
 class ButtonList extends StatelessWidget {
   const ButtonList({super.key, required this.model});
-  final HomeModel model;
+  final ProfileModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -210,26 +212,9 @@ class ButtonList extends StatelessWidget {
           LikeButton(
             id: model.id,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  CupertinoIcons.chat_bubble,
-                  color: AppColors.black,
-                  size: 30,
-                ),
-              ),
-              Text(
-                EnumLocale.message.name.tr,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: AppColors.black),
-              )
-            ],
+          //--------------Message-------------------
+          StartChat(
+            profileModel: model,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -300,7 +285,7 @@ class UserDetailsAppBar extends StatelessWidget {
     required this.data,
   }) : super(key: key);
   final bool isScrollingUp;
-  final HomeModel data;
+  final ProfileModel data;
 
   @override
   Widget build(BuildContext context) {
@@ -353,14 +338,11 @@ class UserDetailsAppBar extends StatelessWidget {
 //----------- Dialog Box to ask for block----------------------------------
 class BlockAlertDialog extends StatelessWidget {
   const BlockAlertDialog({super.key, required this.data});
-  final HomeModel data;
+  final ProfileModel data;
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => BlockRepository(),
-      child: BlocProvider(
-        create: (context) =>
-            BlockBloc(repository: context.read<BlockRepository>()),
+    return  BlocProvider(
+        create: (context) => BlockBloc( repository:   getIt<BlockRepository>()),
         child: AlertDialog(
             contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
             titlePadding: EdgeInsets.only(top: 10.h),
@@ -427,7 +409,7 @@ class BlockAlertDialog extends StatelessWidget {
                             .copyWith(fontSize: 18.sp),
                       ))
                 ])),
-      ),
-    );
+      )
+    ;
   }
 }

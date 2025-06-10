@@ -1,13 +1,13 @@
-import 'package:afriqueen/features/home/model/home_model.dart';
-
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:equatable/equatable.dart';
 
 class HomeState extends Equatable {
-  final List<HomeModel?> data;
-  final List<HomeModel?> profileList;
+  final List<ProfileModel?> data;
+  final List<ProfileModel?> profileList;
   const HomeState({required this.data, required this.profileList});
 
-  HomeState copyWith({List<HomeModel?>? data, List<HomeModel?>? profileList}) =>
+  HomeState copyWith(
+          {List<ProfileModel?>? data, List<ProfileModel?>? profileList}) =>
       HomeState(
           data: data ?? this.data,
           profileList: profileList ?? this.profileList);

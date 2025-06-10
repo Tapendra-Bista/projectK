@@ -5,18 +5,19 @@ import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
 import 'package:afriqueen/features/archive/repository/archive_repository.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
 import 'package:afriqueen/features/favorite/repository/favorite_repository.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
 import 'package:afriqueen/features/like/bloc/like_bloc.dart';
 import 'package:afriqueen/features/like/bloc/like_event.dart';
 import 'package:afriqueen/features/like/repository/like_repository.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/features/user_details/widgets/user_details_widgets.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   UserDetailsScreen({super.key, required this.data});
-  final HomeModel data;
+  final ProfileModel data;
   @override
   State<UserDetailsScreen> createState() => _UserDetailsScreenState();
 }
@@ -30,107 +31,94 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     final date = Seniority.formatJoinedTime(widget.data.createdDate);
     final hasValidUrl = widget.data.imgURL.isNotEmpty &&
         Uri.tryParse(widget.data.imgURL)?.hasAbsolutePath == true;
-    return MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider(
-            create: (context) => FavoriteRepository(),
-          ),
-          RepositoryProvider(
-            create: (context) => ArchiveRepository(),
-          ),
-          RepositoryProvider(
-            create: (context) => LikeRepository(),
-          ),
-        ],
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-                create: (context) => FavoriteBloc(
-                    repository: context.read<FavoriteRepository>())),
-            BlocProvider(
-                create: (context) =>
-                    ArchiveBloc(repository: context.read<ArchiveRepository>())),
-            BlocProvider(
-                create: (context) =>
-                    LikeBloc(repository: context.read<LikeRepository>())
-                      ..add(LikeUsersFetched())),
-          ],
-          child: Scaffold(
-            body: NotificationListener<ScrollNotification>(
-              onNotification: (notification) {
-                if (notification is ScrollUpdateNotification) {
-                  final currentOffset = notification.metrics.pixels;
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) =>
+                FavoriteBloc(repository: getIt<FavoriteRepository>())),
+        BlocProvider(
+            create: (context) =>
+                ArchiveBloc(repository: getIt<ArchiveRepository>())),
+        BlocProvider(
+            create: (context) => LikeBloc(repository: getIt<LikeRepository>())
+              ..add(LikeUsersFetched())),
+      ],
+      child: Scaffold(
+        body: NotificationListener<ScrollNotification>(
+          onNotification: (notification) {
+            if (notification is ScrollUpdateNotification) {
+              final currentOffset = notification.metrics.pixels;
 
-                  setState(() {
-                    _isScrollingUp = currentOffset < _previousOffset;
-                    _previousOffset = currentOffset;
-                  });
-                }
-                return false;
-              },
-              child: CustomScrollView(
-                slivers: [
-                  //----------------------AppBar------------------------------
-                  UserDetailsAppBar(
-                      isScrollingUp: _isScrollingUp, data: widget.data),
-                  SliverFillRemaining(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            //---------------container------------------
-                            Container(
-                              width: double.maxFinite,
-                              decoration: BoxDecoration(
-                                color: AppColors.blue.withValues(alpha: 0.1),
-                                shape: BoxShape.rectangle,
-                                borderRadius: BorderRadius.circular(12.r),
-                                border: Border(
-                                  left: BorderSide(
-                                      color: AppColors.grey, width: 1.w),
-                                  right: BorderSide(
-                                      color: AppColors.grey, width: 1.w),
-                                  bottom: BorderSide(
-                                      color: AppColors.grey, width: 1.w),
-                                ),
-                              ),
-                              child: Column(
-                                spacing: 5.h,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  //------------Image and status---------------------------
-                                  StackWidget(
-                                      hasValidUrl: hasValidUrl, widget: widget),
-
-                                  //-------------age of account-----------------------
-                                  CreatedDate(date: date),
-                                  SizedBox(
-                                    height: 5.h,
-                                  ),
-                                  //-----------------RowList of Button------------------------
-                                  ButtonList(model: widget.data),
-                                  //------User  Details like name , age city------------------------
-                                  UserDetails(widget: widget),
-
-                                  // Interests grid-----------------------
-                                  Interests(widget: widget),
-
-                                  //---------User description-----------------------
-                                  Description(widget: widget),
-                                ],
-                              ),
+              setState(() {
+                _isScrollingUp = currentOffset < _previousOffset;
+                _previousOffset = currentOffset;
+              });
+            }
+            return false;
+          },
+          child: CustomScrollView(
+            slivers: [
+              //----------------------AppBar------------------------------
+              UserDetailsAppBar(
+                  isScrollingUp: _isScrollingUp, data: widget.data),
+              SliverFillRemaining(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        //---------------container------------------
+                        Container(
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                            color: AppColors.blue.withValues(alpha: 0.1),
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(12.r),
+                            border: Border(
+                              left:
+                                  BorderSide(color: AppColors.grey, width: 1.w),
+                              right:
+                                  BorderSide(color: AppColors.grey, width: 1.w),
+                              bottom:
+                                  BorderSide(color: AppColors.grey, width: 1.w),
                             ),
-                          ],
+                          ),
+                          child: Column(
+                            spacing: 5.h,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //------------Image and status---------------------------
+                              StackWidget(
+                                  hasValidUrl: hasValidUrl, widget: widget),
+
+                              //-------------age of account-----------------------
+                              CreatedDate(date: date),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              //-----------------RowList of Button------------------------
+                              ButtonList(model: widget.data),
+                              //------User  Details like name , age city------------------------
+                              UserDetails(widget: widget),
+
+                              // Interests grid-----------------------
+                              Interests(widget: widget),
+
+                              //---------User description-----------------------
+                              Description(widget: widget),
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

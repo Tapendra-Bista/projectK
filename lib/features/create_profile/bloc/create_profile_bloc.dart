@@ -1,7 +1,8 @@
 import 'package:afriqueen/features/create_profile/bloc/create_profile_event.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart';
-import 'package:afriqueen/features/create_profile/model/create_profile_model.dart';
 import 'package:afriqueen/features/create_profile/repository/create_profile_repository.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -12,8 +13,8 @@ class CreateProfileBloc extends Bloc<CreateProfileEvent, CreateProfileState> {
   Set<String> _interests = {};
 
   CreateProfileBloc({required CreateProfileRepository repository})
-    : _profileRepository = repository,
-      super(CreateProfileInitial()) {
+      : _profileRepository = repository,
+        super(CreateProfileInitial()) {
     //-------------For Pseudo-----------------------
     on<PseudoChanged>((PseudoChanged event, Emitter<CreateProfileState> emit) {
       _box.write('pseudo', event.pseudo);
@@ -117,7 +118,8 @@ class CreateProfileBloc extends Bloc<CreateProfileEvent, CreateProfileState> {
         _interests.addAll(List<String>.from(_box.read('adventure') ?? []));
 
         if (secureUrl != null && _interests.isNotEmpty) {
-          final CreateProfileModel createProfileModel = CreateProfileModel(
+          final ProfileModel createProfileModel = ProfileModel(
+            id: FirebaseAuth.instance.currentUser!.uid,
             description: _box.read('description') ?? '',
             pseudo: _box.read('pseudo') ?? '',
             sex: _box.read('sex') ?? '',

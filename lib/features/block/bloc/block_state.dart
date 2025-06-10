@@ -1,34 +1,36 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:afriqueen/features/home/model/home_model.dart';
+import 'package:afriqueen/features/block/model/block_model.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:equatable/equatable.dart';
 
 //-----------------------------Block State-----------------------------
 class BlockState extends Equatable {
-  final List<HomeModel> blockUserList;
-  const BlockState({required this.blockUserList});
+  final BlockModel  blockUserForChat;
+  final List<ProfileModel> blockUserList;
+  const BlockState({required this.blockUserList , required this.blockUserForChat});
 
   @override
   List<Object> get props => [blockUserList];
 }
 
 final class BlockInitial extends BlockState {
-  BlockInitial() : super(blockUserList: []);
+  BlockInitial() : super(blockUserList: [], blockUserForChat: BlockModel.empty);
 }
 
 final class BlockUsersLoading extends BlockState {
-  BlockUsersLoading() : super(blockUserList: []);
+  BlockUsersLoading() : super(blockUserList: [], blockUserForChat:BlockModel.empty );
 }
 
 final class BlockUsersError extends BlockState {
   final String errorMessage;
 
   BlockUsersError.fromState(BlockState state, {required this.errorMessage})
-      : super(blockUserList: state.blockUserList);
+      : super(blockUserList: state.blockUserList, blockUserForChat:  state.blockUserForChat);
 
   @override
   List<Object> get props => [errorMessage];
 }
 
 final class BlockDataEmpty extends BlockState {
-  BlockDataEmpty() : super(blockUserList: []);
+  BlockDataEmpty() : super(blockUserList: [],blockUserForChat: BlockModel.empty);
 }

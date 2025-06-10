@@ -6,8 +6,8 @@ import 'package:afriqueen/features/favorite/model/favorite_model.dart';
 import 'package:afriqueen/features/favorite/repository/favorite_repository.dart';
 import 'package:afriqueen/features/home/bloc/home_event.dart';
 import 'package:afriqueen/features/home/bloc/home_state.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
 import 'package:afriqueen/features/home/repository/home_repository.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
@@ -27,7 +27,7 @@ class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
 
       try {
         emit(Loading.fromState(state));
-        final List<HomeModel?> data =
+        final List<ProfileModel?> data =
             await __repository.fetchAllExceptCurrentUser();
         emit(state.copyWith(data: data));
       } catch (e) {
@@ -44,7 +44,7 @@ class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
       try {
         emit(Loading.fromState(state));
 
-        final List<HomeModel?> data = state.data.isNotEmpty
+        final List<ProfileModel?> data = state.data.isNotEmpty
             ? state.data
             : await __repository.fetchAllExceptCurrentUser();
         if (data.isEmpty) {
@@ -53,7 +53,7 @@ class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
         final FavoriteModel? favData =
             await _favoriteRepository.fetchFavorites();
 
-        final BlockModel? blockData = await _blockRepository.fetchblocks();
+        final BlockModel? blockData = await _blockRepository.fetchBlocks();
         final ArchiveModel? archiveData =
             await _archiveRepository.fetchArchives();
 
@@ -81,11 +81,11 @@ class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
   HomeState? fromJson(Map<String, dynamic> json) {
     try {
       final dataList = (json['data'] as List)
-          .map((e) => e == null ? null : HomeModel.fromJson(e))
+          .map((e) => e == null ? null : ProfileModel.fromJson(e))
           .toList();
 
       final profileList = (json['profileList'] as List)
-          .map((e) => e == null ? null : HomeModel.fromJson(e))
+          .map((e) => e == null ? null : ProfileModel.fromJson(e))
           .toList();
 
       return HomeState(

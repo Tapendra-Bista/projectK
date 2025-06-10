@@ -1,8 +1,8 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_state.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
 import 'package:afriqueen/features/match/widget/card_screen_widget.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -13,7 +13,7 @@ class CardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<HomeBloc, HomeState, List<HomeModel?>>(
+    return BlocSelector<HomeBloc, HomeState, List<ProfileModel?>>(
       selector: (state) => state.data,
       builder: (context, userData) {
         return Scaffold(

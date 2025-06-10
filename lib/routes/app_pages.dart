@@ -6,6 +6,8 @@ import 'package:afriqueen/features/block/bloc/block_bloc.dart';
 import 'package:afriqueen/features/block/bloc/block_event.dart';
 import 'package:afriqueen/features/block/repository/block_repository.dart';
 import 'package:afriqueen/features/block/screen/block_screen.dart';
+import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
+import 'package:afriqueen/features/chat/repository/chat_repository.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart';
 import 'package:afriqueen/features/create_profile/repository/create_profile_repository.dart';
 import 'package:afriqueen/features/create_profile/screen/address_screen.dart';
@@ -53,24 +55,22 @@ import 'package:afriqueen/features/stories/repository/stories_repository.dart';
 import 'package:afriqueen/features/wellcome/bloc/wellcome_bloc.dart';
 import 'package:afriqueen/features/wellcome/screen/wellcome_screen.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Group all your screen imports here for clarity
-final AppGetStorage app = AppGetStorage();
+final AppGetStorage _appGetStorage = AppGetStorage();
 Route<dynamic>? onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
     case AppRoutes.signup:
       return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          lazy: true,
-          create: (context) => SignupRepository(),
-          child: BlocProvider(
-            create: (context) =>
-                SignupBloc(signupRepository: context.read<SignupRepository>()),
-            child: SignupScreen(),
+        builder: (_) => BlocProvider(
+          create: (context) => SignupBloc(
+            signupRepository: getIt<SignupRepository>(),
           ),
+          child: SignupScreen(),
         ),
       );
 
@@ -82,30 +82,26 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
 
     case AppRoutes.login:
       return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          lazy: true,
-          create: (context) => LoginRepository(),
-          child: BlocProvider(
-            create: (context) =>
-                LoginBloc(loginrepository: context.read<LoginRepository>()),
-            child: LoginScreen(),
+        builder: (_) => BlocProvider(
+          create: (context) => LoginBloc(
+            loginrepository: getIt<LoginRepository>(),
           ),
+          child: LoginScreen(),
         ),
       );
-    // forgot password part
+
     case AppRoutes.forgotPassword:
       return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (_) => ForgotPasswordRepository(),
-          child: BlocProvider(
-            create: (context) => ForgotPasswordBloc(
-              repo: context.read<ForgotPasswordRepository>(),
-            ),
-            child: ForgotPasswordScreen(),
+        builder: (_) => BlocProvider(
+          create: (context) => ForgotPasswordBloc(
+            repo: getIt<ForgotPasswordRepository>(),
           ),
+          child: ForgotPasswordScreen(),
         ),
       );
+
     case AppRoutes.emailSent:
+      // Keep BlocProvider.value here as it explicitly reuses an existing bloc instance
       return MaterialPageRoute(
         builder: (context) => BlocProvider.value(
           value: BlocProvider.of<ForgotPasswordBloc>(context),
@@ -115,17 +111,14 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
 
     case AppRoutes.emailVerification:
       return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          lazy: true,
-          create: (context) => EmailVerificationRepository(),
-          child: BlocProvider(
-            create: (context) => EmailVerificationBloc(
-              repository: context.read<EmailVerificationRepository>(),
-            ),
-            child: EmailVerificationScreen(),
+        builder: (_) => BlocProvider(
+          create: (context) => EmailVerificationBloc(
+            repository: getIt<EmailVerificationRepository>(),
           ),
+          child: EmailVerificationScreen(),
         ),
       );
+
     case AppRoutes.wellcome:
       return MaterialPageRoute(
         builder: (_) => BlocProvider(
@@ -133,217 +126,117 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
           child: WellcomeScreen(),
         ),
       );
+
     case AppRoutes.main:
       return MaterialPageRoute(
-        builder: (_) => MultiRepositoryProvider(
+        builder: (_) => MultiBlocProvider(
           providers: [
-            RepositoryProvider(
-              create: (_) => HomeRepository(),
+            BlocProvider(
+              create: (context) => BlockBloc(
+                repository: getIt<BlockRepository>(),
+              )..add(BlockUsersFetched()),
             ),
-            RepositoryProvider(
-              create: (context) => StoriesRepository(),
+            BlocProvider(
+              create: (context) => ChatBloc(
+                chatRepository: getIt<ChatRepository>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => HomeBloc(
+                repo: getIt<HomeRepository>(),
+              )
+                ..add(HomeUsersProfileList())
+                ..add(HomeUsersFetched()),
+            ),
+            BlocProvider(
+              create: (context) => StoriesBloc(
+                repo: getIt<StoriesRepository>(),
+              )..add(StoriesFetching()),
             ),
           ],
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => HomeBloc(
-                  repo: context.read<HomeRepository>(),
-                )
-                  ..add(HomeUsersProfileList())
-                  ..add(HomeUsersFetched()),
-              ),
-              BlocProvider(
-                create: (context) => StoriesBloc(
-                  repo: context.read<StoriesRepository>(),
-                )..add(StoriesFetching()),
-              ),
-            ],
-            child: MainScreen(),
-          ),
+          child: MainScreen(),
         ),
       );
 
-    // Create Profile Flow (CreateProfileBloc shared across screens)
     case AppRoutes.name:
-      return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (_) => CreateProfileRepository(),
-          child: BlocProvider(
-            create: (context) => CreateProfileBloc(
-              repository: context.read<CreateProfileRepository>(),
-            ),
-            child: NameScreen(),
-          ),
-        ),
-      );
-
-    // The following should use `BlocProvider.value()` in real flows
     case AppRoutes.gender:
-      return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (_) => CreateProfileRepository(),
-          child: BlocProvider(
-            create: (context) => CreateProfileBloc(
-              repository: context.read<CreateProfileRepository>(),
-            ),
-            child: GenderScreen(),
-          ),
-        ),
-      );
     case AppRoutes.age:
-      return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (_) => CreateProfileRepository(),
-          child: BlocProvider(
-            create: (context) => CreateProfileBloc(
-              repository: context.read<CreateProfileRepository>(),
-            ),
-            child: AgeScreen(),
-          ),
-        ),
-      );
     case AppRoutes.address:
-      return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (_) => CreateProfileRepository(),
-          child: BlocProvider(
-            create: (context) => CreateProfileBloc(
-              repository: context.read<CreateProfileRepository>(),
-            ),
-            child: AddressScreen(),
-          ),
-        ),
-      );
     case AppRoutes.interests:
-      return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (_) => CreateProfileRepository(),
-          child: BlocProvider(
-            create: (context) => CreateProfileBloc(
-              repository: context.read<CreateProfileRepository>(),
-            ),
-            child: InterestsScreen(),
-          ),
-        ),
-      );
     case AppRoutes.passion:
+    case AppRoutes.upload:
+    case AppRoutes.description:
+      // Consolidated routes for CreateProfileBloc
       return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (_) => CreateProfileRepository(),
-          child: BlocProvider(
-            create: (context) => CreateProfileBloc(
-              repository: context.read<CreateProfileRepository>(),
-            ),
-            child: PassionScreen(),
+        builder: (_) => BlocProvider(
+          create: (context) => CreateProfileBloc(
+            repository: getIt<CreateProfileRepository>(),
           ),
+          child: _getCreateProfileScreen(settings.name!),
         ),
       );
 
-    case AppRoutes.upload:
-      return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (_) => CreateProfileRepository(),
-          child: BlocProvider(
-            create: (context) => CreateProfileBloc(
-              repository: context.read<CreateProfileRepository>(),
-            ),
-            child: UploadImageScreen(),
-          ),
-        ),
-      );
-    case AppRoutes.description:
-      return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (_) => CreateProfileRepository(),
-          child: BlocProvider(
-            create: (context) => CreateProfileBloc(
-              repository: context.read<CreateProfileRepository>(),
-            ),
-            child: DescriptionScreen(),
-          ),
-        ),
-      );
     case AppRoutes.setting:
       return MaterialPageRoute(builder: (_) => SettingScreen());
+
     case AppRoutes.profile:
       return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (context) => ProfileRepository(),
-          child: BlocProvider(
-            create: (context) =>
-                ProfileBloc(repo: context.read<ProfileRepository>())
-                  ..add(ProfileFetch()),
-            child: ProfileScreen(),
-          ),
+        builder: (_) => BlocProvider(
+          create: (context) => ProfileBloc(
+            repo: getIt<ProfileRepository>(),
+          )..add(ProfileFetch()),
+          child: ProfileScreen(),
         ),
       );
+
     case AppRoutes.favorite:
       return MaterialPageRoute(
-        builder: (_) => MultiRepositoryProvider(
+        builder: (_) => MultiBlocProvider(
           providers: [
-            RepositoryProvider(
-              create: (_) => FavoriteRepository(),
+            BlocProvider(
+              create: (context) => FavoriteBloc(
+                repository: getIt<FavoriteRepository>(),
+              )..add(FavoriteUsersFetched()),
             ),
-            RepositoryProvider(
-              create: (context) => LikeRepository(),
+            BlocProvider(
+              create: (context) => LikeBloc(
+                repository: getIt<LikeRepository>(),
+              )..add(LikeUsersFetched()),
             ),
           ],
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => FavoriteBloc(
-                  repository: context.read<FavoriteRepository>(),
-                )..add(FavoriteUsersFetched()),
-              ),
-              BlocProvider(
-                  create: (context) =>
-                      LikeBloc(repository: context.read<LikeRepository>())
-                        ..add(LikeUsersFetched())),
-            ],
-            child: FavoriteScreen(),
-          ),
+          child: FavoriteScreen(),
         ),
       );
+
     case AppRoutes.archive:
       return MaterialPageRoute(
-        builder: (_) => MultiRepositoryProvider(
+        builder: (_) => MultiBlocProvider(
           providers: [
-            RepositoryProvider(
-              create: (_) => ArchiveRepository(),
+            BlocProvider(
+              create: (context) => ArchiveBloc(
+                repository: getIt<ArchiveRepository>(),
+              )..add(ArchiveUsersFetched()),
             ),
-            RepositoryProvider(
-              create: (context) => LikeRepository(),
+            BlocProvider(
+              create: (context) => LikeBloc(
+                repository: getIt<LikeRepository>(),
+              )..add(LikeUsersFetched()),
             ),
           ],
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) =>
-                    ArchiveBloc(repository: context.read<ArchiveRepository>())
-                      ..add(ArchiveUsersFetched()),
-              ),
-              BlocProvider(
-                  create: (context) =>
-                      LikeBloc(repository: context.read<LikeRepository>())
-                        ..add(LikeUsersFetched())),
-            ],
-            child: ArchiveScreen(),
-          ),
+          child: ArchiveScreen(),
         ),
       );
+
     case AppRoutes.block:
       return MaterialPageRoute(
-        builder: (_) => RepositoryProvider(
-          create: (_) => BlockRepository(),
-          child: BlocProvider(
-            create: (context) => BlockBloc(
-              repository: context.read<BlockRepository>(),
-            )..add(BlockUsersFetched()),
-            child: BlockScreen(),
-          ),
+        builder: (_) => BlocProvider(
+          create: (context) => BlockBloc(
+            repository: getIt<BlockRepository>(),
+          )..add(BlockUsersFetched()),
+          child: BlockScreen(),
         ),
       );
+
     default:
       return MaterialPageRoute(
         builder: (_) => BlocProvider(
@@ -354,8 +247,32 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
   }
 }
 
+/// Helper function to return the correct screen for CreateProfile routes.
+Widget _getCreateProfileScreen(String routeName) {
+  switch (routeName) {
+    case AppRoutes.name:
+      return NameScreen();
+    case AppRoutes.gender:
+      return GenderScreen();
+    case AppRoutes.age:
+      return AgeScreen();
+    case AppRoutes.address:
+      return AddressScreen();
+    case AppRoutes.interests:
+      return InterestsScreen();
+    case AppRoutes.passion:
+      return PassionScreen();
+    case AppRoutes.upload:
+      return UploadImageScreen();
+    case AppRoutes.description:
+      return DescriptionScreen();
+    default:
+      return const Text('Error: Unknown Create Profile Screen');
+  }
+}
+
 String? routeNameFromPageNumber() {
-  switch (app.getPageNumber()) {
+  switch (_appGetStorage.getPageNumber()) {
     case 1:
       return AppRoutes.emailVerification;
     case 2:

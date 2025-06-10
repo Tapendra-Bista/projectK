@@ -1,10 +1,10 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/features/add/screen/add_screen.dart';
-import 'package:afriqueen/features/reels/screen/reels_screen.dart';
+import 'package:afriqueen/features/chat/screen/chat_rooms_screen.dart';
 import 'package:afriqueen/features/home/screen/home_screen.dart';
 import 'package:afriqueen/features/match/screen/match_screen.dart';
+import 'package:afriqueen/features/reels/screen/reels_screen.dart';
 import 'package:afriqueen/services/status/repository/status_repository.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     MatchScreen(),
     AddScreen(),
-    AddScreen(),
+    ChatRoomsScreen(),
     ReelsScreen(),
   ];
 

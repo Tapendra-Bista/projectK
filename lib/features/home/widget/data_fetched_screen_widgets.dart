@@ -4,7 +4,7 @@ import 'package:afriqueen/common/widgets/shimmer_effect.dart';
 import 'package:afriqueen/common/widgets/user_status.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_state.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/features/user_details/screen/user_details_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class UserImageGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<HomeBloc, HomeState, List<HomeModel?>>(
+    return BlocSelector<HomeBloc, HomeState, List<ProfileModel?>>(
         selector: (state) => state.profileList,
         builder: (context, profileList) {
           // Access favorite state using context.select

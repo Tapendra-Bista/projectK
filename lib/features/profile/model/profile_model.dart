@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
@@ -24,7 +22,6 @@ class ProfileModel extends Equatable {
     required this.age,
     required this.country,
     required this.city,
-
     required this.interests,
     required this.createdDate,
     required this.imgURL,
@@ -38,7 +35,6 @@ class ProfileModel extends Equatable {
     int? age,
     String? country,
     String? city,
-
     List<String>? interests,
     DateTime? createdDate,
     String? imgURL,
@@ -51,7 +47,6 @@ class ProfileModel extends Equatable {
       age: age ?? this.age,
       country: country ?? this.country,
       city: city ?? this.city,
-
       interests: interests ?? this.interests,
       createdDate: createdDate ?? this.createdDate,
       imgURL: imgURL ?? this.imgURL,
@@ -67,9 +62,8 @@ class ProfileModel extends Equatable {
       'age': age,
       'country': country,
       'city': city,
-
       'interests': interests,
-      'createdDate': createdDate.millisecondsSinceEpoch,
+      'createdDate': createdDate,
       'imgURL': imgURL,
       'description': description,
     };
@@ -83,7 +77,6 @@ class ProfileModel extends Equatable {
       age: map['age'] as int,
       country: map['country'] as String,
       city: map['city'] as String,
-
       interests: List<String>.from(map['interests'] ?? []),
       createdDate:
           (map['createdDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
@@ -109,7 +102,6 @@ class ProfileModel extends Equatable {
       age,
       country,
       city,
-
       interests,
       createdDate,
       imgURL,
@@ -127,7 +119,8 @@ class ProfileModel extends Equatable {
     city: '',
 
     interests: const [],
-    createdDate: DateTime(0), // Or a fixed date like DateTime(0) if preferred
+    createdDate:
+        DateTime.now(), // Or a fixed date like DateTime(0) if preferred
     imgURL: '',
     description: '',
   );

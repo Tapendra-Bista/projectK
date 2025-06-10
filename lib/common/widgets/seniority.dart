@@ -1,4 +1,5 @@
 import 'package:afriqueen/common/localization/enums/enums.dart';
+
 import 'package:get/get.dart';
 
 class Seniority {
@@ -34,6 +35,25 @@ class Seniority {
       return '${difference.inHours} ${EnumLocale.hoursAgo.name.tr}';
     } else {
       return '';
+    }
+  }
+
+  static String formatChatTime(DateTime createdAt) {
+    final now = DateTime.now();
+    final difference = now.difference(createdAt);
+    if (difference.inMinutes < 1) {
+      return '0 ${EnumLocale.minutesAgo.name.tr}';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} ${EnumLocale.minutesAgo.name.tr}';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} ${EnumLocale.hoursAgo.name.tr}';
+    } else if (difference.inDays < 7) {
+      return '${difference.inDays} ${EnumLocale.daysAgo.name.tr}';
+    } else if (difference.inDays < 30) {
+      final weeks = (difference.inDays / 7).floor();
+      return '$weeks week${weeks > 1 ? 's' : ''} ${EnumLocale.ago.name.tr}';
+    } else {
+      return '${createdAt.day}/${createdAt.month}/${createdAt.year}';
     }
   }
 }

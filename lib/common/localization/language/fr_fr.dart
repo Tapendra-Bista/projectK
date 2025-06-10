@@ -226,6 +226,14 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.removedFromBlock.name: "a été débloqué(e).",
   EnumLocale.unblock.name: "Débloquer",
   EnumLocale.addedToArchive.name: "Cet utilisateur est maintenant archivé(e).",
-EnumLocale.removedFromArchive.name: "Cet utilisateur est maintenant désarchivé(e).",
-EnumLocale.unArchive.name: "Désarchiver",
+  EnumLocale.removedFromArchive.name:
+      "Cet utilisateur est maintenant désarchivé(e).",
+  EnumLocale.unArchive.name: "Désarchiver",
+  EnumLocale.chats.name: "Discussions",
+  EnumLocale.online.name: "En ligne",
+  EnumLocale.messagesHint.name: "Messages",
+  EnumLocale.lastSeen.name: "vu(e) pour la dernière fois à",
+  EnumLocale.typing.name: "écrit...",
+  EnumLocale.offline.name: "Hors ligne",
+  EnumLocale.noRecentChats.name: "Aucune discussion récente"
 };

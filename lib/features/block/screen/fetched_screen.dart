@@ -1,9 +1,10 @@
 import 'package:afriqueen/common/widgets/divider.dart';
 import 'package:afriqueen/features/block/bloc/block_bloc.dart';
 import 'package:afriqueen/features/block/bloc/block_state.dart';
-import 'package:afriqueen/features/block/widgets/favorite_widgets.dart';
+import 'package:afriqueen/features/block/widgets/block_widgets.dart';
 import 'package:afriqueen/features/block/widgets/fetched_screen_widgets.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +14,7 @@ class FetchedScreen extends StatelessWidget {
 //------------------Fetch Screen--------------------------
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<BlockBloc, BlockState, List<HomeModel>>(
+    return BlocSelector<BlockBloc, BlockState, List<ProfileModel>>(
       selector: (state) => state.blockUserList,
       builder: (context, blockData) {
         return Scaffold(
@@ -25,7 +26,7 @@ class FetchedScreen extends StatelessWidget {
             child: Column(
               children: [
                 //-----------divider--------------
-           const     CustomDivider(),
+                const CustomDivider(),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
@@ -52,16 +53,16 @@ class FetchedScreen extends StatelessWidget {
                                         //--------User Image---------------
                                         UserImage(Homedata: item),
                                         //-----------User name------------
-                                        UserName(homeModel: item),
+                                        UserName(profileModel: item),
                                       ],
                                     ),
                                     //-----------------Button---------------
-                                    UnBlockedButton(homeModel: item),
+                                    UnBlockedButton(profileModel: item),
                                   ],
                                 ),
                               ),
                               //-----------divider--------------
-                        const      CustomDivider()
+                              const CustomDivider()
                             ],
                           )
                         : null;

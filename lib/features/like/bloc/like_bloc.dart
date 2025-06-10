@@ -4,9 +4,10 @@ import 'package:afriqueen/features/like/bloc/like_event.dart';
 import 'package:afriqueen/features/like/bloc/like_state.dart';
 import 'package:afriqueen/features/like/model/like_model.dart';
 import 'package:afriqueen/features/like/repository/like_repository.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LikeBloc extends Bloc<LikeEvent, LikeState> {
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+
+class LikeBloc extends HydratedBloc<LikeEvent, LikeState> {
   final LikeRepository _likeRepository;
 
   LikeBloc({required LikeRepository repository})
@@ -53,5 +54,25 @@ class LikeBloc extends Bloc<LikeEvent, LikeState> {
     Emitter<LikeState> emit,
   ) async {
     await _likeRepository.addLike(event.likeId);
+  }
+
+  @override
+  LikeState? fromJson(Map<String, dynamic> json) {
+    try {
+      final likeUserData = (json['likeUserData'] as LikeModel);
+
+      return LikeState(likeUserList: likeUserData);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(LikeState state) {
+    try {
+      return {'likeUserData': state.likeUserList.toJson()};
+    } catch (e) {
+      return null;
+    }
   }
 }

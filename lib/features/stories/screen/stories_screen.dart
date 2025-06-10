@@ -5,6 +5,7 @@ import 'package:afriqueen/features/stories/model/stories_model.dart';
 import 'package:afriqueen/features/stories/repository/stories_repository.dart';
 import 'package:afriqueen/features/stories/screen/view_stories.dart';
 import 'package:afriqueen/features/stories/widgets/stories_widgets.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,11 +17,9 @@ class StoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-        child: RepositoryProvider(
-            create: (context) => StoriesRepository(),
-            child: BlocProvider(
+        child:  BlocProvider(
                 create: (context) =>
-                    StoriesBloc(repo: context.read<StoriesRepository>())
+                    StoriesBloc(repo: getIt<StoriesRepository>())
                       ..add(StoriesFetching()),
                 child: BlocSelector<StoriesBloc, StoriesState,
                     List<StoriesFetchModel>>(
@@ -56,6 +55,6 @@ class StoriesScreen extends StatelessWidget {
                       ),
                     );
                   },
-                ))));
+                )));
   }
 }

@@ -4,22 +4,24 @@ import 'package:afriqueen/features/block/bloc/block_event.dart';
 import 'package:afriqueen/features/block/bloc/block_state.dart';
 import 'package:afriqueen/features/block/model/block_model.dart';
 import 'package:afriqueen/features/block/repository/block_repository.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
 import 'package:afriqueen/features/home/repository/home_repository.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 //------------------------Block Bloc--------------------------
 class BlockBloc extends Bloc<BlockEvent, BlockState> {
   final BlockRepository _blockRepository;
   final HomeRepository _homeRepository = HomeRepository();
   BlockBloc({required BlockRepository repository})
-    : _blockRepository = repository,
-      super(BlockInitial()) {
+      : _blockRepository = repository,
+        super(BlockInitial()) {
     on<BlockUserAdded>(_onblockUserAdded);
 
     on<BlockUserRemoved>(_onblockUserRemoved);
 
     on<BlockUsersFetched>(_onblockUsersFetched);
   }
+
   //-------------------------Fetching data----------------------------
   FutureOr<void> _onblockUsersFetched(
     BlockUsersFetched event,
@@ -27,15 +29,15 @@ class BlockBloc extends Bloc<BlockEvent, BlockState> {
   ) async {
     emit(BlockUsersLoading());
     try {
-      final BlockModel? data = await _blockRepository.fetchblocks();
-      final List<HomeModel> homeModelData = await _homeRepository
-          .fetchAllExceptCurrentUser();
+      final BlockModel? data = await _blockRepository.fetchBlocks();
+      final List<ProfileModel> homeModelData =
+          await _homeRepository.fetchAllExceptCurrentUser();
 
       if (data != null) {
-        final List<HomeModel> blockUserData = homeModelData
+        final List<ProfileModel> blockUserData = homeModelData
             .where((e) => e.id.isNotEmpty && data.blockId.contains(e.id))
             .toList();
-        emit(BlockState(blockUserList: blockUserData));
+        emit(BlockState(blockUserList: blockUserData, blockUserForChat: data));
       } else {
         emit(BlockDataEmpty());
       }
@@ -49,7 +51,7 @@ class BlockBloc extends Bloc<BlockEvent, BlockState> {
     BlockUserRemoved event,
     Emitter<BlockState> emit,
   ) async {
-    await _blockRepository.removeblock(event.blockId);
+    await _blockRepository.removeBlock(event.blockId);
 
     add(BlockUsersFetched());
   }
@@ -59,6 +61,6 @@ class BlockBloc extends Bloc<BlockEvent, BlockState> {
     BlockUserAdded event,
     Emitter<BlockState> emit,
   ) async {
-    await _blockRepository.addblock(event.blockId);
+    await _blockRepository.addBlock(event.blockId);
   }
 }

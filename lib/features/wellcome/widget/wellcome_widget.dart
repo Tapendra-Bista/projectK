@@ -18,13 +18,13 @@ import 'package:get/get.dart';
 class NextButton extends StatelessWidget {
   NextButton({super.key});
 
-  final AppGetStorage app = AppGetStorage();
+  final AppGetStorage _appGetStorage= AppGetStorage();
 
   @override
   Widget build(BuildContext context) {
     return CommonButton(
       onPressed: () async {
-        app.setHasOpenedApp();
+        _appGetStorage.setHasOpenedApp();
         Navigator.pushNamedAndRemoveUntil(
           context,
           AppRoutes.login,
@@ -70,7 +70,7 @@ class WellcomeTextAndDropDown extends StatelessWidget {
   }
 }
 
-//------------------Languages of app ------------------------
+//------------------Languages of _appGetStorage------------------------
 class DropDownForLanguage extends StatelessWidget {
   DropDownForLanguage({super.key});
 

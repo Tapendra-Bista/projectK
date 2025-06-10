@@ -4,8 +4,9 @@ import 'package:afriqueen/features/archive/bloc/archive_event.dart';
 import 'package:afriqueen/features/archive/bloc/archive_state.dart';
 import 'package:afriqueen/features/archive/model/archive_model.dart';
 import 'package:afriqueen/features/archive/repository/archive_repository.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
+
 import 'package:afriqueen/features/home/repository/home_repository.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 //-----------------------Archive Bloc----------------------------
@@ -13,8 +14,8 @@ class ArchiveBloc extends Bloc<ArchiveEvent, ArchiveState> {
   final ArchiveRepository _archiveRepository;
   final HomeRepository _homeRepository = HomeRepository();
   ArchiveBloc({required ArchiveRepository repository})
-    : _archiveRepository = repository,
-      super(ArchiveInitial()) {
+      : _archiveRepository = repository,
+        super(ArchiveInitial()) {
     on<ArchiveUserAdded>(_onArchiveUserAdded);
 
     on<ArchiveUserRemoved>(_onArchiveUserRemoved);
@@ -29,11 +30,11 @@ class ArchiveBloc extends Bloc<ArchiveEvent, ArchiveState> {
     emit(ArchiveUsersLoading());
     try {
       final ArchiveModel? data = await _archiveRepository.fetchArchives();
-      final List<HomeModel> homeModelData = await _homeRepository
-          .fetchAllExceptCurrentUser();
+      final List<ProfileModel> homeModelData =
+          await _homeRepository.fetchAllExceptCurrentUser();
 
       if (data != null) {
-        final List<HomeModel> favUserData = homeModelData
+        final List<ProfileModel> favUserData = homeModelData
             .where((e) => e.id.isNotEmpty && data.archiveId.contains(e.id))
             .toList();
         emit(ArchiveState(favUserList: favUserData));

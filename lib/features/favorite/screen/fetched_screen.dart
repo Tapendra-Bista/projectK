@@ -3,7 +3,7 @@ import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_state.dart';
 import 'package:afriqueen/features/favorite/widgets/favorite_widgets.dart';
 import 'package:afriqueen/features/favorite/widgets/fetched_screen_widgets.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +13,7 @@ class FetchedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<FavoriteBloc, FavoriteState, List<HomeModel>>(
+    return BlocSelector<FavoriteBloc, FavoriteState, List<ProfileModel>>(
       selector: (state) => state.favUserList,
       builder: (context, favData) {
         return Scaffold(
@@ -46,13 +46,13 @@ class FetchedScreen extends StatelessWidget {
                           CreatedDate(Homedata: item),
                           ButtonsList(Homedata: item),
                           UserDetails(
-                            homeModel: item,
+                            profileModel: item,
                           ),
                           Interests(
-                            homeModel: item,
+                            profileModel: item,
                           ),
                           Description(
-                            homeModel: item,
+                            profileModel: item,
                           ),
                           SizedBox(
                             height: 3.h,

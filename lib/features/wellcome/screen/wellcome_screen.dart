@@ -10,7 +10,7 @@ import 'package:get/route_manager.dart';
 class WellcomeScreen extends StatelessWidget {
   WellcomeScreen({super.key});
 
-  final AppGetStorage app = AppGetStorage();
+  final AppGetStorage _appGetStorage = AppGetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,7 @@ class WellcomeScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: BlocListener<WellcomeBloc, WellcomeState>(
-            listener: (context, state) async {
-              await Get.updateLocale(Locale(state.languageCode!));
-              app.setLanguageCode(state.languageCode!);
-            },
+            listener: _listener,
             // Sync with GetX,
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -30,7 +27,6 @@ class WellcomeScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-
                 spacing: 5.h,
                 children: [
                   SizedBox(height: 20.h),
@@ -51,5 +47,10 @@ class WellcomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _listener(context, state) async {
+    await Get.updateLocale(Locale(state.languageCode!));
+    _appGetStorage.setLanguageCode(state.languageCode!);
   }
 }

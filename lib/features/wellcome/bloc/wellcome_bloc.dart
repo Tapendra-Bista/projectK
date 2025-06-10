@@ -1,6 +1,5 @@
 import 'package:afriqueen/features/wellcome/bloc/wellcome_event.dart';
 import 'package:afriqueen/features/wellcome/bloc/wellcome_state.dart';
-
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 //-----------------------------Bloc for wellcome page-----------------------------------

@@ -3,7 +3,7 @@ import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/snackbar_message.dart';
 import 'package:afriqueen/features/block/bloc/block_bloc.dart';
 import 'package:afriqueen/features/block/bloc/block_event.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +13,7 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 //-------------------- user Image--------------------
 class UserImage extends StatelessWidget {
   const UserImage({super.key, required this.Homedata});
-  final HomeModel? Homedata;
+  final ProfileModel? Homedata;
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
@@ -25,14 +25,14 @@ class UserImage extends StatelessWidget {
 
 // ---------block User Name--------------------------
 class UserName extends StatelessWidget {
-  const UserName({super.key, required this.homeModel});
+  const UserName({super.key, required this.profileModel});
 
-  final HomeModel homeModel;
+  final ProfileModel profileModel;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      homeModel.pseudo,
+      profileModel.pseudo,
       style: Theme.of(
         context,
       ).textTheme.bodyMedium,
@@ -43,18 +43,18 @@ class UserName extends StatelessWidget {
 
 // ---------block User Name--------------------------
 class UnBlockedButton extends StatelessWidget {
-  const UnBlockedButton({super.key, required this.homeModel});
-  final HomeModel homeModel;
+  const UnBlockedButton({super.key, required this.profileModel});
+  final ProfileModel profileModel;
   @override
   Widget build(BuildContext context) {
-    return  TextButton(
+    return TextButton(
         onPressed: () {
           context
               .read<BlockBloc>()
-              .add(BlockUserRemoved(blockId: homeModel.id));
+              .add(BlockUserRemoved(blockId: profileModel.id));
           snackBarMessage(
             context,
-            "${homeModel.pseudo} ${EnumLocale.removedFromBlock.name.tr}",
+            "${profileModel.pseudo} ${EnumLocale.removedFromBlock.name.tr}",
             Theme.of(context),
           );
         },

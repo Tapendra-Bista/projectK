@@ -2,7 +2,7 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/widgets/seniority.dart';
 import 'package:afriqueen/common/widgets/user_status.dart';
-import 'package:afriqueen/features/home/model/home_model.dart';
+import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class ImageAndStatus extends StatelessWidget {
     super.key,
     required this.user,
   });
-  final HomeModel user;
+  final ProfileModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class ImageAndStatus extends StatelessWidget {
 //-----------Seniority------------------------------
 class CreatedDate extends StatelessWidget {
   const CreatedDate({super.key, required this.user});
-  final HomeModel user;
+  final ProfileModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +128,7 @@ class ListOfButtons extends StatelessWidget {
 class UserDetails extends StatelessWidget {
   const UserDetails({super.key, required this.user});
 
-  final HomeModel user;
+  final ProfileModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +159,7 @@ class UserDetails extends StatelessWidget {
 class Interests extends StatelessWidget {
   const Interests({super.key, required this.user});
 
-  final HomeModel user;
+  final ProfileModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +214,7 @@ class Interests extends StatelessWidget {
 class Description extends StatelessWidget {
   const Description({super.key, required this.user});
 
-  final HomeModel user;
+  final ProfileModel user;
 
   @override
   Widget build(BuildContext context) {

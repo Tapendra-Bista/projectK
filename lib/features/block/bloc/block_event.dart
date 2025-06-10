@@ -11,14 +11,14 @@ sealed class BlockEvent extends Equatable {
 final class BlockUserAdded extends BlockEvent {
   final String blockId;
   BlockUserAdded({required this.blockId});
-    @override
+  @override
   List<Object> get props => [blockId];
 }
 
 final class BlockUserRemoved extends BlockEvent {
   final String blockId;
   BlockUserRemoved({required this.blockId});
-    @override
+  @override
   List<Object> get props => [blockId];
 }
 
