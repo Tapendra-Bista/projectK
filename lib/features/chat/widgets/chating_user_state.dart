@@ -6,7 +6,7 @@ import 'package:afriqueen/services/status/model/status_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-
+//----------- User state online or offline----------------
 class UserState extends StatelessWidget {
   const UserState({super.key});
 

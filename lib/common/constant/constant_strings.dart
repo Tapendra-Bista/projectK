@@ -35,7 +35,6 @@ class AppStrings {
       EnumLocale.slowDancing.name.tr,
       EnumLocale.loveLetters.name.tr,
     ],
-
     "Sports & Outdoors": [
       EnumLocale.football.name.tr,
       EnumLocale.yoga.name.tr,
@@ -69,5 +68,31 @@ class AppStrings {
 
   static const List<String> language = ["English", "Français"];
   static const cloudName = "dwzriczge";
-  static const uploadPreset =  "afrikhc9o0";
+  static const uploadPreset = "afrikhc9o0";
+
+  //-----guideline violation  list-------
+  static List<String> guidelineViolationList = [
+    EnumLocale.underAge.name.tr,
+    EnumLocale.depictionOfViolation.name.tr,
+    EnumLocale.incorrectProfileDetails.name.tr,
+    EnumLocale.abusiveOrIntrusiveBehavior.name.tr,
+    EnumLocale.sexualContent.name.tr,
+    EnumLocale.spamOrAdvertising.name.tr,
+    EnumLocale.dubiousOffers.name.tr,
+    EnumLocale.drugs.name.tr,
+    EnumLocale.someoneIsInDanger.name.tr,
+  ];
+
+  //------------- illegel content-------------
+  static List<String> illegalContentList = [
+    EnumLocale.invasionOfPrivacy.name.tr,
+    EnumLocale.attemptedFraud.name.tr,
+    EnumLocale.threadsOrMalliciousStatements.name.tr,
+    EnumLocale.sexualHarassment.name.tr,
+    EnumLocale.childrenAreAtRisk.name.tr,
+    EnumLocale.drugTrafficking.name.tr,
+    EnumLocale.racismOrTerrorism.name.tr,
+    EnumLocale.blackmail.name.tr,
+    EnumLocale.deprivationOfLiberty.name.tr
+  ];
 }

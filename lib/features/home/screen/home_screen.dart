@@ -4,6 +4,7 @@ import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_state.dart';
 import 'package:afriqueen/features/home/screen/data_fetched_screen.dart';
 import 'package:afriqueen/features/home/screen/error_home_screen.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -62,5 +62,6 @@ class ArchiveBloc extends Bloc<ArchiveEvent, ArchiveState> {
     Emitter<ArchiveState> emit,
   ) async {
     await _archiveRepository.addArchive(event.archiveId);
+    add(ArchiveUsersFetched());
   }
 }

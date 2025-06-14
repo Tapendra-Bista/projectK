@@ -62,5 +62,6 @@ class BlockBloc extends Bloc<BlockEvent, BlockState> {
     Emitter<BlockState> emit,
   ) async {
     await _blockRepository.addBlock(event.blockId);
+    add(BlockUsersFetched());
   }
 }

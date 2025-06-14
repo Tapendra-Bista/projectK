@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-
+//------------------ApppBar -------------------
 class ChatScreenAppBar extends StatelessWidget {
   const ChatScreenAppBar({
     super.key,

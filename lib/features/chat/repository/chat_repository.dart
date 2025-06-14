@@ -9,13 +9,13 @@ class ChatRepository extends BaseRepository {
   CollectionReference getChatRoomMessages(String chatRoomId) {
     return _chatRooms.doc(chatRoomId).collection("messages");
   }
-
+//----------Chat Rooms-------------------
   Future<ChatRoomModel> getOrCreateChatRoom(
       String currentUserId, String otherUserId) async {
     // Prevent creating a chat room with yourself
     if (currentUserId == otherUserId) {
       throw Exception("Cannot create a chat room with yourself");
-    }
+    } 
 
     final users = [currentUserId, otherUserId]..sort();
     final roomId = users.join("_");
@@ -100,7 +100,7 @@ class ChatRepository extends BaseRepository {
     await batch.commit();
   }
 
-  //a--> b
+  //a--> b      // -----------get mesages-----------
   Stream<List<ChatMessage>> getMessages(String chatRoomId,
       {DocumentSnapshot? lastDocument}) {
     var query = getChatRoomMessages(chatRoomId)
@@ -113,7 +113,7 @@ class ChatRepository extends BaseRepository {
     return query.snapshots().map((snapshot) =>
         snapshot.docs.map((doc) => ChatMessage.fromFirestore(doc)).toList());
   }
-
+//-------------get more Messages--------------------
   Future<List<ChatMessage>> getMoreMessages(String chatRoomId,
       {required DocumentSnapshot lastDocument}) async {
     final query = getChatRoomMessages(chatRoomId)
@@ -124,7 +124,7 @@ class ChatRepository extends BaseRepository {
     final snapshot = await query.get();
     return snapshot.docs.map((doc) => ChatMessage.fromFirestore(doc)).toList();
   }
-
+//----------------getChats Rooms------------------
   Stream<List<ChatRoomModel>> getChatRooms(String userId) {
     return _chatRooms
         .where("participants", arrayContains: userId)
@@ -138,7 +138,7 @@ class ChatRepository extends BaseRepository {
 
 
   
-
+//-------------------- no. of unread Count or messages-------------------------
   Stream<int> getUnreadCount(String chatRoomId, String userId) {
     return getChatRoomMessages(chatRoomId)
         .where("receiverId", isEqualTo: userId)
@@ -147,6 +147,7 @@ class ChatRepository extends BaseRepository {
         .map((snapshot) => snapshot.docs.length);
   }
 
+//-----------Mark as read ------------------------
   Future<void> markMessagesAsRead(String chatRoomId, String userId) async {
     try {
       final batch = firestore.batch();
@@ -174,7 +175,7 @@ class ChatRepository extends BaseRepository {
       }
     } catch (e) {}
   }
-
+//----------------Get online use-------------------------
   Stream<Map<String, dynamic>> getUserOnlineStatus(String userId) {
     return firestore
         .collection("users")
@@ -188,14 +189,14 @@ class ChatRepository extends BaseRepository {
       };
     });
   }
-
+//--------------------Upadet Online Status -------------------------
   Future<void> updateOnlineStatus(String userId, bool isOnline) async {
     await firestore.collection("users").doc(userId).update({
       'isOnline': isOnline,
       'lastSeen': Timestamp.now(),
     });
   }
-
+// ---------------Update Typing Status-------------------------------------
   Future<void> updateTypingStatus(
       String chatRoomId, String userId, bool isTyping) async {
     try {
@@ -212,7 +213,7 @@ class ChatRepository extends BaseRepository {
       print("error updating typing status");
     }
   }
-
+//--------Get typing Status -----------------------------
   Stream<Map<String, dynamic>> getTypingStatus(String chatRoomId) {
     return _chatRooms.doc(chatRoomId).snapshots().map((snapshot) {
       if (!snapshot.exists) {

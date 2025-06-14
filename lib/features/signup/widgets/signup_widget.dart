@@ -8,6 +8,7 @@ import 'package:afriqueen/features/signup/bloc/signup_bloc.dart';
 import 'package:afriqueen/features/signup/bloc/signup_event.dart';
 import 'package:afriqueen/features/signup/bloc/signup_state.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +52,7 @@ class _EmailInputState extends State<EmailInput> {
       validator: AppValidator.validateEmail,
       obscureText: false,
       onChanged: (value) =>
-          context.read<SignupBloc>().add(EmailChanged(email: value.trim())),
+          getIt<SignupBloc>().add(EmailChanged(email: value.trim())),
       keyboardType: TextInputType.emailAddress,
     );
   }
@@ -83,12 +84,11 @@ class _PasswordInputState extends State<PasswordInput> {
           controller: _passwordController,
           validator: AppValidator.validatePassword,
           obscureText: state.isPasswordHidden,
-          onChanged: (value) => context.read<SignupBloc>().add(
-                PasswordChanged(password: value.trim()),
-              ),
+          onChanged: (value) => getIt<SignupBloc>().add(
+            PasswordChanged(password: value.trim()),
+          ),
           suffixIcon: IconButton(
-            onPressed: () =>
-                context.read<SignupBloc>().add(PasswordVisibility()),
+            onPressed: () => getIt<SignupBloc>().add(PasswordVisibility()),
             icon: Icon(
               state.isPasswordHidden
                   ? Icons.visibility_off_outlined
@@ -115,7 +115,7 @@ class RegisterDescription extends StatelessWidget {
           builder: (context, state) {
             return IconButton(
               constraints: const BoxConstraints(),
-              onPressed: () => context.read<SignupBloc>().add(CheckedBox()),
+              onPressed: () => getIt<SignupBloc>().add(CheckedBox()),
               icon: Icon(
                 state.isChecked
                     ? Icons.check_box_outlined
@@ -183,7 +183,7 @@ class SignupButton extends StatelessWidget {
             }
 
             if (formKey.currentState!.validate() && state.isChecked == true) {
-              context.read<SignupBloc>().add(Submit());
+              getIt<SignupBloc>().add(Submit());
             }
           },
           buttonText: EnumLocale.signupText.name.tr,

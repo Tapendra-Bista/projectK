@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 enum MessageType { text, image, video }
 
 enum MessageStatus { sent, read }
-
 class ChatMessage {
   final String id;
   final String chatRoomId;
@@ -26,7 +25,7 @@ class ChatMessage {
     required this.timestamp,
     required this.readBy,
   });
-
+//-------------------------------------Chat Messages------------------------------
   factory ChatMessage.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return ChatMessage(
@@ -35,14 +34,51 @@ class ChatMessage {
       senderId: data['senderId'] as String,
       receiverId: data['receiverId'] as String,
       content: data['content'] as String,
-      type: MessageType.values.firstWhere((e) => e.toString() == data['type'],
-          orElse: () => MessageType.text),
+      type: MessageType.values.firstWhere(
+        (e) => e.toString() == data['type'],
+        orElse: () => MessageType.text,
+      ),
       status: MessageStatus.values.firstWhere(
-          (e) => e.toString() == data['status'],
-          orElse: () => MessageStatus.sent),
+        (e) => e.toString() == data['status'],
+        orElse: () => MessageStatus.sent,
+      ),
       timestamp: data['timestamp'] as Timestamp,
       readBy: List<String>.from(data['readBy'] ?? []),
     );
+  }
+
+  factory ChatMessage.fromJson(Map<String, dynamic> json) {
+    return ChatMessage(
+      id: json['id'] as String,
+      chatRoomId: json['chatRoomId'] as String,
+      senderId: json['senderId'] as String,
+      receiverId: json['receiverId'] as String,
+      content: json['content'] as String,
+      type: MessageType.values.firstWhere(
+        (e) => e.toString() == json['type'],
+        orElse: () => MessageType.text,
+      ),
+      status: MessageStatus.values.firstWhere(
+        (e) => e.toString() == json['status'],
+        orElse: () => MessageStatus.sent,
+      ),
+      timestamp: Timestamp.fromMillisecondsSinceEpoch(json['timestamp']),
+      readBy: List<String>.from(json['readBy'] ?? []),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'chatRoomId': chatRoomId,
+      'senderId': senderId,
+      'receiverId': receiverId,
+      'content': content,
+      'type': type.toString(),
+      'status': status.toString(),
+      'timestamp': timestamp.millisecondsSinceEpoch,
+      'readBy': readBy,
+    };
   }
 
   Map<String, dynamic> toMap() {

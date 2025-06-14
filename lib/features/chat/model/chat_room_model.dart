@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatRoomModel {
@@ -11,37 +13,36 @@ class ChatRoomModel {
   final bool isTyping;
   final String? typingUserId;
   final bool isCallActive;
-
-  ChatRoomModel(
-      {required this.id,
-      required this.participants,
-      this.lastMessage,
-      this.lastMessageSenderId,
-      this.lastMessageTime,
-      Map<String, Timestamp>? lastReadTime,
-      Map<String, Map<String, String>>? participantsName,
-      this.isTyping = false,
-      this.typingUserId,
-      this.isCallActive = false})
-      : lastReadTime = lastReadTime ?? {},
+//-----------------------------Chat Room Model----------------------------------------------
+  ChatRoomModel({
+    required this.id,
+    required this.participants,
+    this.lastMessage,
+    this.lastMessageSenderId,
+    this.lastMessageTime,
+    Map<String, Timestamp>? lastReadTime,
+    Map<String, Map<String, String>>? participantsName,
+    this.isTyping = false,
+    this.typingUserId,
+    this.isCallActive = false,
+  })  : lastReadTime = lastReadTime ?? {},
         participantsName = participantsName ?? {};
 
   factory ChatRoomModel.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
-      final rawParticipantsName = data['participantsName'] as Map<String, dynamic>?;
+    final rawParticipantsName =
+        data['participantsName'] as Map<String, dynamic>?;
 
-  final participantsName = rawParticipantsName?.map(
-    (key, value) {
-      final valueMap = Map<String, String>.from(value as Map);
-      return MapEntry(key, valueMap);
-    },
-  );
+    final participantsName = rawParticipantsName?.map(
+      (key, value) {
+        final valueMap = Map<String, String>.from(value as Map);
+        return MapEntry(key, valueMap);
+      },
+    );
 
     return ChatRoomModel(
       id: doc.id,
-      participants: List<String>.from(
-        data['participants'],
-      ),
+      participants: List<String>.from(data['participants']),
       lastMessage: data['lastMessage'],
       lastMessageSenderId: data['lastMessageSenderId'],
       lastMessageTime: data['lastMessageTime'],
@@ -53,6 +54,55 @@ class ChatRoomModel {
     );
   }
 
+  factory ChatRoomModel.fromJson(Map<String, dynamic> json) {
+    final rawParticipantsName =
+        json['participantsName'] as Map<String, dynamic>?;
+
+    final participantsName = rawParticipantsName?.map(
+      (key, value) {
+        final valueMap = Map<String, String>.from(value as Map);
+        return MapEntry(key, valueMap);
+      },
+    );
+
+    return ChatRoomModel(
+      id: json['id'],
+      participants: List<String>.from(json['participants']),
+      lastMessage: json['lastMessage'],
+      lastMessageSenderId: json['lastMessageSenderId'],
+      lastMessageTime: json['lastMessageTime'] != null
+          ? Timestamp.fromMillisecondsSinceEpoch(json['lastMessageTime'])
+          : null,
+      lastReadTime: json['lastReadTime'] != null
+          ? (json['lastReadTime'] as Map<String, dynamic>).map(
+              (key, value) =>
+                  MapEntry(key, Timestamp.fromMillisecondsSinceEpoch(value)),
+            )
+          : {},
+      participantsName: participantsName,
+      isTyping: json['isTyping'] ?? false,
+      typingUserId: json['typingUserId'],
+      isCallActive: json['isCallActive'] ?? false,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'participants': participants,
+      'lastMessage': lastMessage,
+      'lastMessageSenderId': lastMessageSenderId,
+      'lastMessageTime': lastMessageTime?.millisecondsSinceEpoch,
+      'lastReadTime': lastReadTime?.map(
+        (key, value) => MapEntry(key, value.millisecondsSinceEpoch),
+      ),
+      'participantsName': participantsName,
+      'isTyping': isTyping,
+      'typingUserId': typingUserId,
+      'isCallActive': isCallActive,
+    };
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'participants': participants,
@@ -60,8 +110,8 @@ class ChatRoomModel {
       'lastMessageSenderId': lastMessageSenderId,
       'lastMessageTime': lastMessageTime,
       'lastReadTime': lastReadTime,
-      'isTyping': isTyping,
       'participantsName': participantsName,
+      'isTyping': isTyping,
       'typingUserId': typingUserId,
       'isCallActive': isCallActive,
     };

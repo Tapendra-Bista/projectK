@@ -24,7 +24,6 @@ class LikeBloc extends HydratedBloc<LikeEvent, LikeState> {
     LikeUsersFetched event,
     Emitter<LikeState> emit,
   ) async {
-    emit(LikeUsersLoading());
     try {
       final LikeModel? likeUserData = await _likeRepository.fetchLikes();
 
@@ -54,6 +53,7 @@ class LikeBloc extends HydratedBloc<LikeEvent, LikeState> {
     Emitter<LikeState> emit,
   ) async {
     await _likeRepository.addLike(event.likeId);
+    add(LikeUsersFetched());
   }
 
   @override

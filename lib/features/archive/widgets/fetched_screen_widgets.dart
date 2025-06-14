@@ -7,10 +7,12 @@ import 'package:afriqueen/common/widgets/start_chat.dart';
 import 'package:afriqueen/common/widgets/user_status.dart';
 import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
 import 'package:afriqueen/features/archive/bloc/archive_event.dart';
+import 'package:afriqueen/features/home/bloc/home_bloc.dart';
+import 'package:afriqueen/features/home/bloc/home_event.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -97,9 +99,10 @@ class ButtonsList extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  context.read<ArchiveBloc>().add(
-                        ArchiveUserRemoved(archiveId: Homedata!.id),
-                      );
+                  getIt<ArchiveBloc>().add(
+                    ArchiveUserRemoved(archiveId: Homedata!.id),
+                  );
+                  getIt<HomeBloc>().add(HomeUsersProfileList());
                   snackBarMessage(
                     context,
                     EnumLocale.removedFromArchive.name.tr,

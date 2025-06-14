@@ -6,6 +6,7 @@ import 'package:afriqueen/features/wellcome/bloc/wellcome_bloc.dart';
 import 'package:afriqueen/features/wellcome/bloc/wellcome_event.dart';
 import 'package:afriqueen/features/wellcome/bloc/wellcome_state.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
@@ -18,20 +19,15 @@ import 'package:get/get.dart';
 class NextButton extends StatelessWidget {
   NextButton({super.key});
 
-  final AppGetStorage _appGetStorage= AppGetStorage();
+  final AppGetStorage _appGetStorage = AppGetStorage();
 
   @override
   Widget build(BuildContext context) {
     return CommonButton(
       onPressed: () async {
         _appGetStorage.setHasOpenedApp();
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          AppRoutes.login,
-          (Route<dynamic> route) => false,
-        );
+        Get.offAllNamed(AppRoutes.login);
       },
-
       buttonText: EnumLocale.next.name.tr,
     );
   }
@@ -63,7 +59,6 @@ class WellcomeTextAndDropDown extends StatelessWidget {
           EnumLocale.welcome.name.tr,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
-
         DropDownForLanguage(),
       ],
     );
@@ -108,7 +103,7 @@ class DropDownForLanguage extends StatelessWidget {
             dropdownList: country,
             defaultItem: defaultItem,
             onChange: (value) {
-              context.read<WellcomeBloc>().add(
+              getIt<WellcomeBloc>().add(
                 ChangeLanguageEvent(languageCode: value),
               );
               controller.close();
@@ -116,7 +111,6 @@ class DropDownForLanguage extends StatelessWidget {
             dropdownItemOptions: DropdownItemOptions(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
             ),
-
             dropdownOptions: DropdownOptions(width: 130.w),
             resultOptions: ResultOptions(
               render: ResultRender.icon,

@@ -1,12 +1,30 @@
 //-------------------Image and status------------------------------
 import 'package:afriqueen/common/constant/constant_colors.dart';
+import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/seniority.dart';
+import 'package:afriqueen/common/widgets/snackbar_message.dart';
 import 'package:afriqueen/common/widgets/user_status.dart';
+import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
+import 'package:afriqueen/features/archive/bloc/archive_event.dart';
+import 'package:afriqueen/features/chat/screen/chat_screen.dart';
+import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
+import 'package:afriqueen/features/favorite/bloc/favorite_event.dart';
+import 'package:afriqueen/features/home/bloc/home_bloc.dart';
+import 'package:afriqueen/features/home/bloc/home_event.dart';
+import 'package:afriqueen/features/like/bloc/like_bloc.dart';
+import 'package:afriqueen/features/like/bloc/like_event.dart';
+import 'package:afriqueen/features/like/bloc/like_state.dart';
+import 'package:afriqueen/features/like/model/like_model.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
+import 'package:afriqueen/features/user_details/screen/user_details_screen.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 
 //-----------Image and Status---------------------------
@@ -21,31 +39,34 @@ class ImageAndStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     final validUrl = user.imgURL.isNotEmpty &&
         Uri.tryParse(user.imgURL)!.hasAbsolutePath == true;
-    return Stack(
-      children: [
-        Container(
-          width: double.maxFinite,
-          height: 260.h,
-          decoration: validUrl
-              ? BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12.r),
-                    topRight: Radius.circular(12.r),
-                  ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: CachedNetworkImageProvider(user.imgURL),
-                  ),
-                )
-              : null,
-        ),
-        Positioned(
-          top: 8.r,
-          right: 8.r,
-          child: UserStatus(id: user.id),
-        ),
-        Positioned(bottom: 1, child: CreatedDate(user: user))
-      ],
+    return GestureDetector(
+      onTap: () => Get.to(() => UserDetailsScreen(data: user)),
+      child: Stack(
+        children: [
+          Container(
+            width: double.maxFinite,
+            height: 260.h,
+            decoration: validUrl
+                ? BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12.r),
+                      topRight: Radius.circular(12.r),
+                    ),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: CachedNetworkImageProvider(user.imgURL),
+                    ),
+                  )
+                : null,
+          ),
+          Positioned(
+            top: 8.r,
+            right: 8.r,
+            child: UserStatus(id: user.id),
+          ),
+          Positioned(bottom: 1, child: CreatedDate(user: user))
+        ],
+      ),
     );
   }
 }
@@ -69,10 +90,10 @@ class CreatedDate extends StatelessWidget {
 
 //----------------fav , following, archive----------------
 class ListOfButtons extends StatelessWidget {
-  const ListOfButtons({
-    super.key,
-  });
-
+  const ListOfButtons(
+      {super.key, required this.user, required this.controller});
+  final ProfileModel user;
+  final CardSwiperController controller;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -82,36 +103,52 @@ class ListOfButtons extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.thumb_up_alt_outlined,
-              color: AppColors.black,
-              size: 20.r,
-            ),
+          //-----------like----------------
+          LikeButtonForMatch(
+            id: user.id,
+          ),
+          //-------- chat-------
+          StartChatFromMatch(
+            profileModel: user,
           ),
           IconButton(
-            onPressed: () {},
-            icon: Icon(
-              CupertinoIcons.chat_bubble,
-              color: AppColors.black,
-              size: 20.r,
-            ),
-          ),
-          IconButton(
-            onPressed: () async {},
+            onPressed: () async {
+              context
+                  .read<FavoriteBloc>()
+                  .add(FavoriteUserAdded(favId: user.id));
+              snackBarMessage(context, EnumLocale.savedToFavorites.name.tr,
+                  Theme.of(context));
+              getIt<HomeBloc>().add(HomeUsersProfileList());
+              controller.swipe(CardSwiperDirection.right);
+            },
             icon: Icon(Icons.favorite_border_outlined,
                 size: 20.r, color: AppColors.black),
           ),
+          // ------------------following-----------------
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                snackBarMessage(
+                    context,
+                    "${EnumLocale.following.name.tr} ${user.pseudo}",
+                    Theme.of(context));
+                controller.swipe(CardSwiperDirection.right);
+              },
               icon: Icon(
                 Icons.person_add_outlined,
                 color: AppColors.black,
                 size: 20.r,
               )),
+//----------Archive--------------------------
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              context
+                  .read<ArchiveBloc>()
+                  .add(ArchiveUserAdded(archiveId: user.id));
+              snackBarMessage(context, EnumLocale.addedToArchive.name.tr,
+                  Theme.of(context));
+              getIt<HomeBloc>().add(HomeUsersProfileList());
+              controller.swipe(CardSwiperDirection.right);
+            },
             icon: Icon(
               LineIcons.archive,
               color: AppColors.black,
@@ -119,6 +156,67 @@ class ListOfButtons extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+//------------------ only for match page-------------------------
+class LikeButtonForMatch extends StatelessWidget {
+  final String id;
+  const LikeButtonForMatch({super.key, required this.id});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<LikeBloc, LikeState, LikeModel>(
+      selector: (state) => state.likeUserList,
+      builder: (context, likeData) {
+        return IconButton(
+          onPressed: () {
+            if (likeData.likeId.contains(id)) {
+              getIt<LikeBloc>().add(LikeUserRemoved(likeId: id));
+              debugPrint("unLike  ${id}");
+            } else {
+              getIt<LikeBloc>().add(LikeUserAdded(likeId: id));
+              debugPrint("Like  ${id}");
+            }
+          },
+          icon: Icon(
+            likeData.likeId.contains(id)
+                ? Icons.thumb_up_rounded
+                : Icons.thumb_up_alt_outlined,
+            color:
+                likeData.likeId.contains(id) ? AppColors.blue : AppColors.black,
+            size: 20.r,
+          ),
+        );
+      },
+    );
+  }
+}
+
+//-----------------Starting chat from match from here-----------------------
+class StartChatFromMatch extends StatelessWidget {
+  const StartChatFromMatch({super.key, required this.profileModel});
+  final ProfileModel profileModel;
+
+  @override
+  Widget build(BuildContext context) {
+    // innerContext now has access to ChatBloc
+    return IconButton(
+      onPressed: () {
+        // Use innerContext here
+
+        Get.to(() => ChatScreen(
+              imgURL: profileModel.imgURL,
+              receiverId: profileModel.id,
+              receiverName: profileModel.pseudo,
+            ));
+      },
+      icon: Icon(
+        CupertinoIcons.chat_bubble,
+        color: AppColors.black,
+        size: 20.r,
       ),
     );
   }

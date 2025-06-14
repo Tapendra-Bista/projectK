@@ -36,10 +36,8 @@ class LoginRepository extends BaseRepository {
       } else if (e.code == 'wrong-password') {
         error = EnumLocale.wrongPasswordError.name.tr;
       } else {
-        error = EnumLocale.defaultError.name.tr;
+        error = EnumLocale.wrongCredential.name.tr;
       }
-    } catch (e) {
-      error = EnumLocale.defaultError.name.tr;
     }
     return null;
   }

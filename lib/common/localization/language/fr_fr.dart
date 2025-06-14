@@ -235,5 +235,49 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.lastSeen.name: "vu(e) pour la dernière fois à",
   EnumLocale.typing.name: "écrit...",
   EnumLocale.offline.name: "Hors ligne",
-  EnumLocale.noRecentChats.name: "Aucune discussion récente"
+  EnumLocale.noRecentChats.name: "Aucune discussion récente",
+  EnumLocale.atLeastTwoUsers.name:
+      "Au moins deux utilisateurs sont nécessaires !",
+  EnumLocale.wrongCredential.name:
+      "L'utilisateur n'existe pas avec ces identifiants.",
+  EnumLocale.whyAreYouReporting.name: "Pourquoi signalez-vous cette personne ?",
+  EnumLocale.notRevealIdentity.name: "Nous ne révélerons pas votre identité.",
+  EnumLocale.reportDescription1.name:
+      "Cela inclut toutes les violations de nos règles de la communauté. Vous pouvez les consulter en détail ici. Par exemple, veuillez nous informer si vous rencontrez de fausses informations sur les profils ou du spam.",
+  EnumLocale.reportDescription2.name:
+      "Cela inclut tout contenu qui viole la loi applicable et est passible de poursuites. Par exemple, signalez-nous les violations de la vie privée ou la mise en danger d'enfants.",
+  EnumLocale.unLawfulContent.name: "Contenu illégal",
+  EnumLocale.violationOfGuidenlines.name: "Violation des règles",
+  EnumLocale.violationOfGuidenlinesTitle.name:
+      "Quelle violation des règles signalez-vous ?",
+  EnumLocale.underAge.name: "Mineur(e)",
+  EnumLocale.depictionOfViolation.name: "Représentation d'une violation",
+  EnumLocale.incorrectProfileDetails.name: "Détails de profil incorrects",
+  EnumLocale.abusiveOrIntrusiveBehavior.name: "Comportement abusif ou intrusif",
+  EnumLocale.sexualContent.name: "Contenu sexuel ou prostitution",
+  EnumLocale.spamOrAdvertising.name: "Spam ou publicité",
+  EnumLocale.dubiousOffers.name: "Offres douteuses",
+  EnumLocale.drugs.name: "Drogues",
+  EnumLocale.someoneIsInDanger.name: "Quelqu'un est en danger",
+  EnumLocale.illegalContentTitle.name:
+      "Quel contenu illégal nous signalez-vous ?",
+  EnumLocale.invasionOfPrivacy.name: "Atteinte à la vie privée",
+  EnumLocale.attemptedFraud.name: "Tentative de fraude",
+  EnumLocale.threadsOrMalliciousStatements.name:
+      "Menaces ou déclarations malveillantes",
+  EnumLocale.sexualHarassment.name: "Harcèlement sexuel",
+  EnumLocale.childrenAreAtRisk.name: "Des enfants sont en danger",
+  EnumLocale.drugTrafficking.name: "Trafic de drogue",
+  EnumLocale.racismOrTerrorism.name: "Racisme ou terrorisme",
+  EnumLocale.blackmail.name: "Chantage",
+  EnumLocale.deprivationOfLiberty.name: "Privation de liberté",
+  EnumLocale.sendReportTitle.name:
+      "Si vous le souhaitez, nous vous contacterons en cas de nouveauté concernant le signalement (facultatif)",
+  EnumLocale.emailConfirmation.name:
+      "Je confirme que les informations que j'ai fournies sont exactes et complètes.",
+  EnumLocale.sendReport.name: "Envoyer le signalement",
+  EnumLocale.thankForReport.name: "Merci pour votre signalement !",
+  EnumLocale.thankForReportDescription.name:
+      "Nous allons examiner la question. Merci de nous aider à faire de notre plateforme un endroit plus sûr.",
+  EnumLocale.done.name: "Terminé",
 };

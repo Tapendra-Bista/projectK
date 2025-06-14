@@ -7,6 +7,7 @@ import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart'
 import 'package:afriqueen/features/create_profile/bloc/create_profile_event.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
@@ -27,11 +28,9 @@ class FriendshipInchoice extends StatelessWidget {
       builder: (context, state) {
         return Card(
           color: AppColors.floralWhite,
-
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadiusGeometry.circular(8),
           ),
-
           child: Center(
             child: BlocBuilder<CreateProfileBloc, CreateProfileState>(
               builder: (context, state) {
@@ -40,7 +39,7 @@ class FriendshipInchoice extends StatelessWidget {
                   value: state.friendship,
                   onChanged: (value) {
                     if (value.length <= 2) {
-                      context.read<CreateProfileBloc>().add(
+                      getIt<CreateProfileBloc>().add(
                         FriendsShipChanged(friendship: value),
                       );
                     } else {
@@ -74,7 +73,6 @@ class FriendshipInchoice extends StatelessWidget {
                       ),
                     );
                   },
-
                   modalHeaderBuilder: ChoiceModal.createHeader(
                     automaticallyImplyLeading: false,
                     title: Padding(
@@ -84,16 +82,14 @@ class FriendshipInchoice extends StatelessWidget {
                         children: [
                           Text(
                             EnumLocale.chooseOption.name.tr,
-                            style: Theme.of(context).textTheme.bodyLarge!
-                                .copyWith(
-                                  color: AppColors.primaryColor,
-                                  fontSize: 19.sp,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 19.sp,
+                                    ),
                           ),
-
                           IconButton(
                             onPressed: () => Get.back(),
-
                             icon: Icon(
                               state.friendship.isNotEmpty
                                   ? FontAwesomeIcons.solidCircleCheck
@@ -105,14 +101,12 @@ class FriendshipInchoice extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   promptDelegate: ChoicePrompt.delegateBottomSheet(
                     backgroundColor: AppColors.floralWhite,
                     maxHeightFactor: 0.5,
 
                     /// Override tileBuilder to hide trailing icon and label
                   ),
-
                   anchorBuilder: (state, openModal) {
                     return InkWell(
                       onTap: openModal,
@@ -124,10 +118,8 @@ class FriendshipInchoice extends StatelessWidget {
                           child: Center(
                             child: Text(
                               (state.value.isEmpty)
-                                  ? EnumLocale
-                                        .chooseOption
-                                        .name
-                                        .tr // empty text = no placeholder
+                                  ? EnumLocale.chooseOption.name
+                                      .tr // empty text = no placeholder
                                   : state.value.join(
                                       ', ',
                                     ), // or use .label if single select
@@ -169,7 +161,6 @@ class InterestTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       EnumLocale.interestTitle.name.tr,
-
       style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 16),
     );
   }
@@ -185,11 +176,9 @@ class LoveInchoice extends StatelessWidget {
       builder: (context, state) {
         return Card(
           color: AppColors.floralWhite,
-
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadiusGeometry.circular(8),
           ),
-
           child: Center(
             child: BlocBuilder<CreateProfileBloc, CreateProfileState>(
               builder: (context, state) {
@@ -198,7 +187,7 @@ class LoveInchoice extends StatelessWidget {
                   value: state.love,
                   onChanged: (value) {
                     if (value.length <= 2) {
-                      context.read<CreateProfileBloc>().add(
+                      getIt<CreateProfileBloc>().add(
                         LoveChanged(love: value),
                       );
                     } else {
@@ -211,8 +200,7 @@ class LoveInchoice extends StatelessWidget {
                     }
                   },
                   itemCount: AppStrings
-                      .categorizedUserInterests["Love & Romance"]!
-                      .length,
+                      .categorizedUserInterests["Love & Romance"]!.length,
                   itemBuilder: (state, i) {
                     final item = AppStrings
                         .categorizedUserInterests["Love & Romance"]![i];
@@ -233,7 +221,6 @@ class LoveInchoice extends StatelessWidget {
                       ),
                     );
                   },
-
                   modalHeaderBuilder: ChoiceModal.createHeader(
                     automaticallyImplyLeading: false,
                     title: Padding(
@@ -243,16 +230,14 @@ class LoveInchoice extends StatelessWidget {
                         children: [
                           Text(
                             EnumLocale.chooseOption.name.tr,
-                            style: Theme.of(context).textTheme.bodyLarge!
-                                .copyWith(
-                                  color: AppColors.primaryColor,
-                                  fontSize: 19.sp,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 19.sp,
+                                    ),
                           ),
-
                           IconButton(
                             onPressed: () => Get.back(),
-
                             icon: Icon(
                               state.love.isNotEmpty
                                   ? FontAwesomeIcons.solidCircleCheck
@@ -264,14 +249,12 @@ class LoveInchoice extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   promptDelegate: ChoicePrompt.delegateBottomSheet(
                     backgroundColor: AppColors.floralWhite,
                     maxHeightFactor: 0.5,
 
                     /// Override tileBuilder to hide trailing icon and label
                   ),
-
                   anchorBuilder: (state, openModal) {
                     return InkWell(
                       onTap: openModal,
@@ -283,10 +266,8 @@ class LoveInchoice extends StatelessWidget {
                           child: Center(
                             child: Text(
                               (state.value.isEmpty)
-                                  ? EnumLocale
-                                        .chooseOption
-                                        .name
-                                        .tr // empty text = no placeholder
+                                  ? EnumLocale.chooseOption.name
+                                      .tr // empty text = no placeholder
                                   : state.value.join(
                                       ', ',
                                     ), // or use .label if single select
@@ -330,11 +311,9 @@ class SportsInchoice extends StatelessWidget {
       builder: (context, state) {
         return Card(
           color: AppColors.floralWhite,
-
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadiusGeometry.circular(8),
           ),
-
           child: Center(
             child: BlocBuilder<CreateProfileBloc, CreateProfileState>(
               builder: (context, state) {
@@ -343,7 +322,7 @@ class SportsInchoice extends StatelessWidget {
                   value: state.sports,
                   onChanged: (value) {
                     if (value.length <= 2) {
-                      context.read<CreateProfileBloc>().add(
+                      getIt<CreateProfileBloc>().add(
                         SportChanged(sports: value),
                       );
                     } else {
@@ -356,8 +335,7 @@ class SportsInchoice extends StatelessWidget {
                     }
                   },
                   itemCount: AppStrings
-                      .categorizedUserInterests["Sports & Outdoors"]!
-                      .length,
+                      .categorizedUserInterests["Sports & Outdoors"]!.length,
                   itemBuilder: (state, i) {
                     final item = AppStrings
                         .categorizedUserInterests["Sports & Outdoors"]![i];
@@ -378,7 +356,6 @@ class SportsInchoice extends StatelessWidget {
                       ),
                     );
                   },
-
                   modalHeaderBuilder: ChoiceModal.createHeader(
                     automaticallyImplyLeading: false,
                     title: Padding(
@@ -388,16 +365,14 @@ class SportsInchoice extends StatelessWidget {
                         children: [
                           Text(
                             EnumLocale.chooseOption.name.tr,
-                            style: Theme.of(context).textTheme.bodyLarge!
-                                .copyWith(
-                                  color: AppColors.primaryColor,
-                                  fontSize: 19.sp,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 19.sp,
+                                    ),
                           ),
-
                           IconButton(
                             onPressed: () => Get.back(),
-
                             icon: Icon(
                               state.sports.isNotEmpty
                                   ? FontAwesomeIcons.solidCircleCheck
@@ -409,14 +384,12 @@ class SportsInchoice extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   promptDelegate: ChoicePrompt.delegateBottomSheet(
                     backgroundColor: AppColors.floralWhite,
                     maxHeightFactor: 0.5,
 
                     /// Override tileBuilder to hide trailing icon and label
                   ),
-
                   anchorBuilder: (state, openModal) {
                     return InkWell(
                       onTap: openModal,
@@ -428,10 +401,8 @@ class SportsInchoice extends StatelessWidget {
                           child: Center(
                             child: Text(
                               (state.value.isEmpty)
-                                  ? EnumLocale
-                                        .chooseOption
-                                        .name
-                                        .tr // empty text = no placeholder
+                                  ? EnumLocale.chooseOption.name
+                                      .tr // empty text = no placeholder
                                   : state.value.join(
                                       ', ',
                                     ), // or use .label if single select
@@ -475,11 +446,9 @@ class FoodInchoice extends StatelessWidget {
       builder: (context, state) {
         return Card(
           color: AppColors.floralWhite,
-
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadiusGeometry.circular(8),
           ),
-
           child: Center(
             child: BlocBuilder<CreateProfileBloc, CreateProfileState>(
               builder: (context, state) {
@@ -488,7 +457,7 @@ class FoodInchoice extends StatelessWidget {
                   value: state.food,
                   onChanged: (value) {
                     if (value.length <= 2) {
-                      context.read<CreateProfileBloc>().add(
+                      getIt<CreateProfileBloc>().add(
                         FoodChanged(food: value),
                       );
                     } else {
@@ -501,8 +470,7 @@ class FoodInchoice extends StatelessWidget {
                     }
                   },
                   itemCount: AppStrings
-                      .categorizedUserInterests["Food & Restaurants"]!
-                      .length,
+                      .categorizedUserInterests["Food & Restaurants"]!.length,
                   itemBuilder: (state, i) {
                     final item = AppStrings
                         .categorizedUserInterests["Food & Restaurants"]![i];
@@ -523,7 +491,6 @@ class FoodInchoice extends StatelessWidget {
                       ),
                     );
                   },
-
                   modalHeaderBuilder: ChoiceModal.createHeader(
                     automaticallyImplyLeading: false,
                     title: Padding(
@@ -533,16 +500,14 @@ class FoodInchoice extends StatelessWidget {
                         children: [
                           Text(
                             EnumLocale.chooseOption.name.tr,
-                            style: Theme.of(context).textTheme.bodyLarge!
-                                .copyWith(
-                                  color: AppColors.primaryColor,
-                                  fontSize: 19.sp,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 19.sp,
+                                    ),
                           ),
-
                           IconButton(
                             onPressed: () => Get.back(),
-
                             icon: Icon(
                               state.food.isNotEmpty
                                   ? FontAwesomeIcons.solidCircleCheck
@@ -554,14 +519,12 @@ class FoodInchoice extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   promptDelegate: ChoicePrompt.delegateBottomSheet(
                     backgroundColor: AppColors.floralWhite,
                     maxHeightFactor: 0.5,
 
                     /// Override tileBuilder to hide trailing icon and label
                   ),
-
                   anchorBuilder: (state, openModal) {
                     return InkWell(
                       onTap: openModal,
@@ -573,10 +536,8 @@ class FoodInchoice extends StatelessWidget {
                           child: Center(
                             child: Text(
                               (state.value.isEmpty)
-                                  ? EnumLocale
-                                        .chooseOption
-                                        .name
-                                        .tr // empty text = no placeholder
+                                  ? EnumLocale.chooseOption.name
+                                      .tr // empty text = no placeholder
                                   : state.value.join(
                                       ', ',
                                     ), // or use .label if single select
@@ -620,11 +581,9 @@ class AdventureInchoice extends StatelessWidget {
       builder: (context, state) {
         return Card(
           color: AppColors.floralWhite,
-
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadiusGeometry.circular(8),
           ),
-
           child: Center(
             child: BlocBuilder<CreateProfileBloc, CreateProfileState>(
               builder: (context, state) {
@@ -633,7 +592,7 @@ class AdventureInchoice extends StatelessWidget {
                   value: state.adventure,
                   onChanged: (value) {
                     if (value.length <= 2) {
-                      context.read<CreateProfileBloc>().add(
+                      getIt<CreateProfileBloc>().add(
                         AdventureChanged(adventure: value),
                       );
                     } else {
@@ -646,8 +605,7 @@ class AdventureInchoice extends StatelessWidget {
                     }
                   },
                   itemCount: AppStrings
-                      .categorizedUserInterests["Adventure & Travel"]!
-                      .length,
+                      .categorizedUserInterests["Adventure & Travel"]!.length,
                   itemBuilder: (state, i) {
                     final item = AppStrings
                         .categorizedUserInterests["Adventure & Travel"]![i];
@@ -668,7 +626,6 @@ class AdventureInchoice extends StatelessWidget {
                       ),
                     );
                   },
-
                   modalHeaderBuilder: ChoiceModal.createHeader(
                     automaticallyImplyLeading: false,
                     title: Padding(
@@ -678,16 +635,14 @@ class AdventureInchoice extends StatelessWidget {
                         children: [
                           Text(
                             EnumLocale.chooseOption.name.tr,
-                            style: Theme.of(context).textTheme.bodyLarge!
-                                .copyWith(
-                                  color: AppColors.primaryColor,
-                                  fontSize: 19.sp,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      color: AppColors.primaryColor,
+                                      fontSize: 19.sp,
+                                    ),
                           ),
-
                           IconButton(
                             onPressed: () => Get.back(),
-
                             icon: Icon(
                               state.adventure.isNotEmpty
                                   ? FontAwesomeIcons.solidCircleCheck
@@ -699,14 +654,12 @@ class AdventureInchoice extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   promptDelegate: ChoicePrompt.delegateBottomSheet(
                     backgroundColor: AppColors.floralWhite,
                     maxHeightFactor: 0.5,
 
                     /// Override tileBuilder to hide trailing icon and label
                   ),
-
                   anchorBuilder: (state, openModal) {
                     return InkWell(
                       onTap: openModal,
@@ -718,10 +671,8 @@ class AdventureInchoice extends StatelessWidget {
                           child: Center(
                             child: Text(
                               (state.value.isEmpty)
-                                  ? EnumLocale
-                                        .chooseOption
-                                        .name
-                                        .tr // empty text = no placeholder
+                                  ? EnumLocale.chooseOption.name
+                                      .tr // empty text = no placeholder
                                   : state.value.join(
                                       ', ',
                                     ), // or use .label if single select
@@ -806,11 +757,9 @@ class PassionChoice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: AppColors.floralWhite,
-
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusGeometry.circular(8),
       ),
-
       child: Center(
         child: BlocBuilder<CreateProfileBloc, CreateProfileState>(
           builder: (context, state) {
@@ -819,7 +768,7 @@ class PassionChoice extends StatelessWidget {
               value: state.passion,
               onChanged: (value) {
                 if (value.length <= 2) {
-                  context.read<CreateProfileBloc>().add(
+                  getIt<CreateProfileBloc>().add(
                     PassionChanged(passion: value),
                   );
                 } else {
@@ -851,7 +800,6 @@ class PassionChoice extends StatelessWidget {
                   ),
                 );
               },
-
               modalHeaderBuilder: ChoiceModal.createHeader(
                 automaticallyImplyLeading: false,
                 title: Padding(
@@ -862,14 +810,12 @@ class PassionChoice extends StatelessWidget {
                       Text(
                         EnumLocale.chooseOption.name.tr,
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: AppColors.primaryColor,
-                          fontSize: 19.sp,
-                        ),
+                              color: AppColors.primaryColor,
+                              fontSize: 19.sp,
+                            ),
                       ),
-
                       IconButton(
                         onPressed: () => Get.back(),
-
                         icon: Icon(
                           state.passion.isNotEmpty
                               ? FontAwesomeIcons.solidCircleCheck
@@ -881,14 +827,12 @@ class PassionChoice extends StatelessWidget {
                   ),
                 ),
               ),
-
               promptDelegate: ChoicePrompt.delegateBottomSheet(
                 backgroundColor: AppColors.floralWhite,
                 maxHeightFactor: 0.5,
 
                 /// Override tileBuilder to hide trailing icon and label
               ),
-
               anchorBuilder: (state, openModal) {
                 return InkWell(
                   onTap: openModal,
@@ -900,10 +844,8 @@ class PassionChoice extends StatelessWidget {
                       child: Center(
                         child: Text(
                           (state.value.isEmpty)
-                              ? EnumLocale
-                                    .chooseOption
-                                    .name
-                                    .tr // empty text = no placeholder
+                              ? EnumLocale.chooseOption.name
+                                  .tr // empty text = no placeholder
                               : state.value.join(
                                   ', ',
                                 ), // or use .label if single select

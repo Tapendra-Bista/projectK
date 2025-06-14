@@ -8,8 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class StatusBloc extends Bloc<StatusEvent, StatusState> {
   final StatusRepository _repository;
   StatusBloc({required StatusRepository statusrepository})
-    : _repository = statusrepository,
-      super(StatusInitial()) {
+      : _repository = statusrepository,
+        super(StatusInitial()) {
     on<GetStatus>((GetStatus event, Emitter<StatusState> emit) async {
       final user = await FirebaseAuth.instance.authStateChanges().first;
 

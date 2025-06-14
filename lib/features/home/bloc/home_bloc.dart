@@ -19,12 +19,6 @@ class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
       : __repository = repo,
         super(HomeInitial()) {
     on<HomeUsersFetched>((event, emit) async {
-      // ✅ If data already exists, return it directly
-      if (state.data.isNotEmpty) {
-        emit(state.copyWith(data: state.data));
-        return;
-      }
-
       try {
         emit(Loading.fromState(state));
         final List<ProfileModel?> data =
@@ -35,18 +29,11 @@ class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
       }
     });
     on<HomeUsersProfileList>((event, emit) async {
-      // ✅ If profile list already exists, use it
-      if (state.profileList.isNotEmpty) {
-        emit(state.copyWith(profileList: state.profileList));
-        return;
-      }
-
       try {
         emit(Loading.fromState(state));
 
-        final List<ProfileModel?> data = state.data.isNotEmpty
-            ? state.data
-            : await __repository.fetchAllExceptCurrentUser();
+        final List<ProfileModel?> data =
+            await __repository.fetchAllExceptCurrentUser();
         if (data.isEmpty) {
           emit(HomeDataIsEmpty.fromState(state));
         }
@@ -68,7 +55,7 @@ class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
                   !(blockData?.blockId.contains(item.id) ?? false) &&
                   !(archiveData?.archiveId.contains(item.id) ?? false))
               .toList();
-
+          print(filterData.length);
           emit(state.copyWith(profileList: filterData));
         }
       } catch (e) {

@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:afriqueen/features/block/repository/block_repository.dart';
 import 'package:afriqueen/features/chat/model/chat_room_model.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
-import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../repository/chat_repository.dart';
 import 'chat_event.dart';
 import 'chat_state.dart';
@@ -35,24 +37,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<ChatRoomsUpdated>(_onChatRoomsUpdated);
     on<ChatRoomsError>(_onChatRoomsError);
   }
+
   void _onChatRoomsUpdated(ChatRoomsUpdated event, Emitter<ChatState> emit) {
-    if (event.chatRooms.isEmpty) {
-      emit(ChatEmpty());
-    } else {
-      emit(ChatState(chatRoomModel: event.chatRooms));
-    }
+    emit(state.copyWith(chatRoomModel: event.chatRooms, error: null));
   }
 
   void _onChatRoomsError(ChatRoomsError event, Emitter<ChatState> emit) {
-    emit(ChatError(errorMessage: event.errorMessage));
+    emit(state.copyWith(error: event.errorMessage));
   }
 
   Future<void> _onChatRoomsLists(
       ChatRoomsLists event, Emitter<ChatState> emit) async {
-    // Cancel any previous subscription to chat rooms to avoid multiple listeners
     _chatRoomsSubscription?.cancel();
 
-    emit(ChatLoading()); // Emit loading state immediately
+    emit(state.copyWith(status: ChatStatus.loading));
     _chatRoomsSubscription = _chatRepository.getChatRooms(event.id).listen(
       (chatsData) async {
         try {
@@ -68,7 +66,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
                 !blockedUserIds.contains(otherUserId);
           }).toList();
 
-          // Instead of emit, add a new event
           add(ChatRoomsUpdated(chatRooms: chats));
         } catch (e) {
           add(ChatRoomsError(errorMessage: e.toString()));
@@ -80,7 +77,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   Future<void> _onEnterChat(
       InitializeChatEvent event, Emitter<ChatState> emit) async {
     _isInChat = true;
-    // emit(state.copyWith(status: ChatStatus.loading));
+    emit(state.copyWith(status: ChatStatus.loading));
     try {
       final chatRoom = await _chatRepository.getOrCreateChatRoom(
           FirebaseAuth.instance.currentUser!.uid, event.receiverId);
@@ -99,7 +96,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
           FirebaseAuth.instance.currentUser!.uid, true);
     } catch (e) {
       emit(state.copyWith(
-          status: ChatStatus.error, error: "Failed to create chat room $e"));
+          status: ChatStatus.error, error: "Failed to create chat room: $e"));
     }
   }
 
@@ -157,12 +154,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     _messageSubscription?.cancel();
     _messageSubscription =
         _chatRepository.getMessages(chatRoomId).listen((messages) {
-      if (_isInChat) {
-        _markMessagesAsRead(chatRoomId);
-      }
+      if (_isInChat) _markMessagesAsRead(chatRoomId);
       add(MessagesUpdated(messages));
     }, onError: (error) {
-      addError("Failed to load messages");
+      add(ChatRoomsError(errorMessage: "Failed to load messages"));
     });
   }
 
@@ -172,7 +167,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         _chatRepository.getUserOnlineStatus(userId).listen((status) {
       final isOnline = status["isOnline"] as bool;
       final lastSeen = status["lastSeen"] as Timestamp?;
-
       add(OnlineStatusUpdated(isOnline, lastSeen));
     });
   }
@@ -225,8 +219,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   Future<void> _onLeaveChat(LeaveChat event, Emitter<ChatState> emit) async {
     _isInChat = false;
-    // You might want to cancel specific subscriptions here if leaving a specific chat.
-    // However, for the chat rooms list, it's handled in _onChatRoomsLists.
   }
 
   void _onMessagesUpdated(MessagesUpdated event, Emitter<ChatState> emit) {
@@ -251,7 +243,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     _messageSubscription?.cancel();
     _onlineStatusSubscription?.cancel();
     _typingSubscription?.cancel();
-    _chatRoomsSubscription?.cancel(); // Cancel the chat rooms subscription here
+    _chatRoomsSubscription?.cancel();
     _typingTimer?.cancel();
     return super.close();
   }

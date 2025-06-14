@@ -8,6 +8,6 @@ class HomeEvent extends Equatable {
 }
 
 final class HomeUsersFetched extends HomeEvent {}
-final class  HomeUsersProfileList  extends HomeEvent {
-  
-}
+
+final class HomeUsersProfileList extends HomeEvent {}
+

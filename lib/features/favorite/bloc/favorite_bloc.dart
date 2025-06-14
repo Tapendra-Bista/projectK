@@ -54,5 +54,6 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   FutureOr<void> _onFavoriteUserAdded(
       FavoriteUserAdded event, Emitter<FavoriteState> emit) async {
     await _favouriteRepository.addFavorite(event.favId);
+        add(FavoriteUsersFetched());
   }
 }

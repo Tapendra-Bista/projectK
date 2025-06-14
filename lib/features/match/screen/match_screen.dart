@@ -17,6 +17,7 @@ class MatchScreen extends StatelessWidget {
         Loading() => CustomCircularIndicator(),
         //----------------------Error Occure------------------------------
         Error() => ErrorWhileFetching(),
+
         //----------------------Swipe card------------------------------
         _ => CardScreen(),
       };

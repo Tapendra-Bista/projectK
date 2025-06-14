@@ -1,5 +1,4 @@
-//--------------------------
-
+//-------------------------- AppRoutes-------------------
 class AppRoutes {
   static const initial = '/';
   static const signup = '/signup';
@@ -24,4 +23,6 @@ class AppRoutes {
   static const favorite = '/favorite';
   static const block = '/block';
   static const archive = '/archive';
+  static const sendReport = "/sendReport";
+  static const report = "/report";
 }

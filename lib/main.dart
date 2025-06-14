@@ -1,14 +1,11 @@
 import 'package:afriqueen/app.dart';
 import 'package:afriqueen/common/constant/constant_colors.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
-import 'package:afriqueen/services/status/bloc/status_bloc.dart';
-import 'package:afriqueen/services/status/repository/status_repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:afriqueen/firebase_options.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -34,10 +31,6 @@ void main() async {
   );
 
   runApp(
-    BlocProvider(
-      create: (context) =>
-          StatusBloc(statusrepository: getIt<StatusRepository>()),
-      child: MyApp(),
-    ),
+    MyApp(),
   );
 }

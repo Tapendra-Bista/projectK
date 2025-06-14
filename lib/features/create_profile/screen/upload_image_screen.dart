@@ -5,6 +5,7 @@ import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart'
 import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart';
 import 'package:afriqueen/features/create_profile/widget/upload_image_screen_widgets.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,10 +13,25 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 //------------------------------------Upload Image for screen sent ---------------------------------------
-class UploadImageScreen extends StatelessWidget {
+class UploadImageScreen extends StatefulWidget {
   UploadImageScreen({super.key});
 
+  @override
+  State<UploadImageScreen> createState() => _UploadImageScreenState();
+}
+
+class _UploadImageScreenState extends State<UploadImageScreen> {
   final box = GetStorage();
+  @override
+  void initState() {
+    _dispose();
+    super.initState();
+  }
+
+  _dispose() async {
+    getIt<CreateProfileBloc>().close();
+    await getIt.resetLazySingleton<CreateProfileBloc>();
+  }
 
   @override
   Widget build(BuildContext context) {

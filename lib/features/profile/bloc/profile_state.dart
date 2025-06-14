@@ -1,6 +1,9 @@
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'profile_state.g.dart';
 
+@JsonSerializable()
 class ProfileState extends Equatable {
   final ProfileModel data;
   const ProfileState({required this.data});
@@ -13,6 +16,9 @@ class ProfileState extends Equatable {
   }
   @override
   List<Object> get props => [data];
+  factory ProfileState.fromJson(Map<String, dynamic> json) =>
+      _$ProfileStateFromJson(json);
+  Map<String, dynamic> toJson() => _$ProfileStateToJson(this);
 }
 
 final class ProfileInitial extends ProfileState {
@@ -26,7 +32,7 @@ final class Loading extends ProfileState {
 final class Error extends ProfileState {
   final String error;
   Error.fromState(ProfileState state, {required this.error})
-    : super(data: state.data);
+      : super(data: state.data);
   @override
   List<Object> get props => [error];
 }

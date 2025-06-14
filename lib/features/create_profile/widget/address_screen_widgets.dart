@@ -8,6 +8,7 @@ import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/location/location.dart';
 import 'package:afriqueen/services/permissions/permission_handler.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,7 +77,6 @@ class AddressTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       EnumLocale.addressTitle.name.tr,
-
       style: Theme.of(context).textTheme.bodyLarge,
     );
   }
@@ -122,7 +122,6 @@ class _LocationState extends State<Location> {
         Country(locationFuture: _locationFuture),
         SizedBox(height: 5.h),
         CityText(),
-
         City(locationFuture: _locationFuture),
       ],
     );
@@ -132,7 +131,7 @@ class _LocationState extends State<Location> {
 //------------------City name----------------------
 class City extends StatelessWidget {
   const City({super.key, required Future<List<Placemark>?>? locationFuture})
-    : _locationFuture = locationFuture;
+      : _locationFuture = locationFuture;
 
   final Future<List<Placemark>?>? _locationFuture;
 
@@ -170,7 +169,7 @@ class City extends StatelessWidget {
           );
         } else {
           return Text(
-                  EnumLocale.defaultError.name.tr,
+            EnumLocale.defaultError.name.tr,
             style: Theme.of(context).textTheme.bodySmall,
           ); // Handle null data
         }
@@ -182,7 +181,7 @@ class City extends StatelessWidget {
 //------------Country Name-----------------
 class Country extends StatelessWidget {
   const Country({super.key, required Future<List<Placemark>?>? locationFuture})
-    : _locationFuture = locationFuture;
+      : _locationFuture = locationFuture;
 
   final Future<List<Placemark>?>? _locationFuture;
 
@@ -198,12 +197,12 @@ class Country extends StatelessWidget {
           ); // Show loading indicator
         } else if (snapshot.hasError) {
           return Text(
-                   EnumLocale.defaultError.name.tr,
+            EnumLocale.defaultError.name.tr,
             style: Theme.of(context).textTheme.bodySmall,
           );
         } else if (snapshot.hasData && snapshot.data != null) {
           final currentLocation = snapshot.data!;
-          context.read<CreateProfileBloc>().add(
+          getIt<CreateProfileBloc>().add(
             AddressChanged(
               country: currentLocation.first.country!,
               city: currentLocation.first.locality!,
@@ -226,7 +225,7 @@ class Country extends StatelessWidget {
           );
         } else {
           return Text(
-           EnumLocale.defaultError.name.tr,
+            EnumLocale.defaultError.name.tr,
             style: Theme.of(context).textTheme.bodySmall,
           ); // Handle null data
         }

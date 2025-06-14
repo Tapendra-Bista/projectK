@@ -1,6 +1,9 @@
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'home_state.g.dart';
 
+@JsonSerializable()
 class HomeState extends Equatable {
   final List<ProfileModel?> data;
   final List<ProfileModel?> profileList;
@@ -15,8 +18,11 @@ class HomeState extends Equatable {
   factory HomeState.initial() {
     return HomeState(data: [], profileList: []);
   }
+  factory HomeState.fromJson(Map<String, dynamic> json) =>
+      _$HomeStateFromJson(json);
+  Map<String, dynamic> toJson() => _$HomeStateToJson(this);
   @override
-  List<Object> get props => [data, profileList];
+  List<Object> get props => [data, profileList,];
 }
 
 final class HomeInitial extends HomeState {
@@ -32,11 +38,14 @@ final class Error extends HomeState {
   final String error;
   Error.fromState(HomeState state, {required this.error})
       : super(data: state.data, profileList: state.profileList);
+
   @override
-  List<Object> get props => [error];
+  List<Object> get props => [data, profileList, error];
 }
 
 final class HomeDataIsEmpty extends HomeState {
   HomeDataIsEmpty.fromState(HomeState state)
       : super(data: state.data, profileList: state.profileList);
 }
+
+

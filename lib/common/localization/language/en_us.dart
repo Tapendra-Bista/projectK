@@ -227,4 +227,57 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
   EnumLocale.typing.name: 'typing...',
   EnumLocale.offline.name: "Offline",
   EnumLocale.noRecentChats.name: "No recent chats",
+  EnumLocale.atLeastTwoUsers.name: "At least two users are needed. !",
+  EnumLocale.wrongCredential.name: "User does not exist with this credential.",
+
+  //---------Reporting--------
+
+  EnumLocale.whyAreYouReporting.name: "Why are you reporting this person?",
+  EnumLocale.notRevealIdentity.name: "We will not reveal your identity.",
+
+  EnumLocale.reportDescription1.name:
+      "This includes all violations of our community guidelines. You can read about them in detail here. For example, please let us know if you encounter false information on profiles or spam.",
+  EnumLocale.reportDescription2.name:
+      "This includes any content that violates applicable law and is punishable by law. For example, let us know about privacy violations or child endangerment.",
+
+  EnumLocale.unLawfulContent.name: "Unlawful Content",
+  EnumLocale.violationOfGuidenlines.name: "Violation of guidelines",
+
+  // violation of guidelines
+  EnumLocale.violationOfGuidenlinesTitle.name:
+      "What guideline violation are you reporting",
+  EnumLocale.underAge.name: "Underage",
+  EnumLocale.depictionOfViolation.name: "Depiction of violation",
+  EnumLocale.incorrectProfileDetails.name: "Incorrect profile details",
+  EnumLocale.abusiveOrIntrusiveBehavior.name: "Abusive or intrusive behavior",
+  EnumLocale.sexualContent.name: "Sexual content pr prostitution",
+  EnumLocale.spamOrAdvertising.name: "Spam or advertising",
+  EnumLocale.dubiousOffers.name: "Dubious offers",
+  EnumLocale.drugs.name: "Drugs",
+  EnumLocale.someoneIsInDanger.name: "Someone is in danger",
+
+  //----------- illegal content---------
+  EnumLocale.illegalContentTitle.name:
+      "What illegal content are you reporting to us?",
+
+  EnumLocale.invasionOfPrivacy.name: "Invasion of privacy",
+  EnumLocale.attemptedFraud.name: "Attempted fraud",
+  EnumLocale.threadsOrMalliciousStatements.name:
+      "Threads or mallicious statements",
+  EnumLocale.sexualHarassment.name: "Sexual harassment",
+  EnumLocale.childrenAreAtRisk.name: "Children are at risk",
+  EnumLocale.drugTrafficking.name: "Drug trafficking",
+  EnumLocale.racismOrTerrorism.name: "Racism or terrorism",
+  EnumLocale.blackmail.name: "Blackmail",
+  EnumLocale.deprivationOfLiberty.name: "Deprivation of liberty",
+
+  EnumLocale.sendReportTitle.name:
+      "If you like, we will contact you if there is any news regarding the report(optional)",
+  EnumLocale.emailConfirmation.name:
+      "I confirm that the information i have provided is correct and complete.",
+  EnumLocale.sendReport.name: "Send report",
+  EnumLocale.thankForReport.name: "Thank you for your report !",
+  EnumLocale.thankForReportDescription.name:
+      "We will look into the matter. Thank you for helping us to make our platform a safer place.",
+  EnumLocale.done.name: "Done"
 };

@@ -179,7 +179,49 @@ enum EnumLocale {
   lastSeen,
   typing,
   offline,
-  noRecentChats
+  noRecentChats,
+  atLeastTwoUsers,
+  wrongCredential,
+
+  // reporting
+  whyAreYouReporting,
+  notRevealIdentity,
+  reportDescription1,
+  reportDescription2,
+
+  violationOfGuidenlines,
+  unLawfulContent,
+
+  //---guideline violation------------
+  violationOfGuidenlinesTitle,
+  underAge,
+  depictionOfViolation,
+  incorrectProfileDetails,
+  abusiveOrIntrusiveBehavior,
+  sexualContent,
+  spamOrAdvertising,
+  dubiousOffers,
+  drugs,
+  someoneIsInDanger,
+
+  //--------illegel content---------------
+  illegalContentTitle,
+  invasionOfPrivacy,
+  attemptedFraud,
+  threadsOrMalliciousStatements,
+  sexualHarassment,
+  childrenAreAtRisk,
+  drugTrafficking,
+  racismOrTerrorism,
+  blackmail,
+  deprivationOfLiberty,
+  //------send report ----------
+  sendReportTitle,
+  emailConfirmation,
+  sendReport,
+  thankForReport,
+  thankForReportDescription,
+  done,
 }
 
 // debug

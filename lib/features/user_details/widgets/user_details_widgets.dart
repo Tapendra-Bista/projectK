@@ -10,14 +10,14 @@ import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
 import 'package:afriqueen/features/archive/bloc/archive_event.dart';
 import 'package:afriqueen/features/block/bloc/block_bloc.dart';
 import 'package:afriqueen/features/block/bloc/block_event.dart';
-import 'package:afriqueen/features/block/repository/block_repository.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_event.dart';
+import 'package:afriqueen/features/home/bloc/home_bloc.dart';
+import 'package:afriqueen/features/home/bloc/home_event.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/features/user_details/screen/user_details_screen.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -221,13 +221,14 @@ class ButtonList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconButton(
-                onPressed: () async {
+                onPressed: () {
                   context
                       .read<FavoriteBloc>()
                       .add(FavoriteUserAdded(favId: model.id));
                   snackBarMessage(context, EnumLocale.savedToFavorites.name.tr,
                       Theme.of(context));
-                  await Future.delayed(Duration(milliseconds: 500));
+                  getIt<HomeBloc>().add(HomeUsersProfileList());
+
                   Get.toNamed(AppRoutes.main);
                 },
                 icon: Icon(Icons.favorite_border_outlined,
@@ -253,7 +254,8 @@ class ButtonList extends StatelessWidget {
                       .add(ArchiveUserAdded(archiveId: model.id));
                   snackBarMessage(context, EnumLocale.addedToArchive.name.tr,
                       Theme.of(context));
-                  await Future.delayed(Duration(milliseconds: 500));
+
+                  getIt<HomeBloc>().add(HomeUsersProfileList());
                   Get.toNamed(AppRoutes.main);
                 },
                 icon: Icon(
@@ -310,6 +312,7 @@ class UserDetailsAppBar extends StatelessWidget {
           ),
           itemBuilder: (context) => [
             PopupMenuItem(
+              onTap: () => Get.toNamed(AppRoutes.report),
               child: Text(
                 EnumLocale.report.name.tr,
                 style: Theme.of(
@@ -341,75 +344,71 @@ class BlockAlertDialog extends StatelessWidget {
   final ProfileModel data;
   @override
   Widget build(BuildContext context) {
-    return  BlocProvider(
-        create: (context) => BlockBloc( repository:   getIt<BlockRepository>()),
-        child: AlertDialog(
-            contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
-            titlePadding: EdgeInsets.only(top: 10.h),
-            title: Icon(
-              Icons.block_outlined,
-              color: AppColors.red,
-              size: 100.r,
-              shadows: [
-                Shadow(
-                    color: AppColors.primaryColor.withValues(alpha: 1),
-                    blurRadius: 100.r)
-              ],
-            ),
-            backgroundColor: AppColors.floralWhite,
-            shape: RoundedRectangleBorder(
-                side: BorderSide(color: AppColors.grey, width: 1),
-                borderRadius: BorderRadiusGeometry.circular(8.r)),
-            content: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 10.h,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Text(
-                    EnumLocale.blockTitle.name.tr,
+    return AlertDialog(
+        contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
+        titlePadding: EdgeInsets.only(top: 10.h),
+        title: Icon(
+          Icons.block_outlined,
+          color: AppColors.red,
+          size: 100.r,
+          shadows: [
+            Shadow(
+                color: AppColors.primaryColor.withValues(alpha: 1),
+                blurRadius: 100.r)
+          ],
+        ),
+        backgroundColor: AppColors.floralWhite,
+        shape: RoundedRectangleBorder(
+            side: BorderSide(color: AppColors.grey, width: 1),
+            borderRadius: BorderRadiusGeometry.circular(8.r)),
+        content: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: 10.h,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 10.h,
+              ),
+              Text(
+                EnumLocale.blockTitle.name.tr,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontSize: 20.sp),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Builder(
+                builder: (BuildContext newContext) {
+                  return CommonButton(
+                    onPressed: () async {
+                      newContext
+                          .read<BlockBloc>()
+                          .add(BlockUserAdded(blockId: data.id));
+                      snackBarMessage(
+                        newContext,
+                        "${data.pseudo} ${EnumLocale.addedToBlock.name.tr}",
+                        Theme.of(newContext),
+                      );
+
+                      getIt<HomeBloc>().add(HomeUsersProfileList());
+                      Get.toNamed(AppRoutes.main);
+                    },
+                    buttonText: EnumLocale.yesBlock.name.tr,
+                  );
+                },
+              ),
+              TextButton(
+                  onPressed: () => Get.back(),
+                  child: Text(
+                    EnumLocale.cancel.name.tr,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyLarge!
-                        .copyWith(fontSize: 20.sp),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Builder(
-                    builder: (BuildContext newContext) {
-                      return CommonButton(
-                        onPressed: () async {
-                          newContext
-                              .read<BlockBloc>()
-                              .add(BlockUserAdded(blockId: data.id));
-                          snackBarMessage(
-                            newContext,
-                            "${data.pseudo} ${EnumLocale.addedToBlock.name.tr}",
-                            Theme.of(newContext),
-                          );
-                          await Future.delayed(
-                              const Duration(milliseconds: 500));
-                          Get.toNamed(AppRoutes.main);
-                        },
-                        buttonText: EnumLocale.yesBlock.name.tr,
-                      );
-                    },
-                  ),
-                  TextButton(
-                      onPressed: () => Get.back(),
-                      child: Text(
-                        EnumLocale.cancel.name.tr,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(fontSize: 18.sp),
-                      ))
-                ])),
-      )
-    ;
+                        .bodyMedium!
+                        .copyWith(fontSize: 18.sp),
+                  ))
+            ]));
   }
 }

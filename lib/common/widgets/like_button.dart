@@ -4,6 +4,7 @@ import 'package:afriqueen/features/like/bloc/like_bloc.dart';
 import 'package:afriqueen/features/like/bloc/like_event.dart';
 import 'package:afriqueen/features/like/bloc/like_state.dart';
 import 'package:afriqueen/features/like/model/like_model.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -24,10 +25,10 @@ class LikeButton extends StatelessWidget {
             IconButton(
               onPressed: () {
                 if (likeData.likeId.contains(id)) {
-                  context.read<LikeBloc>().add(LikeUserRemoved(likeId: id));
+                  getIt<LikeBloc>().add(LikeUserRemoved(likeId: id));
                   debugPrint("unLike  ${id}");
                 } else {
-                  context.read<LikeBloc>().add(LikeUserAdded(likeId: id));
+                  getIt<LikeBloc>().add(LikeUserAdded(likeId: id));
                   debugPrint("Like  ${id}");
                 }
               },

@@ -4,6 +4,8 @@ import 'package:afriqueen/features/chat/screen/chat_rooms_screen.dart';
 import 'package:afriqueen/features/home/screen/home_screen.dart';
 import 'package:afriqueen/features/match/screen/match_screen.dart';
 import 'package:afriqueen/features/reels/screen/reels_screen.dart';
+import 'package:afriqueen/features/wellcome/bloc/wellcome_bloc.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/status/repository/status_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,9 +34,16 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+
     if (FirebaseAuth.instance.currentUser != null) {
       StatusRepository().setupUserPresence();
     }
+
+    _dispose();
+  }
+
+  _dispose() async {
+    await getIt<WellcomeBloc>().close();
   }
 
   @override

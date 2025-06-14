@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
@@ -8,6 +7,7 @@ import 'package:afriqueen/features/chat/bloc/chat_state.dart';
 import 'package:afriqueen/features/chat/model/chat_message.dart';
 import 'package:afriqueen/features/chat/widgets/chat_screen_widget.dart';
 import 'package:afriqueen/features/chat/widgets/message_bubble.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/status/bloc/status_bloc.dart';
 import 'package:afriqueen/services/status/bloc/status_event.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -17,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+// ----------individual chat screen ------------------
 class ChatScreen extends StatefulWidget {
   final String receiverId;
   final String receiverName;
@@ -44,8 +45,8 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ChatBloc>().add(InitializeChatEvent(widget.receiverId));
-    context.read<StatusBloc>().add(GetStatus(uid: widget.receiverId));
+    getIt<ChatBloc>().add(InitializeChatEvent(widget.receiverId));
+    getIt<StatusBloc>().add(GetStatus(uid: widget.receiverId));
 
     messageController.addListener(_onTextChanged);
     _scrollController.addListener(_onScroll);
@@ -56,7 +57,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (isComposing != _isComposing) {
       setState(() => _isComposing = isComposing);
       if (isComposing) {
-        context.read<ChatBloc>().add(StartTyping());
+        getIt<ChatBloc>().add(StartTyping());
       }
     }
   }
@@ -64,7 +65,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void _onScroll() {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
-      context.read<ChatBloc>().add(LoadMoreMessages());
+      getIt<ChatBloc>().add(LoadMoreMessages());
     }
   }
 
@@ -88,9 +89,9 @@ class _ChatScreenState extends State<ChatScreen> {
   void _handleSendMessage() {
     final text = messageController.text.trim();
     if (text.isNotEmpty) {
-      context.read<ChatBloc>().add(
-            SendMessage(content: text, receiverId: widget.receiverId),
-          );
+      getIt<ChatBloc>().add(
+        SendMessage(content: text, receiverId: widget.receiverId),
+      );
       messageController.clear();
       FocusScope.of(context).unfocus();
     }
@@ -111,6 +112,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.h),
+          //---------Chat Screen AppBar-----------------
           child: ChatScreenAppBar(isValideUrl: isValideUrl, widget: widget)),
       body: BlocConsumer<ChatBloc, ChatState>(
         listener: (context, state) => _hasNewMessages(state.messages),

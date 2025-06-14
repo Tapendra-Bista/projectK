@@ -1,13 +1,12 @@
 import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
 import 'package:afriqueen/features/chat/bloc/chat_state.dart';
 import 'package:afriqueen/features/chat/model/chat_room_model.dart';
-import 'package:afriqueen/features/chat/repository/chat_repository.dart';
 import 'package:afriqueen/features/chat/screen/chat_screen.dart';
 import 'package:afriqueen/features/chat/widgets/chat_list_title.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
 class ListOfUsers extends StatelessWidget {
   ListOfUsers({
@@ -15,7 +14,7 @@ class ListOfUsers extends StatelessWidget {
   });
 
   final String _currentUserId = FirebaseAuth.instance.currentUser!.uid;
-
+//-----------------List of user or Chatrooms List---------------------
   @override
   Widget build(BuildContext context) {
     return BlocSelector<ChatBloc, ChatState, List<ChatRoomModel>>(
@@ -39,16 +38,12 @@ class ListOfUsers extends StatelessWidget {
                         'Unknown';
                     final otherUserImage =
                         chat.participantsName?[otherUserId]?['imgURL'] ?? '';
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => BlocProvider(
-                              create:(_)=> ChatBloc(chatRepository: getIt<ChatRepository>()),
-                                  child: ChatScreen(
-                                      imgURL: otherUserImage,
-                                      receiverId: otherUserId,
-                                      receiverName: otherUserName),
-                                )));
+                    Get.to(
+                      () => ChatScreen(
+                          imgURL: otherUserImage,
+                          receiverId: otherUserId,
+                          receiverName: otherUserName),
+                    );
                   },
                 );
               });

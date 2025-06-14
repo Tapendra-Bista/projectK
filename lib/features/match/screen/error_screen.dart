@@ -1,6 +1,7 @@
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_state.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class ErrorWhileFetching extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<HomeBloc, HomeState, String?>(
+      bloc: getIt<HomeBloc>(),
       selector: (state) {
         if (state is Error) {
           return state.error;

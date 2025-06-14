@@ -6,9 +6,7 @@ import 'package:afriqueen/features/stories/bloc/stories_bloc.dart';
 import 'package:afriqueen/features/stories/bloc/stories_event.dart';
 import 'package:afriqueen/features/stories/bloc/stories_state.dart';
 import 'package:afriqueen/features/stories/model/stories_model.dart';
-import 'package:afriqueen/features/stories/repository/stories_repository.dart';
 import 'package:afriqueen/features/stories/screen/view_stories.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
@@ -114,24 +112,17 @@ class OwnStories extends StatelessWidget {
                                 constraints: const BoxConstraints(),
                                 iconSize: 25.r,
                                 onPressed: () => showModalBottomSheet(
-                                  constraints: BoxConstraints(
-                                    minWidth: double.maxFinite,
-                                  ),
-                                  backgroundColor: AppColors.floralWhite,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(8.r),
+                                    constraints: BoxConstraints(
+                                      minWidth: double.maxFinite,
                                     ),
-                                  ),
-                                  context: context,
-                                  builder: (bottomSheetContext) =>
-                                      BlocProvider<StoriesBloc>(
-                                    create: (blocContext) => StoriesBloc(
-                                      repo: getIt<StoriesRepository>(),
+                                    backgroundColor: AppColors.floralWhite,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(8.r),
+                                      ),
                                     ),
-                                    child: Builder(
-                                      builder: (blocContext) {
-                                        return Column(
+                                    context: context,
+                                    builder: (bottomSheetContext) => Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Padding(
@@ -140,7 +131,7 @@ class OwnStories extends StatelessWidget {
                                               ),
                                               child: Text(
                                                 EnumLocale.addStory.name.tr,
-                                                style: Theme.of(blocContext)
+                                                style: Theme.of(context)
                                                     .textTheme
                                                     .bodyLarge!
                                                     .copyWith(
@@ -158,7 +149,7 @@ class OwnStories extends StatelessWidget {
                                               children: [
                                                 InkWell(
                                                   onTap: () {
-                                                    blocContext
+                                                    context
                                                         .read<StoriesBloc>()
                                                         .add(
                                                           StoriesImage(
@@ -169,7 +160,7 @@ class OwnStories extends StatelessWidget {
                                                           ),
                                                         );
 
-                                                    Navigator.pop(blocContext);
+                                                    Navigator.pop(context);
                                                   },
                                                   child: Column(
                                                     mainAxisSize:
@@ -192,11 +183,7 @@ class OwnStories extends StatelessWidget {
                                             ),
                                             SizedBox(height: 25.h),
                                           ],
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
+                                        )),
                                 icon: Container(
                                   decoration: const BoxDecoration(
                                     color: AppColors.primaryColor,

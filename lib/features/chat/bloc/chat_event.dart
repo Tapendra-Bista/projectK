@@ -6,13 +6,18 @@ abstract class ChatEvent {}
 
 class InitializeChatEvent extends ChatEvent {
   final String receiverId;
+
   InitializeChatEvent(this.receiverId);
 }
 
 class SendMessage extends ChatEvent {
-  final String content;
   final String receiverId;
-  SendMessage({required this.content, required this.receiverId});
+  final String content;
+
+  SendMessage({
+    required this.receiverId,
+    required this.content,
+  });
 }
 
 class LoadMoreMessages extends ChatEvent {}
@@ -23,22 +28,26 @@ class LeaveChat extends ChatEvent {}
 
 class MessagesUpdated extends ChatEvent {
   final List<ChatMessage> messages;
+
   MessagesUpdated(this.messages);
 }
 
 class OnlineStatusUpdated extends ChatEvent {
   final bool isOnline;
   final Timestamp? lastSeen;
+
   OnlineStatusUpdated(this.isOnline, this.lastSeen);
 }
 
 class TypingStatusUpdated extends ChatEvent {
   final bool isTyping;
+
   TypingStatusUpdated(this.isTyping);
 }
 
 class ChatRoomsLists extends ChatEvent {
   final String id;
+
   ChatRoomsLists({required this.id});
 }
 

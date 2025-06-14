@@ -7,9 +7,9 @@ import 'package:afriqueen/common/widgets/common_textfield.dart';
 import 'package:afriqueen/features/forgot_password/bloc/forgot_password_bloc.dart';
 import 'package:afriqueen/features/forgot_password/bloc/forgot_password_event.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -64,8 +64,7 @@ class _UserEmailState extends State<Email> {
       controller: _emailController,
       validator: AppValidator.validateEmail,
       obscureText: false,
-
-      onChanged: (value) => context.read<ForgotPasswordBloc>().add(
+      onChanged: (value) => getIt<ForgotPasswordBloc>().add(
         UserEmail(userEmail: value.trim()),
       ),
       keyboardType: TextInputType.emailAddress,
@@ -89,9 +88,9 @@ class RememberPassword extends StatelessWidget {
             TextSpan(
               text: " ${EnumLocale.loginText.name.tr}",
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: AppColors.primaryColor,
-                fontSize: 14,
-              ),
+                    color: AppColors.primaryColor,
+                    fontSize: 14,
+                  ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () => Get.offAllNamed(AppRoutes.login),
             ),
@@ -112,12 +111,11 @@ class SendButton extends StatelessWidget {
     return CommonButton(
       onPressed: () async {
         if (formKey.currentState!.validate()) {
-          context.read<ForgotPasswordBloc>().add(SendButtonClicked());
+          getIt<ForgotPasswordBloc>().add(SendButtonClicked());
           await Future.delayed(Duration(milliseconds: 500));
           Get.toNamed(AppRoutes.emailSent);
         }
       },
-
       buttonText: EnumLocale.sendButtonText.name.tr,
     );
   }
@@ -143,7 +141,6 @@ class SendButtonInSuccessedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonButton(
       onPressed: () => Get.offAllNamed(AppRoutes.login),
-
       buttonText: EnumLocale.loginText.name.tr,
     );
   }
@@ -203,12 +200,12 @@ class DidnotRecieveTheLink extends StatelessWidget {
             TextSpan(
               text: " ${EnumLocale.resend.name.tr}",
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: AppColors.primaryColor,
-                fontSize: 14,
-              ),
+                    color: AppColors.primaryColor,
+                    fontSize: 14,
+                  ),
               recognizer: TapGestureRecognizer()
-                ..onTap = () =>
-                    context.read<ForgotPasswordBloc>().add(SendButtonClicked()),
+                ..onTap =
+                    () => getIt<ForgotPasswordBloc>().add(SendButtonClicked()),
             ),
           ],
         ),

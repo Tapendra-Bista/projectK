@@ -8,12 +8,14 @@ import 'package:afriqueen/features/email_verification/bloc/email_verification_ev
 import 'package:afriqueen/features/email_verification/bloc/email_verification_state.dart';
 import 'package:afriqueen/features/email_verification/repository/email_verification_repository.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:lottie/lottie.dart';
 
 // --------------Email verification button----------------------------------
@@ -47,10 +49,9 @@ class EmailVerificationButton extends StatelessWidget {
                 );
               }
             } else {
-              context.read<EmailVerificationBloc>().add(OnButtonClicked());
+              getIt<EmailVerificationBloc>().add(OnButtonClicked());
             }
           },
-
           buttonText: state.isVerified
               ? EnumLocale.next.name.tr
               : EnumLocale.verifyYourEmailText.name.tr,
@@ -113,16 +114,19 @@ class EmailVerificationDeleteAccount extends StatelessWidget {
           style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
           children: [
             TextSpan(
-              text: EnumLocale.delete.name.tr,
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: AppColors.primaryColor,
-                fontSize: 14,
-              ),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => context.read<EmailVerificationBloc>().add(
-                  OnClickedDeleteButton(),
-                ),
-            ),
+                text: EnumLocale.delete.name.tr,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: AppColors.primaryColor,
+                      fontSize: 14,
+                    ),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    getIt<EmailVerificationBloc>().add(
+                      OnClickedDeleteButton(),
+                    );
+                    GetStorage().remove('pageNumber');
+                    getIt.resetLazySingleton<EmailVerificationBloc>();
+                  }),
           ],
         ),
       ),

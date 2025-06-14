@@ -5,6 +5,7 @@ import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart'
 import 'package:afriqueen/features/create_profile/bloc/create_profile_event.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,6 @@ class GenderTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       EnumLocale.genderTitle.name.tr,
-
       style: Theme.of(context).textTheme.bodyLarge,
     );
   }
@@ -75,7 +75,6 @@ class Female extends StatelessWidget {
           border: Border.all(color: AppColors.primaryColor, width: 1.w),
           borderRadius: BorderRadius.circular(8.r),
         ),
-
         child: Center(
           child: ListTile(
             leading: Icon(CupertinoIcons.person),
@@ -89,10 +88,9 @@ class Female extends StatelessWidget {
                 builder: (context, state) {
                   return Radio<String>(
                     activeColor: AppColors.green,
-
                     value: EnumLocale.genderFemale.name.tr,
                     groupValue: state.gender,
-                    onChanged: (value) => context.read<CreateProfileBloc>().add(
+                    onChanged: (value) => getIt<CreateProfileBloc>().add(
                       GenderChanged(gender: value!),
                     ),
                   );
@@ -121,7 +119,6 @@ class Male extends StatelessWidget {
           border: Border.all(color: AppColors.primaryColor, width: 1.w),
           borderRadius: BorderRadius.circular(8.r),
         ),
-
         child: Center(
           child: ListTile(
             leading: Icon(CupertinoIcons.person),
@@ -135,10 +132,9 @@ class Male extends StatelessWidget {
                 builder: (context, state) {
                   return Radio<String>(
                     activeColor: AppColors.green,
-
                     value: EnumLocale.genderMale.name.tr,
                     groupValue: state.gender,
-                    onChanged: (value) => context.read<CreateProfileBloc>().add(
+                    onChanged: (value) => getIt<CreateProfileBloc>().add(
                       GenderChanged(gender: value!),
                     ),
                   );
