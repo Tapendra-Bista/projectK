@@ -36,6 +36,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<ChatRoomsLists>(_onChatRoomsLists);
     on<ChatRoomsUpdated>(_onChatRoomsUpdated);
     on<ChatRoomsError>(_onChatRoomsError);
+    on<DeleteChatRoom>(_onDeleteChatRoom);
   }
 
   void _onChatRoomsUpdated(ChatRoomsUpdated event, Emitter<ChatState> emit) {
@@ -246,5 +247,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     _chatRoomsSubscription?.cancel();
     _typingTimer?.cancel();
     return super.close();
+  }
+
+  FutureOr<void> _onDeleteChatRoom(
+      DeleteChatRoom event, Emitter<ChatState> emit) async {
+    await _chatRepository.deleteChatRoom(
+        event.currentUserId, event.otherUserId);
+
+    add(ChatRoomsLists(id: event.currentUserId));
   }
 }

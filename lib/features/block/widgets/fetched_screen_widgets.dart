@@ -56,6 +56,7 @@ class UnBlockedButton extends StatelessWidget {
               .read<BlockBloc>()
               .add(BlockUserRemoved(blockId: profileModel.id));
           getIt<HomeBloc>().add(HomeUsersProfileList());
+
           snackBarMessage(
             context,
             "${profileModel.pseudo} ${EnumLocale.removedFromBlock.name.tr}",

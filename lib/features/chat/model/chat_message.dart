@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 enum MessageType { text, image, video }
 
 enum MessageStatus { sent, read }
+
 class ChatMessage {
   final String id;
   final String chatRoomId;

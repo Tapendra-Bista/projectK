@@ -87,6 +87,7 @@ dependencies:
 
   freezed_annotation: ^3.0.0
   drop_down_list: ^2.0.0
+  flutter_slidable: ^4.0.0
 
 
 dev_dependencies:

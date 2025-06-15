@@ -29,6 +29,7 @@ class ListOfUsers extends StatelessWidget {
                     chat.participants.firstWhere((id) => id != _currentUserId);
 
                 return ChatListTitle(
+                  otherUserId: otherUserId,
                   chat: chat,
                   currentUserId: _currentUserId,
                   onTap: () {

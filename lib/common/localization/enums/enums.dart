@@ -222,6 +222,12 @@ enum EnumLocale {
   thankForReport,
   thankForReportDescription,
   done,
+  // delete  chatroom
+  deleteChatRoom,
+
+  // refresh 
+  refreshToUpdatedData ,
+  
 }
 
 // debug

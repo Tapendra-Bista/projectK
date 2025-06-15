@@ -279,5 +279,7 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
   EnumLocale.thankForReport.name: "Thank you for your report !",
   EnumLocale.thankForReportDescription.name:
       "We will look into the matter. Thank you for helping us to make our platform a safer place.",
-  EnumLocale.done.name: "Done"
+  EnumLocale.done.name: "Done",
+  EnumLocale.deleteChatRoom.name: "Delete",
+  EnumLocale.refreshToUpdatedData.name: "Pull down to refresh!",
 };

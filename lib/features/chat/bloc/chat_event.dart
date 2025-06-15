@@ -62,3 +62,11 @@ class ChatRoomsError extends ChatEvent {
 
   ChatRoomsError({required this.errorMessage});
 }
+
+class DeleteChatRoom extends ChatEvent {
+  final String currentUserId;
+
+  final String otherUserId;
+
+  DeleteChatRoom({required this.currentUserId, required this.otherUserId});
+}

@@ -280,4 +280,6 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.thankForReportDescription.name:
       "Nous allons examiner la question. Merci de nous aider à faire de notre plateforme un endroit plus sûr.",
   EnumLocale.done.name: "Terminé",
+  EnumLocale.deleteChatRoom.name: "Supprimer",
+  EnumLocale.refreshToUpdatedData.name: "Tirez vers le bas pour actualiser !"
 };
