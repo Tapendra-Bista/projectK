@@ -225,9 +225,19 @@ enum EnumLocale {
   // delete  chatroom
   deleteChatRoom,
 
-  // refresh 
-  refreshToUpdatedData ,
-  
+  // refresh
+  refreshToUpdatedData,
+  // preferences
+  preferences,
+  likeToMeet,
+  men,
+  women,
+  age,
+  years,
+  sameCountry,
+  sameCity,
+  same,
+  saveChanges,
 }
 
 // debug

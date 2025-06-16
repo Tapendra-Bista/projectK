@@ -14,6 +14,7 @@ import 'package:afriqueen/features/forgot_password/screen/email_sent_screen.dart
 import 'package:afriqueen/features/forgot_password/screen/forgot_password_screen.dart';
 import 'package:afriqueen/features/login/screen/login_screen.dart';
 import 'package:afriqueen/features/main/screen/main_screen.dart';
+import 'package:afriqueen/features/preferences/screen/preferences_screen.dart';
 import 'package:afriqueen/features/profile/screen/profile_screen.dart';
 import 'package:afriqueen/features/report/screen/report_screen.dart';
 import 'package:afriqueen/features/report/screen/send_report_screen.dart';
@@ -112,7 +113,10 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (_) => BlockScreen(),
       );
-
+    case AppRoutes.preferences:
+      return MaterialPageRoute(
+        builder: (_) => PreferencesScreen(),
+      );
     default:
       return MaterialPageRoute(
         builder: (_) => WellcomeScreen(),

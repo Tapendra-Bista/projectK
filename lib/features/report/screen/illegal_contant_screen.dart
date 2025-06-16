@@ -32,7 +32,7 @@ class IllegalContant extends StatelessWidget {
         width: double.maxFinite,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.r),
-          color: AppColors.black.withValues(alpha: 0.7),
+          color: AppColors.greyContainerColor,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +52,7 @@ class IllegalContant extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
-                      .copyWith(color: AppColors.white, fontSize: 14.sp),
+                      .copyWith(color: AppColors.black, fontSize: 14.sp),
                   overflow: TextOverflow.ellipsis,
                 );
               },
@@ -105,14 +105,14 @@ class BottomSheetContant extends StatelessWidget {
                     height: 40.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4.r),
-                        color: AppColors.black.withValues(alpha: 0.7)),
+                        color: AppColors.blue),
                     child: Center(
                         child: Text(
                       AppStrings.illegalContentList[index],
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
-                          .copyWith(color: AppColors.white),
+                          .copyWith(color: AppColors.black),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     )),

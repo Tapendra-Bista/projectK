@@ -25,4 +25,5 @@ class AppRoutes {
   static const archive = '/archive';
   static const sendReport = "/sendReport";
   static const report = "/report";
+  static const preferences = "/preferences";
 }

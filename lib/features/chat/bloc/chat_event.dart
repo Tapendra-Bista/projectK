@@ -70,3 +70,14 @@ class DeleteChatRoom extends ChatEvent {
 
   DeleteChatRoom({required this.currentUserId, required this.otherUserId});
 }
+
+class DeleteMessage extends ChatEvent {
+  final String chatRoomId;
+  final String content;
+  final Timestamp timestamp;
+
+  DeleteMessage(
+      {required this.chatRoomId,
+      required this.content,
+      required this.timestamp});
+}

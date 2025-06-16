@@ -17,6 +17,8 @@ import 'package:afriqueen/features/like/bloc/like_bloc.dart';
 import 'package:afriqueen/features/like/bloc/like_event.dart';
 import 'package:afriqueen/features/login/bloc/login_bloc.dart';
 import 'package:afriqueen/features/login/screen/login_screen.dart';
+import 'package:afriqueen/features/preferences/bloc/preferences_bloc.dart';
+import 'package:afriqueen/features/preferences/screen/preferences_screen.dart';
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
 import 'package:afriqueen/features/profile/bloc/profile_event.dart';
 import 'package:afriqueen/features/report/bloc/report_bloc.dart';
@@ -96,7 +98,8 @@ class MyApp extends StatelessWidget {
 
         BlocProvider<ReportBloc>.value(
           value: getIt<ReportBloc>(),
-        )
+        ),
+        BlocProvider<PreferencesBloc>.value(value: getIt<PreferencesBloc>())
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
@@ -110,19 +113,20 @@ class MyApp extends StatelessWidget {
           theme: lightTheme,
           defaultTransition: Transition.fade,
           onGenerateRoute: onGenerateRoute,
-          home: StreamBuilder<User?>(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Scaffold(); // or splash screen
-              } else if (snapshot.hasData) {
-                return routeNameFromPageNumber();
-              }
-              return _appGetStorage.hasOpenedApp()
-                  ? LoginScreen()
-                  : WellcomeScreen();
-            },
-          ),
+          // home: StreamBuilder<User?>(
+          //   stream: FirebaseAuth.instance.authStateChanges(),
+          //   builder: (context, snapshot) {
+          //     if (snapshot.connectionState == ConnectionState.waiting) {
+          //       return const Scaffold(); // or splash screen
+          //     } else if (snapshot.hasData) {
+          //       return routeNameFromPageNumber();
+          //     }
+          //     return _appGetStorage.hasOpenedApp()
+          //         ? LoginScreen()
+          //         : WellcomeScreen();
+          //   },
+          // ),
+          home: PreferencesScreen(),
         ),
       ),
     );

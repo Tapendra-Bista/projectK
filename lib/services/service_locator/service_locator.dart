@@ -18,6 +18,7 @@ import 'package:afriqueen/features/like/bloc/like_bloc.dart';
 import 'package:afriqueen/features/like/repository/like_repository.dart';
 import 'package:afriqueen/features/login/bloc/login_bloc.dart';
 import 'package:afriqueen/features/login/repository/login_repository.dart';
+import 'package:afriqueen/features/preferences/bloc/preferences_bloc.dart';
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
 import 'package:afriqueen/features/profile/repository/profile_repository.dart';
 import 'package:afriqueen/features/report/bloc/report_bloc.dart';
@@ -85,4 +86,5 @@ void setupLocator() {
   getIt.registerLazySingleton<ReportBloc>(() => ReportBloc());
 
   getIt.registerLazySingleton<WellcomeBloc>(() => WellcomeBloc());
+  getIt.registerLazySingleton<PreferencesBloc>(() => PreferencesBloc());
 }

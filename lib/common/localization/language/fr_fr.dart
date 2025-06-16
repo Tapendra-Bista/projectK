@@ -281,5 +281,15 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
       "Nous allons examiner la question. Merci de nous aider à faire de notre plateforme un endroit plus sûr.",
   EnumLocale.done.name: "Terminé",
   EnumLocale.deleteChatRoom.name: "Supprimer",
-  EnumLocale.refreshToUpdatedData.name: "Tirez vers le bas pour actualiser !"
+  EnumLocale.refreshToUpdatedData.name: "Tirez vers le bas pour actualiser !",
+  EnumLocale.preferences.name: "Préférences",
+  EnumLocale.likeToMeet.name: "J'aimerais rencontrer",
+  EnumLocale.men.name: "Hommes",
+  EnumLocale.women.name: "Femmes",
+  EnumLocale.age.name: "Âge",
+  EnumLocale.years.name: "ans",
+  EnumLocale.sameCountry.name: "pays",
+  EnumLocale.sameCity.name: "ville",
+  EnumLocale.same.name: "Même",
+  EnumLocale.saveChanges.name: "Enregistrer"
 };

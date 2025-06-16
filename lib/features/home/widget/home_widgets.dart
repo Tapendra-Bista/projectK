@@ -17,7 +17,7 @@ class HomeAppBar extends StatelessWidget {
       
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed:() => Get.toNamed(AppRoutes.preferences),
           icon: Icon(Icons.tune_outlined, size: 35.r),
         ),
       ],

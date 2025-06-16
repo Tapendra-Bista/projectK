@@ -23,7 +23,7 @@ class ConfirmInformation extends StatelessWidget {
       height: 84.h,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.r),
-          color: AppColors.black.withValues(alpha: 0.8)),
+          color: AppColors.greyContainerColor,),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -40,7 +40,7 @@ class ConfirmInformation extends StatelessWidget {
                   TextSpan(
                     text: EnumLocale.sendReportTitle.name.tr,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.floralWhite,
+                        color: AppColors.black,
                         fontSize: 12.5.sp,
                         fontWeight: FontWeight.w100),
                   )
