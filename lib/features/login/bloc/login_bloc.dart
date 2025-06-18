@@ -10,13 +10,14 @@ import 'package:get/get.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginRepository _loginRepository;
+
   bool _isPasswordHidden = true;
   final _app = AppGetStorage();
   LoginModel _loginModel = LoginModel(email: '', password: '');
 
   LoginBloc({required LoginRepository loginrepository})
-    : _loginRepository = loginrepository,
-      super(LoginInitial()) {
+      : _loginRepository = loginrepository,
+        super(LoginInitial()) {
     //---------------------password visibility-----------------------------
     on<LoginPasswordVisibility>((
       LoginPasswordVisibility event,
@@ -37,6 +38,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     //------------------------User pressed LoginButton--------------------------
     on<LoginSubmit>((event, emit) async {
       emit(LoginLoading.fromState(state));
+
       UserCredential? userCredential = await _loginRepository.loginWithEmail(
         _loginModel,
       );

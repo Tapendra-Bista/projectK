@@ -22,14 +22,15 @@ class UploadImageScreen extends StatefulWidget {
 
 class _UploadImageScreenState extends State<UploadImageScreen> {
   final box = GetStorage();
+
   @override
-  void initState() {
+  void dispose() {
     _dispose();
-    super.initState();
+    super.dispose();
   }
 
   _dispose() async {
-    getIt<CreateProfileBloc>().close();
+    await getIt<CreateProfileBloc>().close();
     await getIt.resetLazySingleton<CreateProfileBloc>();
   }
 

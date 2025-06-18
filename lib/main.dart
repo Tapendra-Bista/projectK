@@ -17,7 +17,7 @@ void main() async {
 
   // Get stroage
   await GetStorage.init();
-  // Initialize HydratedStorage
+
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorageDirectory.web

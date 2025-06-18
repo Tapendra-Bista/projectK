@@ -23,7 +23,7 @@ class MainContainer extends StatelessWidget {
             ? Container(
                 width: double.maxFinite.w,
                 decoration: BoxDecoration(
-                  color: AppColors.blue.withValues(alpha: 0.1),
+                  color: AppColors.blue.withValues(alpha: 0.01),
                   borderRadius: BorderRadius.circular(12.r),
                   shape: BoxShape.rectangle,
                   border: Border(

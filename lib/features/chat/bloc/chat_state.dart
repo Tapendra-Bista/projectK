@@ -6,7 +6,8 @@ enum ChatStatus { initial, loading, loaded, error }
 
 class ChatState {
   final List<ChatRoomModel> chatRoomModel;
-  final List<ChatMessage> messages;  // Assuming you have MessageModel for chat messages
+  final List<ChatMessage>
+      messages; // Assuming you have MessageModel for chat messages
   final ChatStatus status;
   final String? chatRoomId;
   final String? receiverId;
@@ -59,3 +60,9 @@ class ChatState {
     );
   }
 }
+
+class ChatLoading extends ChatState {}
+
+class ChatDeleteProcessing extends ChatState {}
+
+class ChatEmpty extends ChatState {}

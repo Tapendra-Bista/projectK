@@ -14,6 +14,7 @@ class BlockScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BlockBloc, BlockState>(
       builder: (context, state) {
+        print("state name :${state}");
         return switch (state) {
           //-----------initial loading---------------------------
           BlockUsersLoading() => const CustomCircularIndicator(),

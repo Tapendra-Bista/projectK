@@ -2,6 +2,7 @@ import 'package:get_storage/get_storage.dart';
 
 class AppGetStorage {
   final box = GetStorage();
+
   //------------------------- For language------------------
   String getLanguageCode() {
     return box.read('code') ?? 'fr';

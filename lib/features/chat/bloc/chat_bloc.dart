@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:afriqueen/features/block/repository/block_repository.dart';
 import 'package:afriqueen/features/chat/model/chat_room_model.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../repository/chat_repository.dart';
 import 'chat_event.dart';
 import 'chat_state.dart';
@@ -41,7 +38,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   void _onChatRoomsUpdated(ChatRoomsUpdated event, Emitter<ChatState> emit) {
-    emit(state.copyWith(chatRoomModel: event.chatRooms, error: null));
+    if (event.chatRooms.isEmpty) {
+      emit(ChatEmpty());
+    } else {
+      emit(state.copyWith(chatRoomModel: event.chatRooms, error: null));
+    }
   }
 
   void _onChatRoomsError(ChatRoomsError event, Emitter<ChatState> emit) {
@@ -52,7 +53,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       ChatRoomsLists event, Emitter<ChatState> emit) async {
     _chatRoomsSubscription?.cancel();
 
-    emit(state.copyWith(status: ChatStatus.loading));
+    emit(ChatLoading());
     _chatRoomsSubscription = _chatRepository.getChatRooms(event.id).listen(
       (chatsData) async {
         try {
@@ -91,11 +92,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       ));
 
       _subscribeToMessages(chatRoom.id);
-      _subscribeToOnlineStatus(event.receiverId);
-      _subscribeToTypingStatus(chatRoom.id);
 
-      await _chatRepository.updateOnlineStatus(
-          FirebaseAuth.instance.currentUser!.uid, true);
+      _subscribeToTypingStatus(chatRoom.id);
     } catch (e) {
       emit(state.copyWith(
           status: ChatStatus.error, error: "Failed to create chat room: $e"));
@@ -160,16 +158,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       add(MessagesUpdated(messages));
     }, onError: (error) {
       add(ChatRoomsError(errorMessage: "Failed to load messages"));
-    });
-  }
-
-  void _subscribeToOnlineStatus(String userId) {
-    _onlineStatusSubscription?.cancel();
-    _onlineStatusSubscription =
-        _chatRepository.getUserOnlineStatus(userId).listen((status) {
-      final isOnline = status["isOnline"] as bool;
-      final lastSeen = status["lastSeen"] as Timestamp?;
-      add(OnlineStatusUpdated(isOnline, lastSeen));
     });
   }
 
@@ -252,6 +240,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   FutureOr<void> _onDeleteChatRoom(
       DeleteChatRoom event, Emitter<ChatState> emit) async {
+    emit(ChatDeleteProcessing());
     await _chatRepository.deleteChatRoom(
         event.currentUserId, event.otherUserId);
 

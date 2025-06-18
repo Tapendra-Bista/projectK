@@ -1,8 +1,6 @@
-
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/services/base_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 //----------------Fetching current   profile data of all user
 class HomeRepository extends BaseRepository {
@@ -10,13 +8,13 @@ class HomeRepository extends BaseRepository {
 
   Future<List<ProfileModel>> fetchAllExceptCurrentUser() async {
     try {
-      final uid = FirebaseAuth.instance.currentUser?.uid;
-      if (uid == null) return [];
+      if (currentUserId.isEmpty) return [];
 
       final snapshot = await firestore.collection('users').get();
 
       return snapshot.docs
-          .where((doc) => doc.id != uid) // Exclude current user by doc ID
+          .where((doc) =>
+              doc.id != currentUserId) // Exclude current user by doc ID
           .map((doc) => ProfileModel.fromMap(
                 doc.data(),
                 // include doc ID if needed inside model

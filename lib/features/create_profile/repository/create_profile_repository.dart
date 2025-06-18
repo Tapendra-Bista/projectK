@@ -26,6 +26,22 @@ class CreateProfileRepository extends BaseRepository {
     }
   }
 
+  Future<void> updateLocation(String? city, String? country) async {
+    final documentReference = firestore.collection('users').doc(currentUserId);
+
+    // Use a transaction or just fetch the doc directly
+    final documentSnapshot = await documentReference.get();
+
+    if (documentSnapshot.exists) {
+      final data = documentSnapshot.data() as Map<String, dynamic>;
+
+      await documentReference.update({
+        'city': city ?? data['city'],
+        'country': country ?? data['country'],
+      });
+    }
+  }
+
   Future<String?> imagePicker() async {
     try {
       final img = await imgPicker.pickImage(

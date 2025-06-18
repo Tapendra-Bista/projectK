@@ -1,10 +1,25 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/features/add/screen/add_screen.dart';
+import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
+import 'package:afriqueen/features/archive/bloc/archive_event.dart';
+import 'package:afriqueen/features/block/bloc/block_bloc.dart';
+import 'package:afriqueen/features/block/bloc/block_event.dart';
+import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
+import 'package:afriqueen/features/chat/bloc/chat_event.dart';
 import 'package:afriqueen/features/chat/screen/chat_rooms_screen.dart';
+import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
+import 'package:afriqueen/features/favorite/bloc/favorite_event.dart';
+import 'package:afriqueen/features/home/bloc/home_bloc.dart';
+import 'package:afriqueen/features/home/bloc/home_event.dart';
 import 'package:afriqueen/features/home/screen/home_screen.dart';
+import 'package:afriqueen/features/like/bloc/like_bloc.dart';
+import 'package:afriqueen/features/like/bloc/like_event.dart';
 import 'package:afriqueen/features/match/screen/match_screen.dart';
+import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
+import 'package:afriqueen/features/profile/bloc/profile_event.dart';
 import 'package:afriqueen/features/reels/screen/reels_screen.dart';
-import 'package:afriqueen/features/wellcome/bloc/wellcome_bloc.dart';
+import 'package:afriqueen/features/stories/bloc/stories_bloc.dart';
+import 'package:afriqueen/features/stories/bloc/stories_event.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/status/repository/status_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,13 +52,17 @@ class _MainScreenState extends State<MainScreen> {
 
     if (FirebaseAuth.instance.currentUser != null) {
       StatusRepository().setupUserPresence();
+      getIt<BlockBloc>().add(BlockUsersFetched());
+      getIt<StoriesBloc>().add(StoriesFetching());
+      getIt<ProfileBloc>().add(ProfileFetch());
+      getIt<FavoriteBloc>().add(FavoriteUsersFetched());
+      getIt<LikeBloc>().add(LikeUsersFetched());
+      getIt<ArchiveBloc>().add(ArchiveUsersFetched());
+      getIt<HomeBloc>().add(HomeUsersFetched());
+      getIt<ChatBloc>()
+          .add(ChatRoomsLists(id: FirebaseAuth.instance.currentUser!.uid));
+      getIt<HomeBloc>().add(HomeUsersProfileList());
     }
-
-    _dispose();
-  }
-
-  _dispose() async {
-    await getIt<WellcomeBloc>().close();
   }
 
   @override

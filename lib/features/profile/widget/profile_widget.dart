@@ -71,7 +71,7 @@ class DescriptionText extends StatelessWidget {
           child: Container(
               padding: EdgeInsets.all(8.r),
               decoration: BoxDecoration(
-                  color: AppColors.blue.withValues(alpha: 0.1),
+                  color: AppColors.greyContainerColor,
                   borderRadius: BorderRadius.circular(12.r)),
               child: Text(data, style: Theme.of(context).textTheme.bodyMedium)),
         );
@@ -101,7 +101,7 @@ class UserInterestsList extends StatelessWidget {
             childAspectRatio: 3,
           ),
           itemBuilder: (BuildContext context, index) {
-            final items =  data[index];
+            final items = data[index];
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 2.w),
               height: 20.h,
@@ -152,7 +152,7 @@ class UserSeniority extends StatelessWidget {
           child: Container(
               padding: EdgeInsets.all(8.r),
               decoration: BoxDecoration(
-                  color: AppColors.blue.withValues(alpha: 0.1),
+                  color: AppColors.greyContainerColor,
                   borderRadius: BorderRadius.circular(12.r)),
               child: Text(date, style: Theme.of(context).textTheme.bodyMedium)),
         );

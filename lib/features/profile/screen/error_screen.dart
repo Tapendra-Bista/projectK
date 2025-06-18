@@ -1,8 +1,12 @@
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
 import 'package:afriqueen/features/profile/bloc/profile_state.dart';
+import 'package:afriqueen/features/profile/widget/profile_widget.dart';
+import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 //---------Widget to show for error state--------------------------
 class ProfileErrorContent extends StatelessWidget {
@@ -10,26 +14,36 @@ class ProfileErrorContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BlocSelector<ProfileBloc, ProfileState, String?>(
-      selector: (state) {
-        {
-          if (state is Error) {
-            return state.error; // error message string
-          }
-          // no error
+    return BlocSelector<ProfileBloc, ProfileState, String?>(selector: (state) {
+      {
+        if (state is Error) {
+          return state.error; // error message string
         }
-        return null;
-      },
-      builder: (context, errorMessage) {
-        return  Scaffold (
-          body:  Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.w),
-            child: Text(errorMessage!),
-          ),
-        )
-        );
+        // no error
       }
-    );
+      return null;
+    }, builder: (context, errorMessage) {
+      return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            actions: [
+              IconButton(
+                onPressed: () => Get.toNamed(AppRoutes.setting),
+                icon: Icon(HugeIcons.strokeRoundedSettings01),
+              ),
+            ],
+            title: AppBarTitle(),
+            leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: Icon(HugeIcons.strokeRoundedMultiplicationSign),
+            ),
+          ),
+          body: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w),
+              child: Text(errorMessage!),
+            ),
+          ));
+    });
   }
 }

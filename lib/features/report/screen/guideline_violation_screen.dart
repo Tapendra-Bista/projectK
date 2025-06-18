@@ -61,7 +61,7 @@ class GuidelinesViolation extends StatelessWidget {
             Icon(
               CupertinoIcons.chevron_down,
               size: 18.sp,
-              color: AppColors.white,
+              color: AppColors.black,
             )
           ],
         ),
@@ -106,8 +106,9 @@ class BottomSheetContant extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: 10.h),
                     height: 40.h,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.r),
-                        color: AppColors.greyContainerColor,),
+                      borderRadius: BorderRadius.circular(4.r),
+                      color: AppColors.greyContainerColor,
+                    ),
                     child: Center(
                         child: Text(
                       AppStrings.guidelineViolationList[index],

@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
@@ -93,7 +94,6 @@ class _ChatScreenState extends State<ChatScreen> {
         SendMessage(content: text, receiverId: widget.receiverId),
       );
       messageController.clear();
-      FocusScope.of(context).unfocus();
     }
   }
 

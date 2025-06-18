@@ -1,30 +1,20 @@
 import 'package:afriqueen/common/localization/translations/app_translations.dart';
 import 'package:afriqueen/common/theme/app_theme.dart';
 import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
-import 'package:afriqueen/features/archive/bloc/archive_event.dart';
 import 'package:afriqueen/features/block/bloc/block_bloc.dart';
-import 'package:afriqueen/features/block/bloc/block_event.dart';
 import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
-import 'package:afriqueen/features/chat/bloc/chat_event.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart';
-import 'package:afriqueen/features/email_verification/bloc/email_verification_bloc.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
-import 'package:afriqueen/features/favorite/bloc/favorite_event.dart';
 import 'package:afriqueen/features/forgot_password/bloc/forgot_password_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
-import 'package:afriqueen/features/home/bloc/home_event.dart';
 import 'package:afriqueen/features/like/bloc/like_bloc.dart';
-import 'package:afriqueen/features/like/bloc/like_event.dart';
 import 'package:afriqueen/features/login/bloc/login_bloc.dart';
 import 'package:afriqueen/features/login/screen/login_screen.dart';
 import 'package:afriqueen/features/preferences/bloc/preferences_bloc.dart';
-import 'package:afriqueen/features/preferences/screen/preferences_screen.dart';
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
-import 'package:afriqueen/features/profile/bloc/profile_event.dart';
 import 'package:afriqueen/features/report/bloc/report_bloc.dart';
 import 'package:afriqueen/features/signup/bloc/signup_bloc.dart';
 import 'package:afriqueen/features/stories/bloc/stories_bloc.dart';
-import 'package:afriqueen/features/stories/bloc/stories_event.dart';
 import 'package:afriqueen/features/wellcome/bloc/wellcome_bloc.dart';
 import 'package:afriqueen/features/wellcome/screen/wellcome_screen.dart';
 import 'package:afriqueen/routes/app_pages.dart';
@@ -41,7 +31,7 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final AppGetStorage _appGetStorage = AppGetStorage();
-  final String _currentUserId = FirebaseAuth.instance.currentUser!.uid;
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -60,41 +50,30 @@ class MyApp extends StatelessWidget {
         BlocProvider<ForgotPasswordBloc>.value(
           value: getIt<ForgotPasswordBloc>(),
         ),
-        BlocProvider<EmailVerificationBloc>.value(
-          value: getIt<EmailVerificationBloc>(),
-        ),
 
         BlocProvider<BlockBloc>.value(
-          value: getIt<BlockBloc>()..add(BlockUsersFetched()),
+          value: getIt<BlockBloc>(),
         ),
         BlocProvider<ChatBloc>.value(
-          value: getIt<ChatBloc>()..add(ChatRoomsLists(id: _currentUserId)),
+          value: getIt<ChatBloc>(),
         ),
 
-        BlocProvider<StoriesBloc>.value(
-            value: getIt<StoriesBloc>()..add(StoriesFetching())),
+        BlocProvider<StoriesBloc>.value(value: getIt<StoriesBloc>()),
 
         BlocProvider<CreateProfileBloc>.value(
           value: getIt<CreateProfileBloc>(),
         ),
 
-        BlocProvider<ProfileBloc>.value(
-            value: getIt<ProfileBloc>()..add(ProfileFetch())),
+        BlocProvider<ProfileBloc>.value(value: getIt<ProfileBloc>()),
 
-        BlocProvider<FavoriteBloc>.value(
-            value: getIt<FavoriteBloc>()..add(FavoriteUsersFetched())),
-        BlocProvider<LikeBloc>.value(
-            value: getIt<LikeBloc>()..add(LikeUsersFetched())),
+        BlocProvider<FavoriteBloc>.value(value: getIt<FavoriteBloc>()),
+        BlocProvider<LikeBloc>.value(value: getIt<LikeBloc>()),
 
-        BlocProvider<ArchiveBloc>.value(
-            value: getIt<ArchiveBloc>()..add(ArchiveUsersFetched())),
+        BlocProvider<ArchiveBloc>.value(value: getIt<ArchiveBloc>()),
 
         BlocProvider<StatusBloc>.value(value: getIt<StatusBloc>()),
 
-        BlocProvider<HomeBloc>.value(
-            value: getIt<HomeBloc>()
-              ..add(HomeUsersFetched())
-              ..add(HomeUsersProfileList())),
+        BlocProvider<HomeBloc>.value(value: getIt<HomeBloc>()),
 
         BlocProvider<ReportBloc>.value(
           value: getIt<ReportBloc>(),
@@ -113,20 +92,19 @@ class MyApp extends StatelessWidget {
           theme: lightTheme,
           defaultTransition: Transition.fade,
           onGenerateRoute: onGenerateRoute,
-          // home: StreamBuilder<User?>(
-          //   stream: FirebaseAuth.instance.authStateChanges(),
-          //   builder: (context, snapshot) {
-          //     if (snapshot.connectionState == ConnectionState.waiting) {
-          //       return const Scaffold(); // or splash screen
-          //     } else if (snapshot.hasData) {
-          //       return routeNameFromPageNumber();
-          //     }
-          //     return _appGetStorage.hasOpenedApp()
-          //         ? LoginScreen()
-          //         : WellcomeScreen();
-          //   },
-          // ),
-          home: PreferencesScreen(),
+          home: StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Scaffold(); // or splash screen
+              } else if (snapshot.hasData) {
+                return routeNameFromPageNumber();
+              }
+              return _appGetStorage.hasOpenedApp()
+                  ? LoginScreen()
+                  : WellcomeScreen();
+            },
+          ),
         ),
       ),
     );

@@ -50,7 +50,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       Container(
                         width: double.maxFinite,
                         decoration: BoxDecoration(
-                          color: AppColors.blue.withValues(alpha: 0.1),
+                          color: AppColors.blue.withValues(alpha: 0.01),
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border(

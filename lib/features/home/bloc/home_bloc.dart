@@ -44,7 +44,7 @@ class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
         final ArchiveModel? archiveData =
             await _archiveRepository.fetchArchives();
 
-        if (favData == null && blockData == null) {
+        if (favData == null && blockData == null && archiveData == null) {
           emit(state.copyWith(profileList: data));
         } else {
           final filterData = data
@@ -59,6 +59,7 @@ class HomeBloc extends HydratedBloc<HomeEvent, HomeState> {
           emit(state.copyWith(profileList: filterData));
         }
       } catch (e) {
+        print("Error in home screen :${e.toString()}");
         emit(Error.fromState(state, error: e.toString()));
       }
     });

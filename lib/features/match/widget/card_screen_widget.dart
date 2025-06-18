@@ -81,7 +81,7 @@ class CreatedDate extends StatelessWidget {
     return Container(
         padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
-            color: AppColors.blue.withValues(alpha: 0.1),
+            color: AppColors.greyContainerColor,
             borderRadius: BorderRadius.circular(12.r)),
         child: Text(Seniority.formatJoinedTime(user.createdDate),
             style: Theme.of(context).textTheme.bodyMedium));
@@ -98,7 +98,7 @@ class ListOfButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: AppColors.blue.withValues(alpha: 0.1),
+          color: AppColors.greyContainerColor,
           borderRadius: BorderRadius.circular(12.r)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -323,7 +323,7 @@ class Description extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
-            color: AppColors.blue.withValues(alpha: 0.1),
+            color: AppColors.greyContainerColor,
             borderRadius: BorderRadius.circular(12.r)),
         child: Text(
           user.description,

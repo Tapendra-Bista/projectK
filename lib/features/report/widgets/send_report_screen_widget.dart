@@ -22,8 +22,9 @@ class ConfirmInformation extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
       height: 84.h,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.r),
-          color: AppColors.greyContainerColor,),
+        borderRadius: BorderRadius.circular(12.r),
+        color: AppColors.greyContainerColor,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -137,17 +138,20 @@ class BottomSheetContant extends StatelessWidget {
           style:
               Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 20.sp),
         ),
-        Text(
-          EnumLocale.thankForReportDescription.name.tr,
-          style: Theme.of(context).textTheme.bodySmall,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          child: Text(
+            EnumLocale.thankForReportDescription.name.tr,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextButton(
               style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(
-                      AppColors.grey.withValues(alpha: 0.5))),
+                  backgroundColor:
+                      WidgetStatePropertyAll(AppColors.greyContainerColor)),
               onPressed: () {},
               child: Text(
                 EnumLocale.block.name.tr,
@@ -159,8 +163,8 @@ class BottomSheetContant extends StatelessWidget {
             ),
             TextButton(
                 style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                        AppColors.grey.withValues(alpha: 0.5))),
+                    backgroundColor:
+                        WidgetStatePropertyAll(AppColors.greyContainerColor)),
                 onPressed: () => Get.back(),
                 child: Text(EnumLocale.done.name.tr,
                     style: Theme.of(context)

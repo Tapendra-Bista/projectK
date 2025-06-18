@@ -35,11 +35,24 @@ class ChatRepository extends BaseRepository {
       final users = [currentUserId, otherUserId]..sort();
       final roomId = users.join("_");
 
+      // 1. Reference to messages subcollection
+      final messagesRef = _chatRooms.doc(roomId).collection("messages");
+
+      // 2. Fetch all documents in messages subcollection
+      final messagesSnapshot = await messagesRef.get();
+
+      // 3. Delete each message document
+      for (final doc in messagesSnapshot.docs) {
+        await doc.reference.delete();
+      }
+
+      // 4. Delete the main chatRoom document
       await _chatRooms.doc(roomId).delete();
-      print("Chat room $roomId deleted successfully.");
+
+      print("Chat room $roomId and all its messages deleted successfully.");
     } catch (e) {
       print("Failed to delete chat room: $e");
-      rethrow; // Re-throw the error if higher-level handling is needed
+      rethrow;
     }
   }
 
@@ -208,28 +221,8 @@ class ChatRepository extends BaseRepository {
     } catch (e) {}
   }
 
-//----------------Get online use-------------------------
-  Stream<Map<String, dynamic>> getUserOnlineStatus(String userId) {
-    return firestore
-        .collection("users")
-        .doc(userId)
-        .snapshots()
-        .map((snapshot) {
-      final data = snapshot.data();
-      return {
-        'isOnline': data?['isOnline'] ?? false,
-        'lastSeen': data?['lastSeen'],
-      };
-    });
-  }
 
-//--------------------Upadet Online Status -------------------------
-  Future<void> updateOnlineStatus(String userId, bool isOnline) async {
-    await firestore.collection("users").doc(userId).update({
-      'isOnline': isOnline,
-      'lastSeen': Timestamp.now(),
-    });
-  }
+
 
 // ---------------Update Typing Status-------------------------------------
   Future<void> updateTypingStatus(

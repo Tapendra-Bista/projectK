@@ -80,7 +80,7 @@ class CreatedDate extends StatelessWidget {
       child: Container(
           padding: EdgeInsets.all(8.r),
           decoration: BoxDecoration(
-              color: AppColors.blue.withValues(alpha: 0.1),
+              color: AppColors.greyContainerColor,
               borderRadius: BorderRadius.circular(12.r)),
           child: Text(date, style: Theme.of(context).textTheme.bodyMedium)),
     );
@@ -100,7 +100,7 @@ class Description extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
-            color: AppColors.blue.withValues(alpha: 0.1),
+            color: AppColors.greyContainerColor,
             borderRadius: BorderRadius.circular(12.r)),
         child: Text(
           widget.data.description,
@@ -203,7 +203,7 @@ class ButtonList extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(8.r),
       decoration: BoxDecoration(
-          color: AppColors.blue.withValues(alpha: 0.1),
+          color: AppColors.greyContainerColor,
           borderRadius: BorderRadius.circular(12.r)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

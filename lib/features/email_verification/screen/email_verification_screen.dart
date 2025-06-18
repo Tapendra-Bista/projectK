@@ -35,31 +35,34 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: false),
       body: SafeArea(
-        child: BlocListener<EmailVerificationBloc, EmailVerificationState>(
-          listener: _listener,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 5.h,
-                children: [
-                  //--------------- Title part----------------------
-                  const EmailVerificationTitle(),
-                  //-------------------Body text part------------------------
-                  const EmailVerificationBody(),
-                  //-----------------------Logo part---------------------------------------
-                  const EmailVerificationImage(),
-                  SizedBox(height: 50.h),
-                  //-----------------------Email verification Button--------------------------------
-                  EmailVerificationButton(),
+        child: BlocProvider<EmailVerificationBloc>(
+          create: (context) => getIt<EmailVerificationBloc>(),
+          child: BlocListener<EmailVerificationBloc, EmailVerificationState>(
+            listener: _listener,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 5.h,
+                  children: [
+                    //--------------- Title part----------------------
+                    const EmailVerificationTitle(),
+                    //-------------------Body text part------------------------
+                    const EmailVerificationBody(),
+                    //-----------------------Logo part---------------------------------------
+                    const EmailVerificationImage(),
+                    SizedBox(height: 50.h),
+                    //-----------------------Email verification Button--------------------------------
+                    EmailVerificationButton(),
 
-                  //----------------------------- To  navigate to another page-------------------
-                  SizedBox(height: 10.h),
-                  //------------------------------- Delete Text ---------------------------------------
-                  const EmailVerificationDeleteAccount(),
-                ],
+                    //----------------------------- To  navigate to another page-------------------
+                    SizedBox(height: 10.h),
+                    //------------------------------- Delete Text ---------------------------------------
+                    const EmailVerificationDeleteAccount(),
+                  ],
+                ),
               ),
             ),
           ),
