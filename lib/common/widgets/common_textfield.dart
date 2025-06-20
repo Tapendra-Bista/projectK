@@ -1,5 +1,6 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 //-----------------------TextField for user Input-----------------
@@ -23,7 +24,7 @@ class CommonTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return PlatformTextFormField(
       keyboardType: keyboardType,
       onChanged: onChanged,
       cursorColor: AppColors.black,
@@ -32,28 +33,31 @@ class CommonTextField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       obscuringCharacter: '•',
-      decoration: InputDecoration(
-        suffixIcon: suffixIcon,
-        errorMaxLines: 3,
-        labelText: labelText,
-        labelStyle: Theme.of(context).textTheme.bodySmall,
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
-          borderSide: BorderSide(width: 2.w, color: AppColors.red),
+     
+      material: (context, platform) => MaterialTextFormFieldData(
+        decoration: InputDecoration(
+          suffixIcon: suffixIcon,
+          errorMaxLines: 3,
+          labelText: labelText,
+          labelStyle: Theme.of(context).textTheme.bodySmall,
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.r),
+            borderSide: BorderSide(width: 2.w, color: AppColors.red),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.r),
+            borderSide: BorderSide(width: 1.w, color: AppColors.black),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.r),
+            borderSide: BorderSide(width: 1.w, color: AppColors.blue),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.r),
+            borderSide: BorderSide(width: 2.w, color: AppColors.red),
+          ),
+          border: InputBorder.none,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
-          borderSide: BorderSide(width: 1.w, color: AppColors.black),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
-          borderSide: BorderSide(width: 1.w, color: AppColors.blue),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
-          borderSide: BorderSide(width: 2.w, color: AppColors.red),
-        ),
-        border: InputBorder.none,
       ),
     );
   }

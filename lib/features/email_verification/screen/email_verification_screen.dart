@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
 
@@ -32,8 +32,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: false),
+    return PlatformScaffold(
+      appBar: PlatformAppBar(automaticallyImplyLeading: false),
       body: SafeArea(
         child: BlocProvider<EmailVerificationBloc>(
           create: (context) => getIt<EmailVerificationBloc>(),

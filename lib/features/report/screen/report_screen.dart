@@ -8,6 +8,7 @@ import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -33,10 +34,10 @@ class _ReportScreenState extends State<ReportScreen> {
       },
       bloc: getIt<ReportBloc>(),
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
+        return PlatformScaffold(
+          appBar: PlatformAppBar(
             automaticallyImplyLeading: false,
-            leading: IconButton(
+            leading: PlatformIconButton(
                 onPressed: () => Get.back(),
                 icon: Icon(HugeIcons.strokeRoundedMultiplicationSign)),
           ),

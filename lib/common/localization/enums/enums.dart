@@ -230,14 +230,17 @@ enum EnumLocale {
   // preferences
   preferences,
   likeToMeet,
-  men,
-  women,
+
   age,
   years,
   sameCountry,
   sameCity,
   same,
   saveChanges,
+  match,
+  deleteChat,
+  areYouSure,
+
 }
 
 // debug

@@ -6,19 +6,47 @@ import 'package:afriqueen/features/login/bloc/login_bloc.dart';
 import 'package:afriqueen/features/login/bloc/login_state.dart';
 import 'package:afriqueen/features/login/widgets/login_widgets.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/location/location.dart';
+import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AppGetStorage _appGetStorage = AppGetStorage();
+  @override
+  void initState() {
+    _initLocation();
+    super.initState();
+  }
+
+  Future<void> _initLocation() async {
+    try {
+      final position = await UserLocation.determinePosition();
+      final placemarks = await UserLocation.geoCoding(position);
+      if (!mounted) return;
+      _appGetStorage.setCity(placemarks.first.locality!);
+      _appGetStorage.setCountry(placemarks.first.country!);
+    } catch (e) {
+      if (!mounted) return;
+      // Optionally show an error message or fallback
+      debugPrint('Location init error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PlatformScaffold(
       body: SafeArea(
         child: BlocListener<LoginBloc, LoginState>(
           listener: _listener,
@@ -51,7 +79,7 @@ class LoginScreen extends StatelessWidget {
                     //----------------Forget Password--------------------
                     const ForgotPassword(),
                     SizedBox(height: 45.h),
-                    //--------------------------Signup button and Login with Email Both Inside This ---------------------
+                    //   --------------------------Signup button and Login with Email Both Inside This ---------------------
                     LoginAndGoogleSigninButton(formKey: _formKey),
                     //------------------if user has already have account------------------
                     SizedBox(height: 3.h),

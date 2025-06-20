@@ -2,7 +2,7 @@ import 'package:afriqueen/common/widgets/steps.dart';
 import 'package:afriqueen/features/create_profile/widget/name_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 class NameScreen extends StatelessWidget {
   NameScreen({super.key});
 
@@ -10,8 +10,8 @@ class NameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: false),
+    return PlatformScaffold(
+      appBar: PlatformAppBar(automaticallyImplyLeading: false),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

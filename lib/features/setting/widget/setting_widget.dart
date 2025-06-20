@@ -1,4 +1,4 @@
-//----------------AppBar Title-----------------------
+//----------------PlatformAppBar Title-----------------------
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/constant/constant_strings.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 class FavoritesListTile extends StatelessWidget {
   const FavoritesListTile({super.key});
 
@@ -77,13 +77,13 @@ class BlockedListTile extends StatelessWidget {
 }
 
 //-----------App Bar--------------------------
-class SettingAppBar extends StatelessWidget {
-  const SettingAppBar({super.key});
+class SettingPlatformAppBar extends StatelessWidget {
+  const SettingPlatformAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      leading: IconButton(
+      leading: PlatformIconButton(
         onPressed: () => Get.back(),
         icon: Icon(HugeIcons.strokeRoundedMultiplicationSign),
       ),
@@ -133,7 +133,7 @@ class LanguageListTile extends StatelessWidget {
               ),
               trailing: SizedBox(
                 width: 50.w,
-                child: IconButton(
+                child: PlatformIconButton(
                   onPressed: () => Get.back(),
                   icon: Icon(
                     HugeIcons.strokeRoundedMultiplicationSignCircle,

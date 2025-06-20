@@ -5,6 +5,7 @@ import 'package:afriqueen/features/chat/screen/chat_screen.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:get/get.dart';
 
 class StartChat extends StatelessWidget {
@@ -17,7 +18,7 @@ class StartChat extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        IconButton(
+        PlatformIconButton(
           onPressed: () {
             Get.to(
               () => ChatScreen(
@@ -33,7 +34,7 @@ class StartChat extends StatelessWidget {
             size: 30,
           ),
         ),
-        Text(
+        PlatformText(
           EnumLocale.message.name.tr,
           style: Theme.of(context) // context is still fine for Theme.of
               .textTheme

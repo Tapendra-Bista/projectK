@@ -8,13 +8,14 @@ import 'package:afriqueen/features/login/bloc/login_event.dart';
 import 'package:afriqueen/features/login/bloc/login_state.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
+import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 /// ---------------- Signup text ----------------
 class LoginText extends StatelessWidget {
   const LoginText({super.key});
@@ -88,7 +89,7 @@ class _LoginPasswordInputState extends State<LoginPasswordInput> {
           onChanged: (value) => getIt<LoginBloc>().add(
             LoginPasswordChanged(password: value.trim()),
           ),
-          suffixIcon: IconButton(
+          suffixIcon: PlatformIconButton(
             onPressed: () => getIt<LoginBloc>().add(LoginPasswordVisibility()),
             icon: Icon(
               state.isLoginPasswordVisible
@@ -105,9 +106,9 @@ class _LoginPasswordInputState extends State<LoginPasswordInput> {
 
 /// ----------------------- Login button ----------------------
 class LoginButton extends StatelessWidget {
-  const LoginButton({super.key, required this.formKey});
+  LoginButton({super.key, required this.formKey});
   final GlobalKey<FormState> formKey;
-
+  final AppGetStorage _appGetStorage = AppGetStorage();
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -118,7 +119,10 @@ class LoginButton extends StatelessWidget {
           // Using ElevatedButton for better default styling
           onPressed: () {
             if (formKey.currentState!.validate()) {
-              getIt<LoginBloc>().add(LoginSubmit());
+              getIt<LoginBloc>().add(LoginSubmit(
+                city: _appGetStorage.getCity(),
+                country: _appGetStorage.getCountry(),
+              ));
             }
           },
           style: ElevatedButton.styleFrom(

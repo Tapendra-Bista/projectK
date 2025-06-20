@@ -1,8 +1,7 @@
 //------------ main part of data fetched state-----------------
-import 'package:afriqueen/features/profile/screen/main_container_screen.dart';
 import 'package:afriqueen/features/profile/widget/profile_widget.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileDataContent extends StatelessWidget {
@@ -10,27 +9,22 @@ class ProfileDataContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PlatformScaffold(
       body: CustomScrollView(
         slivers: [
           //-------------------app bar-------------------
-          const ProfileAppBar(),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 12.w,
-              ).copyWith(top: 5.h, bottom: 80.h),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  //----------Main Container--------------
-                  const MainContainer(),
-                  SizedBox(height: 30.h),
-                ],
-              ),
-            ),
-          ),
+          const ProfilePlatformAppBar(),
+          //---------------User Profile Image--------------------
+          ProfileImage(),
+          const UserSeniority(),
+          //---------------User Profile Details--------------------
+          const UserDetails(),
+
+          //------------------------------ user interests------------------------------
+          const UserInterestsList(),
+          SliverToBoxAdapter(child: SizedBox(height: 10.h)),
+          const DescriptionText(),
+          SliverToBoxAdapter(child: SizedBox(height: 10.h)),
         ],
       ),
     );

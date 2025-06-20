@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 //---------------- Illegal contant----------------
 class IllegalContant extends StatelessWidget {
   const IllegalContant({
@@ -76,22 +76,27 @@ class BottomSheetContant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 10.h,
-      children: [
-        IconButton(onPressed: () => Get.back(), icon: Icon(Icons.arrow_back)),
-        Text(
-          EnumLocale.whyAreYouReporting.name.tr,
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: AppColors.red,
-              ),
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+            child: Align(
+          alignment: Alignment.centerLeft,
+          child: PlatformIconButton(
+              onPressed: () => Get.back(), icon: Icon(Icons.arrow_back)),
+        )),
+        SliverPadding(
+          padding: EdgeInsetsGeometry.only(left: 4.w, bottom: 10.h),
+          sliver: SliverToBoxAdapter(
+            child: Text(
+              EnumLocale.whyAreYouReporting.name.tr,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontSize: 20.sp,
+                    color: AppColors.red,
+                  ),
+            ),
+          ),
         ),
-        ListView.builder(
-            shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            physics: NeverScrollableScrollPhysics(),
+        SliverList.builder(
             itemCount: AppStrings.illegalContentList.length,
             itemBuilder: (context, index) => InkWell(
                   onTap: () {

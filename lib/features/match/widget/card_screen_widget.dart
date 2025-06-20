@@ -26,7 +26,7 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 //-----------Image and Status---------------------------
 class ImageAndStatus extends StatelessWidget {
   const ImageAndStatus({
@@ -111,7 +111,7 @@ class ListOfButtons extends StatelessWidget {
           StartChatFromMatch(
             profileModel: user,
           ),
-          IconButton(
+          PlatformIconButton(
             onPressed: () async {
               context
                   .read<FavoriteBloc>()
@@ -125,7 +125,7 @@ class ListOfButtons extends StatelessWidget {
                 size: 20.r, color: AppColors.black),
           ),
           // ------------------following-----------------
-          IconButton(
+          PlatformIconButton(
               onPressed: () {
                 snackBarMessage(
                     context,
@@ -139,7 +139,7 @@ class ListOfButtons extends StatelessWidget {
                 size: 20.r,
               )),
 //----------Archive--------------------------
-          IconButton(
+          PlatformIconButton(
             onPressed: () async {
               context
                   .read<ArchiveBloc>()
@@ -171,7 +171,7 @@ class LikeButtonForMatch extends StatelessWidget {
     return BlocSelector<LikeBloc, LikeState, LikeModel>(
       selector: (state) => state.likeUserList,
       builder: (context, likeData) {
-        return IconButton(
+        return PlatformIconButton(
           onPressed: () {
             if (likeData.likeId.contains(id)) {
               getIt<LikeBloc>().add(LikeUserRemoved(likeId: id));
@@ -203,7 +203,7 @@ class StartChatFromMatch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // innerContext now has access to ChatBloc
-    return IconButton(
+    return PlatformIconButton(
       onPressed: () {
         // Use innerContext here
 
@@ -265,7 +265,6 @@ class Interests extends StatelessWidget {
       height: 72.h,
       child: GridView.builder(
         padding: EdgeInsets.symmetric(horizontal: 5.w),
-        shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemCount: user.interests.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

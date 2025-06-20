@@ -119,8 +119,8 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.genderTitle.name: "Comment vous identifiez-vous ?",
   EnumLocale.genderDescription.name:
       "Vous pourrez modifier ces informations ultérieurement en contactant notre service client.",
-  EnumLocale.genderMale.name: "Homme",
-  EnumLocale.genderFemale.name: "Femme",
+   EnumLocale.genderMale.name: "Homme",
+   EnumLocale.genderFemale.name: "Femme",
   EnumLocale.dobTitle.name: "Votre date de naissance",
   EnumLocale.dobDescription.name:
       "Veuillez indiquer votre âge correctement ; vous ne pourrez plus le modifier ultérieurement.",
@@ -284,12 +284,14 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.refreshToUpdatedData.name: "Tirez vers le bas pour actualiser !",
   EnumLocale.preferences.name: "Préférences",
   EnumLocale.likeToMeet.name: "J'aimerais rencontrer",
-  EnumLocale.men.name: "Hommes",
-  EnumLocale.women.name: "Femmes",
+
   EnumLocale.age.name: "Âge",
   EnumLocale.years.name: "ans",
   EnumLocale.sameCountry.name: "pays",
   EnumLocale.sameCity.name: "ville",
   EnumLocale.same.name: "Même",
-  EnumLocale.saveChanges.name: "Enregistrer"
+  EnumLocale.saveChanges.name: "Enregistrer",
+  EnumLocale.match.name: "Match",
+  EnumLocale.deleteChat.name: "Supprimer",
+  EnumLocale.areYouSure.name: "Voulez-vous vraiment le supprimer ?"
 };

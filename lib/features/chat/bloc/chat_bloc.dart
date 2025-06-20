@@ -1,16 +1,19 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:afriqueen/features/block/repository/block_repository.dart';
 import 'package:afriqueen/features/chat/model/chat_room_model.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../repository/chat_repository.dart';
 import 'chat_event.dart';
 import 'chat_state.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final ChatRepository _chatRepository;
+
   bool _isInChat = false;
 
   StreamSubscription? _messageSubscription;
@@ -41,7 +44,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     if (event.chatRooms.isEmpty) {
       emit(ChatEmpty());
     } else {
-      emit(state.copyWith(chatRoomModel: event.chatRooms, error: null));
+      emit(state.copyWith(
+          chatRoomModel: event.chatRooms, error: null, isDelete: false));
     }
   }
 
@@ -240,7 +244,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   FutureOr<void> _onDeleteChatRoom(
       DeleteChatRoom event, Emitter<ChatState> emit) async {
-    emit(ChatDeleteProcessing());
+    emit(state.copyWith(isDelete: true));
     await _chatRepository.deleteChatRoom(
         event.currentUserId, event.otherUserId);
 

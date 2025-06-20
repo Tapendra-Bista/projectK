@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum MessageType { text, image, video }
-
 enum MessageStatus { sent, read }
 
 class ChatMessage {
@@ -26,7 +25,8 @@ class ChatMessage {
     required this.timestamp,
     required this.readBy,
   });
-//-------------------------------------Chat Messages------------------------------
+
+  // Firestore -> ChatMessage
   factory ChatMessage.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return ChatMessage(
@@ -36,11 +36,11 @@ class ChatMessage {
       receiverId: data['receiverId'] as String,
       content: data['content'] as String,
       type: MessageType.values.firstWhere(
-        (e) => e.toString() == data['type'],
+        (e) => e.name == data['type'],
         orElse: () => MessageType.text,
       ),
       status: MessageStatus.values.firstWhere(
-        (e) => e.toString() == data['status'],
+        (e) => e.name == data['status'],
         orElse: () => MessageStatus.sent,
       ),
       timestamp: data['timestamp'] as Timestamp,
@@ -48,6 +48,7 @@ class ChatMessage {
     );
   }
 
+  // JSON (GetStorage) -> ChatMessage
   factory ChatMessage.fromJson(Map<String, dynamic> json) {
     return ChatMessage(
       id: json['id'] as String,
@@ -56,11 +57,11 @@ class ChatMessage {
       receiverId: json['receiverId'] as String,
       content: json['content'] as String,
       type: MessageType.values.firstWhere(
-        (e) => e.toString() == json['type'],
+        (e) => e.name == json['type'],
         orElse: () => MessageType.text,
       ),
       status: MessageStatus.values.firstWhere(
-        (e) => e.toString() == json['status'],
+        (e) => e.name == json['status'],
         orElse: () => MessageStatus.sent,
       ),
       timestamp: Timestamp.fromMillisecondsSinceEpoch(json['timestamp']),
@@ -68,6 +69,7 @@ class ChatMessage {
     );
   }
 
+  // To JSON for GetStorage
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -75,21 +77,22 @@ class ChatMessage {
       'senderId': senderId,
       'receiverId': receiverId,
       'content': content,
-      'type': type.toString(),
-      'status': status.toString(),
+      'type': type.name,
+      'status': status.name,
       'timestamp': timestamp.millisecondsSinceEpoch,
       'readBy': readBy,
     };
   }
 
+  // Optional: For Firestore (timestamp is raw Timestamp)
   Map<String, dynamic> toMap() {
     return {
       "chatRoomId": chatRoomId,
       "senderId": senderId,
       "receiverId": receiverId,
       "content": content,
-      "type": type.toString(),
-      "status": status.toString(),
+      "type": type.name,
+      "status": status.name,
       "timestamp": timestamp,
       "readBy": readBy,
     };

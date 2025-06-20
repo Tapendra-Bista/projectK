@@ -1,6 +1,7 @@
 import 'package:afriqueen/common/widgets/divider.dart';
 import 'package:afriqueen/features/setting/widget/setting_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -8,11 +9,11 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PlatformScaffold(
       body: CustomScrollView(
         slivers: [
           //--------------------------------- app Bar---------------------------
-          SettingAppBar(),
+          SettingPlatformAppBar(),
           // -------------Body--------------------------
           SliverToBoxAdapter(
             child: Column(

@@ -1,5 +1,6 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 //-------------------------------- button for app-------------------------------------------------
 class CommonButton extends StatelessWidget {
@@ -35,7 +36,7 @@ class CommonButton extends StatelessWidget {
             ),
             child: Container(
               alignment: Alignment.center,
-              child: Text(
+              child: PlatformText(
                 buttonText,
                 style: Theme.of(
                   context,

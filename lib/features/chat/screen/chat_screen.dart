@@ -1,7 +1,8 @@
 import 'dart:io';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
+import 'package:afriqueen/common/widgets/circular_indicator.dart';
 import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
 import 'package:afriqueen/features/chat/bloc/chat_event.dart';
 import 'package:afriqueen/features/chat/bloc/chat_state.dart';
@@ -101,6 +102,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     messageController.dispose();
     _scrollController.dispose();
+    getIt<ChatBloc>().add(LeaveChat());
 
     super.dispose();
   }
@@ -112,7 +114,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.h),
-          //---------Chat Screen AppBar-----------------
+          //---------Chat Screen PlatformAppBar-----------------
           child: ChatScreenAppBar(isValideUrl: isValideUrl, widget: widget)),
       body: BlocConsumer<ChatBloc, ChatState>(
         listener: (context, state) => _hasNewMessages(state.messages),
@@ -123,7 +125,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 child:
                     Text(" ${EnumLocale.defaultError.name.tr} ${state.error}"));
           }
-
+          if (state.status == ChatStatus.loading) {
+            return const Center(child: CustomCircularIndicator());
+          }
           return Column(
             children: [
               Expanded(
@@ -148,7 +152,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     Row(
                       children: [
-                        IconButton(
+                        PlatformIconButton(
                           icon: const Icon(Icons.emoji_emotions_outlined),
                           onPressed: () {
                             setState(() => _showEmoji = !_showEmoji);
@@ -195,7 +199,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             textCapitalization: TextCapitalization.sentences,
                           ),
                         ),
-                        IconButton(
+                        PlatformIconButton(
                           icon: Icon(Icons.send,
                               color:
                                   _isComposing ? AppColors.blue : Colors.grey),

@@ -17,8 +17,9 @@ class ChatState {
   final bool hasMoreMessages;
   final bool isLoadingMore;
   final String? error;
-
+  final bool? isDelete;
   const ChatState({
+    this.isDelete = false,
     this.chatRoomModel = const [],
     this.messages = const [],
     this.status = ChatStatus.initial,
@@ -44,25 +45,24 @@ class ChatState {
     bool? hasMoreMessages,
     bool? isLoadingMore,
     String? error,
+    bool? isDelete,
   }) {
     return ChatState(
-      chatRoomModel: chatRoomModel ?? this.chatRoomModel,
-      messages: messages ?? this.messages,
-      status: status ?? this.status,
-      chatRoomId: chatRoomId ?? this.chatRoomId,
-      receiverId: receiverId ?? this.receiverId,
-      isReceiverOnline: isReceiverOnline ?? this.isReceiverOnline,
-      receiverLastSeen: receiverLastSeen ?? this.receiverLastSeen,
-      isReceiverTyping: isReceiverTyping ?? this.isReceiverTyping,
-      hasMoreMessages: hasMoreMessages ?? this.hasMoreMessages,
-      isLoadingMore: isLoadingMore ?? this.isLoadingMore,
-      error: error ?? this.error,
-    );
+        chatRoomModel: chatRoomModel ?? this.chatRoomModel,
+        messages: messages ?? this.messages,
+        status: status ?? this.status,
+        chatRoomId: chatRoomId ?? this.chatRoomId,
+        receiverId: receiverId ?? this.receiverId,
+        isReceiverOnline: isReceiverOnline ?? this.isReceiverOnline,
+        receiverLastSeen: receiverLastSeen ?? this.receiverLastSeen,
+        isReceiverTyping: isReceiverTyping ?? this.isReceiverTyping,
+        hasMoreMessages: hasMoreMessages ?? this.hasMoreMessages,
+        isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+        error: error ?? this.error,
+        isDelete: isDelete ?? this.isDelete);
   }
 }
 
 class ChatLoading extends ChatState {}
-
-class ChatDeleteProcessing extends ChatState {}
 
 class ChatEmpty extends ChatState {}

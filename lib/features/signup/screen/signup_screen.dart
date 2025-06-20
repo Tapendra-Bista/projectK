@@ -8,6 +8,7 @@ import 'package:afriqueen/features/signup/widgets/signup_widget.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,7 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PlatformScaffold(
       body: SafeArea(
         child: BlocListener<SignupBloc, SignupState>(
           listener: _listener,

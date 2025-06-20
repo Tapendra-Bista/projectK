@@ -1,5 +1,6 @@
 import 'package:afriqueen/features/forgot_password/widgets/forgot_password_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 //--------------------------------------- main screen of Forgot password---------------------------------------
@@ -10,8 +11,8 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: true),
+    return PlatformScaffold(
+      appBar: PlatformAppBar(automaticallyImplyLeading: true),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -21,7 +22,6 @@ class ForgotPasswordScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-
                 children: [
                   SizedBox(height: 20.h),
                   //-------------Forgot password text----------------------

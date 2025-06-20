@@ -1,5 +1,6 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 //------------------------------------Password visibility(Toggle)-------------------------
 class PasswordVisibility extends StatelessWidget {
@@ -13,7 +14,7 @@ class PasswordVisibility extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
+    return PlatformIconButton(
       onPressed: onPressed,
       icon: Icon(
         isHidden ? Icons.visibility_off_outlined : Icons.visibility_outlined,

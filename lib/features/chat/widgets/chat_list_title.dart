@@ -19,13 +19,13 @@ import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 // -----------Chat List Title -----------------------
-class ChatListTitle extends StatelessWidget {
+class ChatListTile extends StatelessWidget {
   final ChatRoomModel chat;
   final String currentUserId;
   final VoidCallback onTap;
   final String otherUserId;
 
-  ChatListTitle(
+  ChatListTile(
       {super.key,
       required this.chat,
       required this.currentUserId,

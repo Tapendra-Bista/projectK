@@ -13,7 +13,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 /// ---------------- Signup text ----------------
 class SignUpText extends StatelessWidget {
   const SignUpText({super.key});
@@ -87,7 +87,7 @@ class _PasswordInputState extends State<PasswordInput> {
           onChanged: (value) => getIt<SignupBloc>().add(
             PasswordChanged(password: value.trim()),
           ),
-          suffixIcon: IconButton(
+          suffixIcon: PlatformIconButton(
             onPressed: () => getIt<SignupBloc>().add(PasswordVisibility()),
             icon: Icon(
               state.isPasswordHidden
@@ -113,8 +113,8 @@ class RegisterDescription extends StatelessWidget {
       children: [
         BlocBuilder<SignupBloc, SignupState>(
           builder: (context, state) {
-            return IconButton(
-              constraints: const BoxConstraints(),
+            return PlatformIconButton(
+          
               onPressed: () => getIt<SignupBloc>().add(CheckedBox()),
               icon: Icon(
                 state.isChecked

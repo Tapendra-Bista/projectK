@@ -1,5 +1,6 @@
 import 'package:afriqueen/features/report/widgets/send_report_screen_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -8,10 +9,10 @@ class SendReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return PlatformScaffold(
+      appBar: PlatformAppBar(
         automaticallyImplyLeading: false,
-        leading: IconButton(
+        leading: PlatformIconButton(
             onPressed: () => Get.back(), icon: Icon(Icons.arrow_back)),
       ),
       body: SafeArea(

@@ -1,7 +1,6 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/circular_indicator.dart';
-import 'package:afriqueen/common/widgets/loading.dart';
 import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
 import 'package:afriqueen/features/chat/bloc/chat_event.dart';
 import 'package:afriqueen/features/chat/bloc/chat_state.dart';
@@ -11,6 +10,7 @@ import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:get/get.dart';
 
 class ChatRoomsScreen extends StatelessWidget {
@@ -21,10 +21,23 @@ class ChatRoomsScreen extends StatelessWidget {
 //------------Chat RoOM MAIN screen---------------------
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
+    return PlatformScaffold(
+        appBar: PlatformAppBar(
           automaticallyImplyLeading: false,
           title: Text(EnumLocale.chats.name.tr),
+          bottom: PreferredSize(
+              preferredSize: Size.fromHeight(0),
+              child: BlocSelector<ChatBloc, ChatState, bool>(
+                selector: (state) => state.isDelete!,
+                builder: (context, isDeleting) {
+                  return isDeleting
+                      ? LinearProgressIndicator(
+                          backgroundColor: AppColors.greyContainerColor,
+                          color: AppColors.primaryColor,
+                        )
+                      : SizedBox.shrink();
+                },
+              )),
         ),
         body: RefreshIndicator(
           color: AppColors.primaryColor,
@@ -32,16 +45,8 @@ class ChatRoomsScreen extends StatelessWidget {
           onRefresh: () async {
             getIt<ChatBloc>().add(ChatRoomsLists(id: _currentUserId));
           },
-          child: BlocConsumer<ChatBloc, ChatState>(
-              listenWhen: (previous, current) => current != previous,
+          child: BlocBuilder<ChatBloc, ChatState>(
               buildWhen: (previous, current) => current != previous,
-              listener: (context, state) {
-                if (state is ChatDeleteProcessing) {
-                  customLoading(context);
-                } else {
-                  Get.back();
-                }
-              },
               builder: (context, state) {
                 return switch (state) {
                   //-------initial state-----------------

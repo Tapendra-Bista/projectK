@@ -4,11 +4,14 @@ import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_state.dart';
 import 'package:afriqueen/features/match/widget/card_screen_widget.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
+import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_utils/get_utils.dart';
+import 'package:get/get.dart';
+import 'package:line_icons/line_icons.dart';
 
 class CardScreen extends StatefulWidget {
   const CardScreen({super.key});
@@ -31,7 +34,24 @@ class _CardScreenState extends State<CardScreen> {
     return BlocSelector<HomeBloc, HomeState, List<ProfileModel?>>(
       selector: (state) => state.profileList,
       builder: (context, userData) {
-        return Scaffold(
+        return PlatformScaffold(
+          appBar: PlatformAppBar(
+            material: (context, platform) {
+              return MaterialAppBarData(centerTitle: true);
+            },
+            title: PlatformText(
+              EnumLocale.match.name.tr,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(fontSize: 20.sp),
+              overflow: TextOverflow.ellipsis,
+            ),
+            leading: PlatformIconButton(
+              onPressed: () => Get.toNamed(AppRoutes.profile),
+              icon: Icon(LineIcons.user, size: 35.r),
+            ),
+          ),
           body: SafeArea(
               child: Center(
             child: SizedBox(

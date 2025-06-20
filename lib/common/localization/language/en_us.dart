@@ -284,12 +284,13 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
   EnumLocale.refreshToUpdatedData.name: "Pull down to refresh!",
   EnumLocale.preferences.name: "Preferences",
   EnumLocale.likeToMeet.name: "I'd like to meet",
-  EnumLocale.men.name: "Men",
-  EnumLocale.women.name: "Women",
+
   EnumLocale.age.name: "Age",
   EnumLocale.years.name: "years",
   EnumLocale.sameCountry.name: "Country",
   EnumLocale.sameCity.name: "City",
   EnumLocale.same.name: "Same",
-  EnumLocale.saveChanges.name : "Save"
+  EnumLocale.saveChanges.name: "Save",
+  EnumLocale.match.name: "Match", EnumLocale.deleteChat.name: "Delete",
+  EnumLocale.areYouSure.name: "Are you sure you want to delete it?",
 };

@@ -15,7 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 //----------------------------Interest screen components------------------
 
 //-------------------Frienship inlineChoice---------------------------
@@ -88,7 +88,7 @@ class FriendshipInchoice extends StatelessWidget {
                                       fontSize: 19.sp,
                                     ),
                           ),
-                          IconButton(
+                          PlatformIconButton(
                             onPressed: () => Get.back(),
                             icon: Icon(
                               state.friendship.isNotEmpty
@@ -236,7 +236,7 @@ class LoveInchoice extends StatelessWidget {
                                       fontSize: 19.sp,
                                     ),
                           ),
-                          IconButton(
+                          PlatformIconButton(
                             onPressed: () => Get.back(),
                             icon: Icon(
                               state.love.isNotEmpty
@@ -371,7 +371,7 @@ class SportsInchoice extends StatelessWidget {
                                       fontSize: 19.sp,
                                     ),
                           ),
-                          IconButton(
+                          PlatformIconButton(
                             onPressed: () => Get.back(),
                             icon: Icon(
                               state.sports.isNotEmpty
@@ -506,7 +506,7 @@ class FoodInchoice extends StatelessWidget {
                                       fontSize: 19.sp,
                                     ),
                           ),
-                          IconButton(
+                          PlatformIconButton(
                             onPressed: () => Get.back(),
                             icon: Icon(
                               state.food.isNotEmpty
@@ -641,7 +641,7 @@ class AdventureInchoice extends StatelessWidget {
                                       fontSize: 19.sp,
                                     ),
                           ),
-                          IconButton(
+                          PlatformIconButton(
                             onPressed: () => Get.back(),
                             icon: Icon(
                               state.adventure.isNotEmpty
@@ -814,7 +814,7 @@ class PassionChoice extends StatelessWidget {
                               fontSize: 19.sp,
                             ),
                       ),
-                      IconButton(
+                      PlatformIconButton(
                         onPressed: () => Get.back(),
                         icon: Icon(
                           state.passion.isNotEmpty

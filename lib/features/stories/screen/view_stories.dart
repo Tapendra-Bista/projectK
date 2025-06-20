@@ -4,6 +4,7 @@ import 'package:afriqueen/features/stories/model/stories_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_story_view/flutter_story_view.dart';
 import 'package:flutter_story_view/models/story_item.dart';
@@ -22,7 +23,7 @@ class _ViewStoriesState extends State<ViewStories> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PlatformScaffold(
       body: SafeArea(
         child: SizedBox.expand(
             child: Stack(

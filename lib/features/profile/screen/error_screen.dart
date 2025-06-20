@@ -4,6 +4,7 @@ import 'package:afriqueen/features/profile/widget/profile_widget.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -23,17 +24,16 @@ class ProfileErrorContent extends StatelessWidget {
       }
       return null;
     }, builder: (context, errorMessage) {
-      return Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            actions: [
-              IconButton(
+      return PlatformScaffold(
+          appBar: PlatformAppBar(
+            trailingActions: [
+              PlatformIconButton(
                 onPressed: () => Get.toNamed(AppRoutes.setting),
                 icon: Icon(HugeIcons.strokeRoundedSettings01),
               ),
             ],
-            title: AppBarTitle(),
-            leading: IconButton(
+            title: PlatformAppBarTitle(),
+            leading: PlatformIconButton(
               onPressed: () => Get.back(),
               icon: Icon(HugeIcons.strokeRoundedMultiplicationSign),
             ),

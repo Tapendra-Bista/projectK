@@ -89,6 +89,8 @@ dependencies:
   drop_down_list: ^2.0.0
   flutter_slidable: ^4.0.0
   flutter_platform_widgets: ^9.0.0
+  popup_menu: ^2.1.0
+  firebase_dynamic_links: ^6.1.7
 
 
 dev_dependencies:

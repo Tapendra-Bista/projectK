@@ -1,12 +1,15 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
+import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_state.dart';
-import 'package:afriqueen/features/favorite/widgets/favorite_widgets.dart';
 import 'package:afriqueen/features/favorite/widgets/fetched_screen_widgets.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class FetchedScreen extends StatelessWidget {
   const FetchedScreen({super.key});
@@ -16,10 +19,19 @@ class FetchedScreen extends StatelessWidget {
     return BlocSelector<FavoriteBloc, FavoriteState, List<ProfileModel>>(
       selector: (state) => state.favUserList,
       builder: (context, favData) {
-        return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(55.h),
-            child: FavoriteScreenAppBar(),
+        return PlatformScaffold(
+          appBar: PlatformAppBar(
+            material: (context, platform) {
+              return MaterialAppBarData(centerTitle: true);
+            },
+            leading: PlatformIconButton(
+              onPressed: () => Get.back(),
+              icon: Icon(HugeIcons.strokeRoundedMultiplicationSign),
+            ),
+            title: Text(
+              EnumLocale.favorites.name.tr,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
           ),
           body: ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: 5.w),

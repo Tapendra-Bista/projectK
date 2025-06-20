@@ -17,7 +17,10 @@ final class LoginEmailChanged extends LoginEvent {
 }
 
 final class LoginSubmit extends LoginEvent {
+  final String city;
+  final String country;
 
+  LoginSubmit({required this.city, required this.country});
 }
 
 final class LoginPasswordChanged extends LoginEvent {

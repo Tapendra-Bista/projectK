@@ -7,9 +7,11 @@ import 'package:afriqueen/features/chat/widgets/loading_dots.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+
 //------------------ApppBar -------------------
 class ChatScreenAppBar extends StatelessWidget {
   const ChatScreenAppBar({
@@ -23,9 +25,18 @@ class ChatScreenAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
+    return PlatformAppBar(
+      material: (context, platform) {
+        return MaterialAppBarData(titleSpacing: 0);
+      },
       automaticallyImplyLeading: false,
-      leading: IconButton(
+      trailingActions: [
+        Padding(
+          padding: EdgeInsets.only(right: 5.w),
+          child: Icon(Icons.more_vert_outlined),
+        )
+      ],
+      leading: PlatformIconButton(
         onPressed: () {
           Get.back();
         },

@@ -12,23 +12,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-
-//----------------AppBar -----------------------
-class ProfileAppBar extends StatelessWidget {
-  const ProfileAppBar({super.key});
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+//----------------PlatformAppBar -----------------------
+class ProfilePlatformAppBar extends StatelessWidget {
+  const ProfilePlatformAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       centerTitle: true,
       actions: [
-        IconButton(
+        PlatformIconButton(
           onPressed: () => Get.toNamed(AppRoutes.setting),
           icon: Icon(HugeIcons.strokeRoundedSettings01),
         ),
       ],
-      title: AppBarTitle(),
-      leading: IconButton(
+      title: PlatformAppBarTitle(),
+      leading: PlatformIconButton(
         onPressed: () => Get.back(),
         icon: Icon(HugeIcons.strokeRoundedMultiplicationSign),
       ),
@@ -36,9 +36,9 @@ class ProfileAppBar extends StatelessWidget {
   }
 }
 
-//----------------AppBar Title-----------------------
-class AppBarTitle extends StatelessWidget {
-  const AppBarTitle({super.key});
+//----------------PlatformAppBar Title-----------------------
+class PlatformAppBarTitle extends StatelessWidget {
+  const PlatformAppBarTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +66,23 @@ class DescriptionText extends StatelessWidget {
     return BlocSelector<ProfileBloc, ProfileState, String>(
       selector: (state) => state.data.description,
       builder: (context, data) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.w),
-          child: Container(
-              padding: EdgeInsets.all(8.r),
-              decoration: BoxDecoration(
-                  color: AppColors.greyContainerColor,
-                  borderRadius: BorderRadius.circular(12.r)),
-              child: Text(data, style: Theme.of(context).textTheme.bodyMedium)),
+        return SliverPadding(
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
+          sliver: SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                    padding: EdgeInsets.all(8.r),
+                    decoration: BoxDecoration(
+                        color: AppColors.greyContainerColor,
+                        borderRadius: BorderRadius.circular(12.r)),
+                    child: Text(data,
+                        style: Theme.of(context).textTheme.bodyMedium)),
+              ),
+            ),
+          ),
         );
       },
     );
@@ -89,48 +98,48 @@ class UserInterestsList extends StatelessWidget {
     return BlocSelector<ProfileBloc, ProfileState, List>(
       selector: (state) => state.data.interests,
       builder: (context, data) {
-        return GridView.builder(
-          padding: EdgeInsets.symmetric(horizontal: 5.w),
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: data.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 8.h,
-            crossAxisSpacing: 8.w,
-            childAspectRatio: 3,
-          ),
-          itemBuilder: (BuildContext context, index) {
-            final items = data[index];
-            return Container(
-              padding: EdgeInsets.symmetric(horizontal: 2.w),
-              height: 20.h,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primaryColor.withAlpha(10),
-                    blurRadius: 2.r,
-                    spreadRadius: 2.r,
-                    offset: Offset(0.4.w, 0.4.h),
-                    blurStyle: BlurStyle.solid,
-                  ),
-                ],
-                color: AppColors.transparent,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(8.r),
-                border: Border.all(color: AppColors.primaryColor, width: 1.w),
-              ),
-              child: Center(
-                child: Text(
-                  items,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium!.copyWith(fontSize: 14.sp),
-                  overflow: TextOverflow.ellipsis,
+        return SliverPadding(
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
+          sliver: SliverGrid.builder(
+            itemCount: data.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              mainAxisSpacing: 8.h,
+              crossAxisSpacing: 8.w,
+              childAspectRatio: 3,
+            ),
+            itemBuilder: (BuildContext context, index) {
+              final items = data[index];
+              return Container(
+                padding: EdgeInsets.symmetric(horizontal: 2.w),
+                height: 20.h,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primaryColor.withAlpha(10),
+                      blurRadius: 2.r,
+                      spreadRadius: 2.r,
+                      offset: Offset(0.4.w, 0.4.h),
+                      blurStyle: BlurStyle.solid,
+                    ),
+                  ],
+                  color: AppColors.transparent,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(8.r),
+                  border: Border.all(color: AppColors.primaryColor, width: 1.w),
                 ),
-              ),
-            );
-          },
+                child: Center(
+                  child: Text(
+                    items,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium!.copyWith(fontSize: 14.sp),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              );
+            },
+          ),
         );
       },
     );
@@ -147,14 +156,23 @@ class UserSeniority extends StatelessWidget {
       selector: (state) => state.data.createdDate,
       builder: (context, data) {
         final date = Seniority.formatJoinedTime(data);
-        return Padding(
-          padding: EdgeInsets.only(left: 20.w),
-          child: Container(
-              padding: EdgeInsets.all(8.r),
-              decoration: BoxDecoration(
-                  color: AppColors.greyContainerColor,
-                  borderRadius: BorderRadius.circular(12.r)),
-              child: Text(date, style: Theme.of(context).textTheme.bodyMedium)),
+        return SliverPadding(
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
+          sliver: SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.only(left: 20.w),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                    padding: EdgeInsets.all(8.r),
+                    decoration: BoxDecoration(
+                        color: AppColors.greyContainerColor,
+                        borderRadius: BorderRadius.circular(12.r)),
+                    child: Text(date,
+                        style: Theme.of(context).textTheme.bodyMedium)),
+              ),
+            ),
+          ),
         );
       },
     );
@@ -170,22 +188,31 @@ class UserDetails extends StatelessWidget {
     return BlocSelector<ProfileBloc, ProfileState, ProfileModel>(
       selector: (state) => state.data,
       builder: (context, data) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              data.pseudo,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge!.copyWith(color: AppColors.primaryColor),
+        return SliverPadding(
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
+          sliver: SliverToBoxAdapter(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  data.pseudo,
+                  style: Theme.of(
+                    context,
+                  )
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: AppColors.primaryColor),
+                ),
+                Text("${data.age}",
+                    style: Theme.of(context).textTheme.bodyMedium),
+                Text(
+                  data.city,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
-            Text("${data.age}", style: Theme.of(context).textTheme.bodyMedium),
-            Text(
-              data.city,
-              style: Theme.of(context).textTheme.bodyMedium,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+          ),
         );
       },
     );
@@ -203,30 +230,35 @@ class ProfileImage extends StatelessWidget {
       builder: (context, url) {
         final hasValidUrl =
             url.isNotEmpty && Uri.tryParse(url)?.hasAbsolutePath == true;
-        return Padding(
-          padding: EdgeInsets.only(bottom: 5.h),
-          child: Container(
-            height: 280.h,
-            width: double.maxFinite.w,
-            decoration: BoxDecoration(
-              image: hasValidUrl
-                  ? DecorationImage(
-                      fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider(url),
-                    )
-                  : null,
-              color: AppColors.floralWhite,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12.r),
-                topRight: Radius.circular(12.r),
-              ),
-              shape: BoxShape.rectangle,
-            ),
+        return SliverPadding(
+          padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
+          sliver: SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.all(8.0.r),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: UserStatus(id: auth.currentUser!.uid),
+              padding: EdgeInsets.only(bottom: 5.h),
+              child: Container(
+                height: 280.h,
+                width: double.maxFinite.w,
+                decoration: BoxDecoration(
+                  image: hasValidUrl
+                      ? DecorationImage(
+                          fit: BoxFit.cover,
+                          image: CachedNetworkImageProvider(url),
+                        )
+                      : null,
+                  color: AppColors.floralWhite,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12.r),
+                    topRight: Radius.circular(12.r),
+                  ),
+                  shape: BoxShape.rectangle,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(8.0.r),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: UserStatus(id: auth.currentUser!.uid),
+                  ),
+                ),
               ),
             ),
           ),

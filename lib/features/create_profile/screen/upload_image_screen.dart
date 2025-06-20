@@ -8,6 +8,7 @@ import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -36,8 +37,8 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: false),
+    return PlatformScaffold(
+      appBar: PlatformAppBar(automaticallyImplyLeading: false),
       body: SafeArea(
         child: BlocListener<CreateProfileBloc, CreateProfileState>(
           listener: _listener,

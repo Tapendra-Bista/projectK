@@ -1,4 +1,4 @@
-//----------------AppBar -----------------------
+//----------------PlatformAppBar -----------------------
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
 import 'package:afriqueen/features/profile/bloc/profile_state.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
@@ -11,21 +11,21 @@ import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 
 //-------------------App Bar-------------------------------
-class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({super.key});
+class HomePlatformAppBar extends StatelessWidget {
+  const HomePlatformAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       centerTitle: true,
       actions: [
-        IconButton(
+        PlatformIconButton(
           onPressed: () => Get.toNamed(AppRoutes.preferences),
           icon: Icon(Icons.tune_outlined, size: 35.r),
         ),
       ],
       title: CityName(),
-      leading: IconButton(
+      leading: PlatformIconButton(
         onPressed: () => Get.toNamed(AppRoutes.profile),
         icon: Icon(LineIcons.user, size: 35.r),
       ),

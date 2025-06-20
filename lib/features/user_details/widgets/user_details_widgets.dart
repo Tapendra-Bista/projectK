@@ -21,6 +21,7 @@ import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -39,31 +40,34 @@ class StackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: double.maxFinite,
-          height: 280.h,
-          decoration: hasValidUrl
-              ? BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12.r),
-                    topRight: Radius.circular(12.r),
-                  ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: CachedNetworkImageProvider(widget.data.imgURL),
-                  ),
-                )
-              : null,
-        ),
-        Positioned(
-          top: 8.r,
-          right: 8.r,
-          child: UserStatus(id: widget.data.id),
-        ),
-      ],
-    );
+    return SliverPadding(
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
+        sliver: SliverToBoxAdapter(
+            child: Stack(
+          children: [
+            Container(
+              width: double.maxFinite,
+              height: 280.h,
+              decoration: hasValidUrl
+                  ? BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12.r),
+                        topRight: Radius.circular(12.r),
+                      ),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: CachedNetworkImageProvider(widget.data.imgURL),
+                      ),
+                    )
+                  : null,
+            ),
+            Positioned(
+              top: 8.r,
+              right: 8.r,
+              child: UserStatus(id: widget.data.id),
+            ),
+          ],
+        )));
   }
 }
 
@@ -75,15 +79,22 @@ class CreatedDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 20.w),
-      child: Container(
-          padding: EdgeInsets.all(8.r),
-          decoration: BoxDecoration(
-              color: AppColors.greyContainerColor,
-              borderRadius: BorderRadius.circular(12.r)),
-          child: Text(date, style: Theme.of(context).textTheme.bodyMedium)),
-    );
+    return SliverPadding(
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 5.h),
+        sliver: SliverToBoxAdapter(
+            child: Padding(
+          padding: EdgeInsets.only(left: 20.w),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+                padding: EdgeInsets.all(8.r),
+                decoration: BoxDecoration(
+                    color: AppColors.greyContainerColor,
+                    borderRadius: BorderRadius.circular(12.r)),
+                child:
+                    Text(date, style: Theme.of(context).textTheme.bodyMedium)),
+          ),
+        )));
   }
 }
 
@@ -95,19 +106,25 @@ class Description extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-      child: Container(
-        padding: EdgeInsets.all(8.r),
-        decoration: BoxDecoration(
-            color: AppColors.greyContainerColor,
-            borderRadius: BorderRadius.circular(12.r)),
-        child: Text(
-          widget.data.description,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-      ),
-    );
+    return SliverPadding(
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 5.h),
+        sliver: SliverToBoxAdapter(
+            child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: EdgeInsets.all(8.r),
+              decoration: BoxDecoration(
+                  color: AppColors.greyContainerColor,
+                  borderRadius: BorderRadius.circular(12.r)),
+              child: Text(
+                widget.data.description,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+          ),
+        )));
   }
 }
 
@@ -119,46 +136,46 @@ class Interests extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: EdgeInsets.symmetric(horizontal: 5.w),
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: widget.data.interests.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        mainAxisSpacing: 8.h,
-        crossAxisSpacing: 8.w,
-        childAspectRatio: 3,
-      ),
-      itemBuilder: (BuildContext context, index) {
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 2.w),
-          height: 20.h,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primaryColor.withAlpha(10),
-                blurRadius: 2.r,
-                spreadRadius: 2.r,
-                offset: Offset(0.4.w, 0.4.h),
-                blurStyle: BlurStyle.solid,
-              ),
-            ],
-            color: AppColors.transparent,
-            borderRadius: BorderRadius.circular(8.r),
-            border: Border.all(color: AppColors.primaryColor, width: 1.w),
-          ),
-          child: Center(
-            child: Text(
-              widget.data.interests[index],
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium!.copyWith(fontSize: 14.sp),
-              overflow: TextOverflow.ellipsis,
+    return SliverPadding(
+      padding: EdgeInsetsGeometry.symmetric(horizontal: 10.h),
+      sliver: SliverGrid.builder(
+        itemCount: widget.data.interests.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: 8.h,
+          crossAxisSpacing: 8.w,
+          childAspectRatio: 3,
+        ),
+        itemBuilder: (BuildContext context, index) {
+          return Container(
+            padding: EdgeInsets.symmetric(horizontal: 2.w),
+            height: 20.h,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primaryColor.withAlpha(10),
+                  blurRadius: 2.r,
+                  spreadRadius: 2.r,
+                  offset: Offset(0.4.w, 0.4.h),
+                  blurStyle: BlurStyle.solid,
+                ),
+              ],
+              color: AppColors.transparent,
+              borderRadius: BorderRadius.circular(8.r),
+              border: Border.all(color: AppColors.primaryColor, width: 1.w),
             ),
-          ),
-        );
-      },
+            child: Center(
+              child: Text(
+                widget.data.interests[index],
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(fontSize: 14.sp),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -171,26 +188,29 @@ class UserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Text(
-          widget.data.pseudo,
-          style: Theme.of(
-            context,
-          ).textTheme.bodyLarge!.copyWith(color: AppColors.primaryColor),
-        ),
-        Text(
-          "${widget.data.age}",
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        Text(
-          widget.data.city,
-          style: Theme.of(context).textTheme.bodyMedium,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
-    );
+    return SliverPadding(
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
+        sliver: SliverToBoxAdapter(
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              widget.data.pseudo,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge!.copyWith(color: AppColors.primaryColor),
+            ),
+            Text(
+              "${widget.data.age}",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            Text(
+              widget.data.city,
+              style: Theme.of(context).textTheme.bodyMedium,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        )));
   }
 }
 
@@ -200,88 +220,93 @@ class ButtonList extends StatelessWidget {
   final ProfileModel model;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8.r),
-      decoration: BoxDecoration(
-          color: AppColors.greyContainerColor,
-          borderRadius: BorderRadius.circular(12.r)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          //------------ like button----------
-          LikeButton(
-            id: model.id,
-          ),
-          //--------------Message-------------------
-          StartChat(
-            profileModel: model,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return SliverPadding(
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
+        sliver: SliverToBoxAdapter(
+            child: Container(
+          padding: EdgeInsets.all(8.r),
+          decoration: BoxDecoration(
+              color: AppColors.greyContainerColor,
+              borderRadius: BorderRadius.circular(12.r)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
-                onPressed: () {
-                  context
-                      .read<FavoriteBloc>()
-                      .add(FavoriteUserAdded(favId: model.id));
-                  snackBarMessage(context, EnumLocale.savedToFavorites.name.tr,
-                      Theme.of(context));
-                  getIt<HomeBloc>().add(HomeUsersProfileList());
-
-                  Get.toNamed(AppRoutes.main);
-                },
-                icon: Icon(Icons.favorite_border_outlined,
-                    size: 30, color: AppColors.black),
+              //------------ like button----------
+              LikeButton(
+                id: model.id,
               ),
-              Text(
-                EnumLocale.Favorite.name.tr,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: AppColors.black),
-              )
+              //--------------Message-------------------
+              StartChat(
+                profileModel: model,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  PlatformIconButton(
+                    onPressed: () {
+                      context
+                          .read<FavoriteBloc>()
+                          .add(FavoriteUserAdded(favId: model.id));
+                      snackBarMessage(
+                          context,
+                          EnumLocale.savedToFavorites.name.tr,
+                          Theme.of(context));
+                      getIt<HomeBloc>().add(HomeUsersProfileList());
+
+                      Get.toNamed(AppRoutes.main);
+                    },
+                    icon: Icon(Icons.favorite_border_outlined,
+                        size: 30, color: AppColors.black),
+                  ),
+                  Text(
+                    EnumLocale.Favorite.name.tr,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(color: AppColors.black),
+                  )
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  PlatformIconButton(
+                    onPressed: () async {
+                      context
+                          .read<ArchiveBloc>()
+                          .add(ArchiveUserAdded(archiveId: model.id));
+                      snackBarMessage(context,
+                          EnumLocale.addedToArchive.name.tr, Theme.of(context));
+
+                      getIt<HomeBloc>().add(HomeUsersProfileList());
+                      Get.toNamed(AppRoutes.main);
+                    },
+                    icon: Icon(
+                      LineIcons.archive,
+                      color: AppColors.black,
+                      size: 30,
+                    ),
+                  ),
+                  Text(
+                    EnumLocale.archive.name.tr,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(color: AppColors.black),
+                  )
+                ],
+              ),
             ],
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: () async {
-                  context
-                      .read<ArchiveBloc>()
-                      .add(ArchiveUserAdded(archiveId: model.id));
-                  snackBarMessage(context, EnumLocale.addedToArchive.name.tr,
-                      Theme.of(context));
-
-                  getIt<HomeBloc>().add(HomeUsersProfileList());
-                  Get.toNamed(AppRoutes.main);
-                },
-                icon: Icon(
-                  LineIcons.archive,
-                  color: AppColors.black,
-                  size: 30,
-                ),
-              ),
-              Text(
-                EnumLocale.archive.name.tr,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: AppColors.black),
-              )
-            ],
-          ),
-        ],
-      ),
-    );
+        )));
   }
 }
 
-//---------------- AppBar -----------------------
-class UserDetailsAppBar extends StatelessWidget {
-  const UserDetailsAppBar({
+//---------------- PlatformAppBar -----------------------
+class UserDetailsPlatformAppBar extends StatelessWidget {
+  const UserDetailsPlatformAppBar({
     Key? key,
     required this.isScrollingUp,
     required this.data,
@@ -299,7 +324,7 @@ class UserDetailsAppBar extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 25.sp),
         overflow: TextOverflow.ellipsis,
       ),
-      leading: IconButton(
+      leading: PlatformIconButton(
         onPressed: () => Get.back(),
         icon: Icon(HugeIcons.strokeRoundedMultiplicationSign),
       ),

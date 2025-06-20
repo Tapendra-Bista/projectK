@@ -2,14 +2,14 @@ import 'package:afriqueen/common/widgets/steps.dart';
 import 'package:afriqueen/features/create_profile/widget/create_profile_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 class PassionScreen extends StatelessWidget {
   const PassionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: false),
+    return PlatformScaffold(
+      appBar: PlatformAppBar(automaticallyImplyLeading: false),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

@@ -8,14 +8,14 @@ import 'package:afriqueen/features/home/widget/home_widgets.dart';
 import 'package:afriqueen/features/stories/screen/stories_screen.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class HomeDataContent extends StatelessWidget {
   const HomeDataContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PlatformScaffold(
         body: RefreshIndicator(
       color: AppColors.primaryColor,
       backgroundColor: AppColors.floralWhite,
@@ -25,16 +25,10 @@ class HomeDataContent extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           //-------------------app bar-------------------
-          const HomeAppBar(),
+          const HomePlatformAppBar(),
           //-------------------Stories-------------------
           const StoriesScreen(),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 3.w),
-              //-----------User profile grid-------------------------
-              child: const UserImageGrid(),
-            ),
-          ),
+          const UserImageGrid(),
         ],
       ),
     ));

@@ -34,7 +34,7 @@ class CreateProfileRepository extends BaseRepository {
 
     if (documentSnapshot.exists) {
       final data = documentSnapshot.data() as Map<String, dynamic>;
-
+      print("Current User Location : ${country} and ${city}");
       await documentReference.update({
         'city': city ?? data['city'],
         'country': country ?? data['country'],

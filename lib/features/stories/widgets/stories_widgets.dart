@@ -13,7 +13,7 @@ import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 //---------------------Other user Stories--------------------------------
 class OtherUserStories extends StatelessWidget {
   const OtherUserStories({
@@ -107,10 +107,10 @@ class OwnStories extends StatelessWidget {
                             child: SizedBox(
                               width: 25,
                               height: 25,
-                              child: IconButton(
+                              child: PlatformIconButton(
                                 padding: EdgeInsets.zero,
-                                constraints: const BoxConstraints(),
-                                iconSize: 25.r,
+                             material: (context,platform)=>MaterialIconButtonData(   constraints: const BoxConstraints(),
+                                iconSize: 25.r,),
                                 onPressed: () => showModalBottomSheet(
                                     constraints: BoxConstraints(
                                       minWidth: double.maxFinite,

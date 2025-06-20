@@ -16,6 +16,7 @@ class LoginRepository extends BaseRepository {
   bool? isNewUser;
   LoginRepository({FirebaseAuth? firebaseauth});
 
+
   //------------------------------login with Email ------------------------------------------
   Future<UserCredential?> loginWithEmail(LoginModel loginModel) async {
     try {

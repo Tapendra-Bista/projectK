@@ -28,7 +28,7 @@ class ListOfUsers extends StatelessWidget {
                 final otherUserId =
                     chat.participants.firstWhere((id) => id != _currentUserId);
 
-                return ChatListTitle(
+                return ChatListTile(
                   otherUserId: otherUserId,
                   chat: chat,
                   currentUserId: _currentUserId,
@@ -39,12 +39,13 @@ class ListOfUsers extends StatelessWidget {
                         'Unknown';
                     final otherUserImage =
                         chat.participantsName?[otherUserId]?['imgURL'] ?? '';
-                    Get.to(
-                      () => ChatScreen(
-                          imgURL: otherUserImage,
-                          receiverId: otherUserId,
-                          receiverName: otherUserName),
-                    );
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Get.to(() => ChatScreen(
+                            imgURL: otherUserImage,
+                            receiverId: otherUserId,
+                            receiverName: otherUserName,
+                          ));
+                    });
                   },
                 );
               });

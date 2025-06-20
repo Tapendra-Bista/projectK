@@ -2,6 +2,7 @@
 import 'package:afriqueen/services/location/location.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,7 @@ class _CityNameState extends State<CityName> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SizedBox.shrink(); // Show loading indicator
         } else if (snapshot.hasError) {
-          return Text(
+          return PlatformText(
             'Error: ${snapshot.error}',
             style: Theme.of(context).textTheme.bodySmall,
             overflow: TextOverflow.ellipsis,
@@ -43,14 +44,14 @@ class _CityNameState extends State<CityName> {
         } else if (snapshot.hasData && snapshot.data != null) {
           final currentLocation = snapshot.data!;
           return Center(
-            child: Text(
+            child: PlatformText(
               currentLocation.first.locality!.tr,
               style: Theme.of(context).textTheme.bodyMedium,
               overflow: TextOverflow.ellipsis,
             ),
           );
         } else {
-          return Text(
+          return PlatformText(
             'Location not available',
             style: Theme.of(context).textTheme.bodySmall,
             overflow: TextOverflow.ellipsis,

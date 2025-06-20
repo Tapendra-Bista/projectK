@@ -7,6 +7,7 @@ import 'package:afriqueen/features/like/model/like_model.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:get/get.dart';
 
 class LikeButton extends StatelessWidget {
@@ -22,7 +23,7 @@ class LikeButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            IconButton(
+            PlatformIconButton(
               onPressed: () {
                 if (likeData.likeId.contains(id)) {
                   getIt<LikeBloc>().add(LikeUserRemoved(likeId: id));
@@ -42,7 +43,7 @@ class LikeButton extends StatelessWidget {
                 size: 30,
               ),
             ),
-            Text(
+            PlatformText(
               EnumLocale.like.name.tr,
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: likeData.likeId.contains(id)

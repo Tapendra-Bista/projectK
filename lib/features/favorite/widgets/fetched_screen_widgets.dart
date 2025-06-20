@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 //-------------------- user Image--------------------
 class UserImage extends StatelessWidget {
   const UserImage({super.key, required this.Homedata});
@@ -90,7 +90,7 @@ class ButtonsList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IconButton(
+              PlatformIconButton(
                   onPressed: () {
                     context
                         .read<FavoriteBloc>()

@@ -1,10 +1,11 @@
+import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_state.dart';
-import 'package:afriqueen/features/favorite/widgets/favorite_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:get/get.dart';
+import 'package:hugeicons/hugeicons.dart';
 //------------------Error widget---------------------
 
 class ErrorScreen extends StatelessWidget {
@@ -23,10 +24,19 @@ class ErrorScreen extends StatelessWidget {
         return null;
       },
       builder: (context, error) {
-        return Scaffold(
-           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(55.h),
-            child: FavoriteScreenAppBar(),
+        return PlatformScaffold(
+          appBar: PlatformAppBar(
+            material: (context, platform) {
+              return MaterialAppBarData(centerTitle: true);
+            },
+            leading: PlatformIconButton(
+              onPressed: () => Get.back(),
+              icon: Icon(HugeIcons.strokeRoundedMultiplicationSign),
+            ),
+            title: Text(
+              EnumLocale.favorites.name.tr,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
           ),
           body: Center(
             child: Text(

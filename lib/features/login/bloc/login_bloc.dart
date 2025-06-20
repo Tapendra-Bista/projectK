@@ -1,4 +1,5 @@
 import 'package:afriqueen/common/localization/enums/enums.dart';
+import 'package:afriqueen/features/create_profile/repository/create_profile_repository.dart';
 import 'package:afriqueen/features/login/bloc/login_event.dart';
 import 'package:afriqueen/features/login/bloc/login_state.dart';
 import 'package:afriqueen/features/login/models/login_model.dart';
@@ -10,7 +11,8 @@ import 'package:get/get.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginRepository _loginRepository;
-
+  final CreateProfileRepository _createProfileRepository =
+      CreateProfileRepository();
   bool _isPasswordHidden = true;
   final _app = AppGetStorage();
   LoginModel _loginModel = LoginModel(email: '', password: '');
@@ -44,6 +46,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       );
 
       if (userCredential != null) {
+        await _createProfileRepository.updateLocation(
+            event.city, event.country);
+
         emit(LoginSuccess.fromState(state));
       } else {
         emit(LoginError.fromState(state, error: _loginRepository.error!.tr));
