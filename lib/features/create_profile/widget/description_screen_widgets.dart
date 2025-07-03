@@ -5,9 +5,9 @@ import 'package:afriqueen/common/widgets/common_button.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_event.dart';
 import 'package:afriqueen/routes/app_routes.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -67,9 +67,9 @@ class _TextFieldForDescriptionState extends State<TextFieldForDescription> {
         maxLines: null, // Must be null when expands is true
         minLines: null,
         keyboardType: TextInputType.text,
-        onChanged: (value) => getIt<CreateProfileBloc>().add(
-          DescriptionChanged(description: value.trim()),
-        ),
+        onChanged: (value) => context.read<CreateProfileBloc>().add(
+              DescriptionChanged(description: value.trim()),
+            ),
         cursorColor: AppColors.black,
         style: TextStyle(fontSize: 16),
         validator: AppValidator.validateDescription,

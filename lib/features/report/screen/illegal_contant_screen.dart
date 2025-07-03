@@ -2,13 +2,13 @@ import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/constant/constant_strings.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/features/report/bloc/report_bloc.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+
 //---------------- Illegal contant----------------
 class IllegalContant extends StatelessWidget {
   const IllegalContant({
@@ -38,7 +38,7 @@ class IllegalContant extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BlocSelector<ReportBloc, ReportState, String?>(
-              bloc: getIt<ReportBloc>(),
+              bloc: context.read<ReportBloc>(),
               selector: (state) {
                 if (state is Illegal) {
                   return state.illegal;
@@ -100,7 +100,7 @@ class BottomSheetContant extends StatelessWidget {
             itemCount: AppStrings.illegalContentList.length,
             itemBuilder: (context, index) => InkWell(
                   onTap: () {
-                    getIt<ReportBloc>().add(IllegalChoosen(
+                    context.read<ReportBloc>().add(IllegalChoosen(
                         illegal: AppStrings.illegalContentList[index]));
                     print("Printed ${AppStrings.illegalContentList[index]}");
                     Get.back();

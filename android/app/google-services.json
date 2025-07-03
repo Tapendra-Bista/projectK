@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "729178992675",
+    "firebase_url": "https://afriqueen-e0b18-default-rtdb.firebaseio.com",
     "project_id": "afriqueen-e0b18",
     "storage_bucket": "afriqueen-e0b18.firebasestorage.app"
   },
@@ -14,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "729178992675-gduf9ahnkhnn4daurqk234kjtjkr7421.apps.googleusercontent.com",
+          "client_id": "729178992675-2dsdj87i6qmcga87kbe48snte05mgdmc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.afriqueen",
-            "certificate_hash": "d97a276d58010c1a823b7f9a58e5ede4f3a36d96"
+            "certificate_hash": "6e998ca7fff3a7077d2447849c590fda6f344008"
           }
         },
         {

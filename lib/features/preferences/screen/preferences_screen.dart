@@ -38,6 +38,7 @@ class PreferencesScreen extends StatelessWidget {
       ),
       body: BlocBuilder<PreferencesBloc, PreferencesState>(
         builder: (context, state) {
+    
           return BlocSelector<ProfileBloc, ProfileState, ProfileModel>(
             selector: (state) => state.data,
             builder: (context, CurrentUserData) {

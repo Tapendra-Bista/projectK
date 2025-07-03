@@ -24,8 +24,8 @@ class _WellcomeScreenState extends State<WellcomeScreen> {
     return PlatformScaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: BlocProvider(
-            create: (context) => getIt<WellcomeBloc>(),
+          child: BlocProvider<WellcomeBloc>.value(
+            value: getIt<WellcomeBloc>(),
             child: BlocListener<WellcomeBloc, WellcomeState>(
               listener: _listener,
               // Sync with GetX,
@@ -46,7 +46,7 @@ class _WellcomeScreenState extends State<WellcomeScreen> {
                     //--------------------Welcome page description----------------------------
                     const WelcomeDescription(),
 
-                    SizedBox(height: 30.h),
+                    SizedBox(height: 25.h),
                     //------------------------Next Button ----------------------------------
                     NextButton(),
                   ],

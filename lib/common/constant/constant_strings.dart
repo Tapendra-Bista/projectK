@@ -67,6 +67,10 @@ class AppStrings {
   ];
 
   static const List<String> language = ["English", "Français"];
+  static const List<String> flag = [
+    'assets/images/country/us.png',
+    'assets/images/country/fr.png'
+  ];
   static const cloudName = "dwzriczge";
   static const uploadPreset = "afrikhc9o0";
 
@@ -94,5 +98,11 @@ class AppStrings {
     EnumLocale.racismOrTerrorism.name.tr,
     EnumLocale.blackmail.name.tr,
     EnumLocale.deprivationOfLiberty.name.tr
+  ];
+
+  static List<String> reelsFilterItems = [
+    EnumLocale.archive.name.tr,
+    EnumLocale.Favorite.name.tr,
+    EnumLocale.following.name.tr,
   ];
 }

@@ -18,7 +18,7 @@ class StoriesScreen extends StatelessWidget {
       selector: (state) => state.storiesData,
       builder: (context, storiesData) {
         return SizedBox(
-          height: 85.h,
+          height: 90.h,
           child: GridView.builder(
             padding: EdgeInsets.zero,
             scrollDirection: Axis.horizontal,
@@ -26,7 +26,7 @@ class StoriesScreen extends StatelessWidget {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
                 mainAxisSpacing: 0,
-                childAspectRatio: 1.2,
+                childAspectRatio: 1.1,
                 crossAxisSpacing: 0),
             itemBuilder: (context, index) {
               if (index == 0) {

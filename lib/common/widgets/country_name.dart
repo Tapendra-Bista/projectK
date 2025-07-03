@@ -31,6 +31,7 @@ class _CountryNameState extends State<CountryName> {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return FutureBuilder<List<Placemark>?>(
       future: _locationFuture,
       builder: (context, snapshot) {
@@ -39,7 +40,7 @@ class _CountryNameState extends State<CountryName> {
         } else if (snapshot.hasError) {
           return PlatformText(
             'Error: ${snapshot.error}',
-            style: Theme.of(context).textTheme.bodySmall,
+            style: theme.bodySmall,
             overflow: TextOverflow.ellipsis,
           );
         } else if (snapshot.hasData && snapshot.data != null) {
@@ -48,14 +49,14 @@ class _CountryNameState extends State<CountryName> {
           return Center(
             child: PlatformText(
               currentLocation.first.country!.tr,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.bodyMedium,
               overflow: TextOverflow.ellipsis,
             ),
           );
         } else {
           return PlatformText(
             'Location not available',
-            style: Theme.of(context).textTheme.bodySmall,
+            style: theme.bodySmall,
             overflow: TextOverflow.ellipsis,
           ); // Handle null data
         }

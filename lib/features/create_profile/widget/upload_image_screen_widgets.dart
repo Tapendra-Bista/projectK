@@ -8,7 +8,6 @@ import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart'
 import 'package:afriqueen/features/create_profile/bloc/create_profile_event.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart';
 import 'package:afriqueen/services/permissions/permission_handler.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +28,7 @@ class SubmitButton extends StatelessWidget {
         return CommonButton(
           onPressed: () {
             if (state.imgURL.isNotEmpty) {
-              getIt<CreateProfileBloc>().add(SubmitButtonClicked());
+              context.read<CreateProfileBloc>().add(SubmitButtonClicked());
             } else {
               snackBarMessage(
                 context,
@@ -65,7 +64,7 @@ class UploadImageCenterLogo extends StatelessWidget {
             if (!currentContext.mounted) return;
 
             if (isGranted) {
-              getIt<CreateProfileBloc>().add(PickImg());
+              context.read<CreateProfileBloc>().add(PickImg());
             } else {
               snackBarMessage(
                 context,

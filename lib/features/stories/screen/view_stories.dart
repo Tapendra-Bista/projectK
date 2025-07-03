@@ -10,7 +10,6 @@ import 'package:flutter_story_view/flutter_story_view.dart';
 import 'package:flutter_story_view/models/story_item.dart';
 import 'package:get/get.dart';
 
-// ----------------------------View Stories-----------------------------------------------
 class ViewStories extends StatefulWidget {
   const ViewStories({super.key, required this.data});
   final StoriesFetchModel data;
@@ -21,47 +20,64 @@ class ViewStories extends StatefulWidget {
 
 class _ViewStoriesState extends State<ViewStories> {
   int currentIndex = 0;
+  bool initialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          initialized = true;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return PlatformScaffold(
       body: SafeArea(
         child: SizedBox.expand(
-            child: Stack(
-          children: [
-            FlutterStoryView(
-              showReplyButton: false,
-              indicatorPadding: REdgeInsets.only(top: 30.h),
-              storyItems: widget.data.containUrl.map((imgUrl) {
-                return StoryItem(
-                    url: imgUrl, type: StoryItemType.image, duration: 4);
-              }).toList(),
+          child: Stack(
+            children: [
+              FlutterStoryView(
+                showReplyButton: false,
+                indicatorPadding: REdgeInsets.only(top: 30.h),
+                storyItems: widget.data.containUrl.map((imgUrl) {
+                  return StoryItem(
+                    url: imgUrl,
+                    type: StoryItemType.image,
+                    duration: 4,
+                  );
+                }).toList(),
+                onComplete: () {
+                  Get.back();
+                },
+                onPageChanged: (index) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (mounted) {
+                      setState(() {
+                        currentIndex = index;
+                      });
+                    }
+                  });
+                },
+                indicatorColor: Colors.grey[500],
+                indicatorHeight: 2,
+                indicatorValueColor: Colors.white,
+              ),
 
-              onComplete: () {
-                Get.back();
-              }, // called when stories completed
-              onPageChanged: (index) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (mounted) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  }
-                });
-              },
-              // returns current page index
-              indicatorColor: Colors.grey[500],
-              indicatorHeight: 2,
-              indicatorValueColor: Colors.white,
-            ),
-            Positioned(
+              // User avatar + name + time
+              Positioned(
                 top: 38.h,
                 left: 10.w,
                 child: Row(
-                  spacing: 10.w,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AdvancedAvatar(
-                      foregroundDecoration: BoxDecoration(
+                      foregroundDecoration: const BoxDecoration(
                         shape: BoxShape.circle,
                       ),
                       decoration: const BoxDecoration(
@@ -71,31 +87,32 @@ class _ViewStoriesState extends State<ViewStories> {
                       image: CachedNetworkImageProvider(widget.data.userImg),
                       size: 40.r,
                     ),
+                    SizedBox(width: 10.w),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           widget.data.userName,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
+                          style: theme.bodyMedium!
                               .copyWith(color: AppColors.floralWhite),
                         ),
                         Text(
-                          Seniority.formatStoriesTime(
-                              widget.data.createdDate[currentIndex]),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
+                          (initialized &&
+                                  widget.data.createdDate.length > currentIndex)
+                              ? Seniority.formatStoriesTime(
+                                  widget.data.createdDate[currentIndex])
+                              : '',
+                          style: theme.bodySmall!
                               .copyWith(color: AppColors.floralWhite),
-                        )
+                        ),
                       ],
-                    )
+                    ),
                   ],
-                ))
-          ],
-        )),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

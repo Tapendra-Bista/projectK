@@ -3,20 +3,10 @@ import 'package:get_storage/get_storage.dart';
 class AppGetStorage {
   final box = GetStorage();
 
-  // //-------- chat data----------
-  // getChats() {
-  //   final data = box.read('chats');
-
-  //   return ChatMessage.fromJson(data);
-  // }
-
-  // void setChats(ChatMessage message) {
-  //   box.write('chats', message.toJson());
-  // }
 
 // --------------------for Location-----------------
   String getCity() {
-    return box.read('newCity');
+    return box.read('newCity') ?? '';
   }
 
   void setCity(String value) {
@@ -24,7 +14,7 @@ class AppGetStorage {
   }
 
   String getCountry() {
-    return box.read('newCountry');
+    return box.read('newCountry')??'';
   }
 
   void setCountry(String value) {

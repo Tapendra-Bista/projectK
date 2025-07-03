@@ -2,6 +2,7 @@ import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 //-------------------------------- button for app-------------------------------------------------
 class CommonButton extends StatelessWidget {
   const CommonButton({
@@ -19,15 +20,22 @@ class CommonButton extends StatelessWidget {
       child: SizedBox(
         height: 40.h, // Slightly increased height for better touch target
         width: 200.w,
-        child: ElevatedButton(
+        child: PlatformElevatedButton(
           // Using ElevatedButton for better default styling
           onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.transparent,
-            padding: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.r),
+          material: (context, platform) => MaterialElevatedButtonData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.r),
+              ),
             ),
+          ),
+
+          cupertino: (context, platform) => CupertinoElevatedButtonData(
+            color: Colors.transparent,
+            padding: EdgeInsets.zero,
           ),
           child: Ink(
             decoration: BoxDecoration(

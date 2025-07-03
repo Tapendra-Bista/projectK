@@ -293,4 +293,34 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
   EnumLocale.saveChanges.name: "Save",
   EnumLocale.match.name: "Match", EnumLocale.deleteChat.name: "Delete",
   EnumLocale.areYouSure.name: "Are you sure you want to delete it?",
+  EnumLocale.noProfileMatchYourFilters.name: "No profiles match your filters",
+  EnumLocale.newReel.name: "New reel",
+  EnumLocale.reels.name: "Reels",
+  EnumLocale.selecteFromGallery.name: "Select from gallery",
+  EnumLocale.lengthOfVideo.name: "Your video must be under 15 seconds.",
+  EnumLocale.voiceMessage.name: "Voice message",
+  EnumLocale.postReels.name: "Post",
+  EnumLocale.reelHintText.name: "Write a caption",
+  EnumLocale.descriptionRequired.name: 'Description is required',
+  EnumLocale.reelPosted.name: "Your reel is live!",
+  EnumLocale.requests.name: "Requests",
+  EnumLocale.messageRequestsText1.name: "Send a message request to",
+  EnumLocale.messageRequestsText2.name:
+      "to start chatting! Once they accept, you'll be able to exchange messages.",
+
+  EnumLocale.messageRequestsSend1.name: "Message request sent to",
+  EnumLocale.messageRequestsSend2.name:
+      "! You can find all your request-related information in the Requests section.",
+  EnumLocale.messageRequests.name: "Message requests",
+  EnumLocale.requestInfo.name:
+      "sent you a message request! Slide left to respond.",
+  EnumLocale.accept.name: "Accept",
+  EnumLocale.reject.name: "Reject",
+  EnumLocale.requestReject.name: "Request reject",
+  EnumLocale.requestInitial.name: "Request processing...",
+  EnumLocale.requestInitialMessage.name:
+      "hasn't responded to your message request yet.",
+  EnumLocale.requestRejectMessage.name: "has declined your message request.",
+   EnumLocale.toYou.name: "To You",
+  EnumLocale.fromYou.name: "From You",
 };

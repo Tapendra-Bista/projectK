@@ -40,3 +40,12 @@ List<ProfileModel?> getFilterData(
     return result;
   }).toList();
 }
+
+bool isFilterActive(PreferencesState state) {
+  return state.isMenClicked ||
+      state.isWomenClicked ||
+      state.isCityClicked ||
+      state.isCountryClicked ||
+      state.start != 18 ||
+      state.end != 60;
+}

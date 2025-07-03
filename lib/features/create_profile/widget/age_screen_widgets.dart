@@ -6,7 +6,6 @@ import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart'
 import 'package:afriqueen/features/create_profile/bloc/create_profile_event.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart';
 import 'package:afriqueen/routes/app_routes.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
@@ -103,7 +102,7 @@ class SelectDob extends StatelessWidget {
         ),
         onChange: (index) {},
         onSubmit: (value) =>
-            getIt<CreateProfileBloc>().add(DobChanged(dob: value)),
+            context.read<CreateProfileBloc>().add(DobChanged(dob: value)),
         bottomPickerTheme: BottomPickerTheme.plumPlate,
       ).show(context),
       child: Container(

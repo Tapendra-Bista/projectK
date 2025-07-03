@@ -8,7 +8,6 @@ import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/location/location.dart';
 import 'package:afriqueen/services/permissions/permission_handler.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +26,7 @@ class AddressNextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   
     return BlocBuilder<CreateProfileBloc, CreateProfileState>(
       builder: (context, state) {
         return CommonButton(
@@ -62,9 +62,10 @@ class AddressDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.addressDescription.name.tr,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: theme.bodySmall,
     );
   }
 }
@@ -75,9 +76,10 @@ class AddressTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.addressTitle.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: theme.bodyLarge,
     );
   }
 }
@@ -137,18 +139,19 @@ class City extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final theme = Theme.of(context).textTheme;
     return FutureBuilder<List<Placemark>?>(
       future: _locationFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Text(
             'Loading',
-            style: Theme.of(context).textTheme.bodySmall,
+            style: theme.bodySmall,
           ); // Show loading indicator
         } else if (snapshot.hasError) {
           return Text(
             EnumLocale.defaultError.name.tr,
-            style: Theme.of(context).textTheme.bodySmall,
+            style: theme.bodySmall,
           );
         } else if (snapshot.hasData && snapshot.data != null) {
           final currentLocation = snapshot.data!;
@@ -163,14 +166,14 @@ class City extends StatelessWidget {
             child: Center(
               child: Text(
                 currentLocation.first.locality!.tr,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: theme.bodyMedium,
               ),
             ),
           );
         } else {
           return Text(
             EnumLocale.defaultError.name.tr,
-            style: Theme.of(context).textTheme.bodySmall,
+            style: theme.bodySmall,
           ); // Handle null data
         }
       },
@@ -187,27 +190,28 @@ class Country extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final theme = Theme.of(context).textTheme;
     return FutureBuilder<List<Placemark>?>(
       future: _locationFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Text(
             'Loading',
-            style: Theme.of(context).textTheme.bodySmall,
+            style: theme.bodySmall,
           ); // Show loading indicator
         } else if (snapshot.hasError) {
           return Text(
             EnumLocale.defaultError.name.tr,
-            style: Theme.of(context).textTheme.bodySmall,
+            style: theme.bodySmall,
           );
         } else if (snapshot.hasData && snapshot.data != null) {
           final currentLocation = snapshot.data!;
-          getIt<CreateProfileBloc>().add(
-            AddressChanged(
-              country: currentLocation.first.country!,
-              city: currentLocation.first.locality!,
-            ),
-          );
+          context.read<CreateProfileBloc>().add(
+                AddressChanged(
+                  country: currentLocation.first.country!,
+                  city: currentLocation.first.locality!,
+                ),
+              );
           return Container(
             height: 40.h,
             width: 150.w,
@@ -219,14 +223,14 @@ class Country extends StatelessWidget {
             child: Center(
               child: Text(
                 currentLocation.first.country!.tr,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: theme.bodyMedium,
               ),
             ),
           );
         } else {
           return Text(
             EnumLocale.defaultError.name.tr,
-            style: Theme.of(context).textTheme.bodySmall,
+            style: theme.bodySmall,
           ); // Handle null data
         }
       },

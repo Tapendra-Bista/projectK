@@ -3,7 +3,7 @@ import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
 import 'package:afriqueen/features/archive/bloc/archive_state.dart';
 import 'package:afriqueen/features/archive/screen/empty_data_screen.dart';
 import 'package:afriqueen/features/archive/screen/error_screen.dart';
-import 'package:afriqueen/features/archive/screen/fetched_screen.dart';
+import 'package:afriqueen/features/archive/screen/archive_fetched_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

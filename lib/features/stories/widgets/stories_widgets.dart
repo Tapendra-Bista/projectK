@@ -11,9 +11,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+
 //---------------------Other user Stories--------------------------------
 class OtherUserStories extends StatelessWidget {
   const OtherUserStories({
@@ -25,6 +26,7 @@ class OtherUserStories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     final isValidImage = Uri.tryParse(data.userImg)!.hasAbsolutePath == true;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -47,8 +49,7 @@ class OtherUserStories extends StatelessWidget {
         ),
         Text(
           data.userName,
-          style: Theme.of(context)
-              .textTheme
+          style: theme
               .bodySmall!
               .copyWith(color: AppColors.black, fontSize: 11.2.sp),
           overflow: TextOverflow.ellipsis,
@@ -66,6 +67,7 @@ class OwnStories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocSelector<StoriesBloc, StoriesState, StoriesFetchModel>(
         selector: (state) => state.currentUserStoriesData,
         builder: (context, currentUserStoriesData) {
@@ -109,8 +111,11 @@ class OwnStories extends StatelessWidget {
                               height: 25,
                               child: PlatformIconButton(
                                 padding: EdgeInsets.zero,
-                             material: (context,platform)=>MaterialIconButtonData(   constraints: const BoxConstraints(),
-                                iconSize: 25.r,),
+                                material: (context, platform) =>
+                                    MaterialIconButtonData(
+                                  constraints: const BoxConstraints(),
+                                  iconSize: 25.r,
+                                ),
                                 onPressed: () => showModalBottomSheet(
                                     constraints: BoxConstraints(
                                       minWidth: double.maxFinite,
@@ -118,7 +123,7 @@ class OwnStories extends StatelessWidget {
                                     backgroundColor: AppColors.floralWhite,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(8.r),
+                                        top: Radius.circular(32.r),
                                       ),
                                     ),
                                     context: context,
@@ -142,46 +147,43 @@ class OwnStories extends StatelessWidget {
                                               ),
                                             ),
                                             const CustomDivider(),
-                                            SizedBox(height: 25.h),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    context
-                                                        .read<StoriesBloc>()
-                                                        .add(
-                                                          StoriesImage(
-                                                            name: profileData
-                                                                .pseudo,
-                                                            img: profileData
-                                                                .imgURL,
-                                                          ),
-                                                        );
+                                            InkWell(
+                                              onTap: () {
+                                                context.read<StoriesBloc>().add(
+                                                      StoriesImage(
+                                                        name:
+                                                            profileData.pseudo,
+                                                        img: profileData.imgURL,
+                                                      ),
+                                                    );
 
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Column(
+                                                Navigator.pop(context);
+                                              },
+                                              child: Container(
+                                                width: double.maxFinite,
+                                                height: 60.h,
+                                                color: AppColors
+                                                    .greyContainerColor,
+                                                child: Center(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
                                                     mainAxisSize:
                                                         MainAxisSize.min,
+                                                    spacing: 15.w,
                                                     children: [
                                                       Icon(
                                                         Icons
-                                                            .add_a_photo_outlined,
-                                                        size: 50.r,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10.h,
+                                                            .collections_outlined,
+                                                        size: 30.sp,
                                                       ),
                                                       Text(EnumLocale
                                                           .addPhoto.name.tr),
                                                     ],
                                                   ),
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                            SizedBox(height: 25.h),
                                           ],
                                         )),
                                 icon: Container(
@@ -201,7 +203,7 @@ class OwnStories extends StatelessWidget {
                       ),
                       Text(
                         EnumLocale.yourStory.name.tr,
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        style: theme.bodySmall!.copyWith(
                             color: AppColors.black, fontSize: 11.2.sp),
                         overflow: TextOverflow.ellipsis,
                       )

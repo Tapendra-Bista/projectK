@@ -13,6 +13,7 @@ import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -63,8 +64,6 @@ class ChatListTile extends StatelessWidget {
     );
   }
 
-  final chatRepository = ChatRepository();
-
   @override
   Widget build(BuildContext context) {
     final isValideUrl = _getOtherUserimage().isNotEmpty &&
@@ -78,9 +77,11 @@ class ChatListTile extends StatelessWidget {
               backgroundColor: AppColors.grey,
               icon: HugeIcons.strokeRoundedUserBlock01,
               onPressed: (context) async {
-                getIt<BlockBloc>().add(BlockUserAdded(blockId: _getUserID()));
+                context
+                    .read<BlockBloc>()
+                    .add(BlockUserAdded(blockId: _getUserID()));
 
-                getIt<HomeBloc>().add(HomeUsersProfileList());
+                context.read<HomeBloc>().add(HomeUsersProfileList());
                 snackBarMessage(
                   context,
                   EnumLocale.refreshToUpdatedData.name.tr,
@@ -94,7 +95,7 @@ class ChatListTile extends StatelessWidget {
               backgroundColor: AppColors.red,
               icon: HugeIcons.strokeRoundedDelete01,
               onPressed: (contex) {
-                getIt<ChatBloc>().add(DeleteChatRoom(
+                context.read<ChatBloc>().add(DeleteChatRoom(
                     currentUserId: currentUserId, otherUserId: otherUserId));
               }),
         ]),
@@ -116,9 +117,18 @@ class ChatListTile extends StatelessWidget {
           ),
           subtitle: Row(
             children: [
+              if (chat.lastMessage != null &&
+                  Uri.tryParse(chat.lastMessage!)!.hasAbsolutePath == true)
+                Icon(
+                  Icons.mic_outlined,
+                  color: AppColors.grey,
+                ),
               Expanded(
                   child: Text(
-                chat.lastMessage ?? "",
+                chat.lastMessage != null &&
+                        Uri.tryParse(chat.lastMessage!)!.hasAbsolutePath == true
+                    ? " ${EnumLocale.voiceMessage.name.tr}"
+                    : chat.lastMessage ?? "",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context)
@@ -129,8 +139,10 @@ class ChatListTile extends StatelessWidget {
             ],
           ),
           trailing: StreamBuilder<int>(
-            stream: chatRepository.getUnreadCount(chat.id, currentUserId),
+            stream:
+                getIt<ChatRepository>().getUnreadCount(chat.id, currentUserId),
             builder: (context, snapshot) {
+              print("Unseen Count ${snapshot.data}");
               if (!snapshot.hasData || snapshot.data == 0) {
                 return const SizedBox();
               }
@@ -139,7 +151,7 @@ class ChatListTile extends StatelessWidget {
                 width: 15,
                 padding: EdgeInsets.zero,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: AppColors.primaryColor,
                   shape: BoxShape.circle,
                 ),
                 child: Center(

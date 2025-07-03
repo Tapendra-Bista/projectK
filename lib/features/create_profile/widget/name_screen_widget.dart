@@ -5,9 +5,9 @@ import 'package:afriqueen/common/widgets/common_textfield.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_event.dart';
 import 'package:afriqueen/routes/app_routes.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 // -----------------------------Name screen components-----------------------------------
@@ -51,9 +51,9 @@ class PseudoTextField extends StatelessWidget {
       controller: controller,
       validator: AppValidator.validatePseudo,
       obscureText: false,
-      onChanged: (value) => getIt<CreateProfileBloc>().add(
-        PseudoChanged(pseudo: value.trim()),
-      ),
+      onChanged: (value) => context.read<CreateProfileBloc>().add(
+            PseudoChanged(pseudo: value.trim()),
+          ),
     );
   }
 }

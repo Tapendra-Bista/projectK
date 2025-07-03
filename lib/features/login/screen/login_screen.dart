@@ -35,8 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
       final position = await UserLocation.determinePosition();
       final placemarks = await UserLocation.geoCoding(position);
       if (!mounted) return;
-      _appGetStorage.setCity(placemarks.first.locality!);
-      _appGetStorage.setCountry(placemarks.first.country!);
+      _appGetStorage.setCity(placemarks.first.locality ?? '');
+      _appGetStorage.setCountry(placemarks.first.country ?? '');
     } catch (e) {
       if (!mounted) return;
       // Optionally show an error message or fallback
@@ -121,21 +121,21 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     if (state is GoogleLoginNewUser) {
+      Get.back();
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRoutes.name,
         (Route<dynamic> route) => false,
       );
-      Get.back();
     }
 
     if (state is GoogleLoginOldUser) {
+      Get.back();
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRoutes.main,
         (Route<dynamic> route) => false,
       );
-      Get.back();
     }
 
     if (state is GoogleLoginError) {

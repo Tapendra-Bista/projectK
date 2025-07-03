@@ -14,6 +14,7 @@ class ErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocSelector<ArchiveBloc, ArchiveState, String?>(
       selector: (state) {
         if (state is ArchiveUsersError) {
@@ -34,11 +35,11 @@ class ErrorScreen extends StatelessWidget {
             ),
             title: Text(
               EnumLocale.archive.name.tr,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.bodyMedium,
             ),
           ),
           body: Center(
-            child: Text(error!, style: Theme.of(context).textTheme.bodyMedium),
+            child: Text(error!, style: theme.bodyMedium),
           ),
         );
       },

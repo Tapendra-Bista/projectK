@@ -240,7 +240,31 @@ enum EnumLocale {
   match,
   deleteChat,
   areYouSure,
-
+  noProfileMatchYourFilters,
+  newReel,
+  selecteFromGallery,
+  lengthOfVideo,
+  reels,
+  voiceMessage,
+  postReels,
+  reelHintText,
+  descriptionRequired,
+  reelPosted,
+  requests,
+  messageRequestsText1,
+  messageRequestsText2,
+  messageRequestsSend1,
+  messageRequestsSend2,
+  sendRequest,
+  messageRequests,
+  requestInfo,
+  accept,
+  reject,
+  requestReject,
+  requestRejectMessage,
+    requestInitial,
+  requestInitialMessage,
+  toYou,fromYou
 }
 
 // debug

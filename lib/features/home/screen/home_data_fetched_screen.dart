@@ -3,11 +3,11 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_event.dart';
-import 'package:afriqueen/features/home/widget/data_fetched_screen_widgets.dart';
+import 'package:afriqueen/features/home/widget/home_data_fetched_screen_widgets.dart';
 import 'package:afriqueen/features/home/widget/home_widgets.dart';
 import 'package:afriqueen/features/stories/screen/stories_screen.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 class HomeDataContent extends StatelessWidget {
@@ -20,7 +20,7 @@ class HomeDataContent extends StatelessWidget {
       color: AppColors.primaryColor,
       backgroundColor: AppColors.floralWhite,
       onRefresh: () async {
-        getIt<HomeBloc>().add(HomeUsersProfileList());
+        context.read<HomeBloc>().add(HomeUsersProfileList());
       },
       child: CustomScrollView(
         slivers: [

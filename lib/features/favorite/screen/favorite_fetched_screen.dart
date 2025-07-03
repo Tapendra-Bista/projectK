@@ -1,8 +1,8 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
-import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
-import 'package:afriqueen/features/archive/bloc/archive_state.dart';
-import 'package:afriqueen/features/archive/widgets/fetched_screen_widgets.dart';
+import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
+import 'package:afriqueen/features/favorite/bloc/favorite_state.dart';
+import 'package:afriqueen/features/favorite/widgets/favorite_fetched_screen_widgets.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,10 +13,10 @@ import 'package:hugeicons/hugeicons.dart';
 
 class FetchedScreen extends StatelessWidget {
   const FetchedScreen({super.key});
-//------------------------Fetch Screen---------------------------
+
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<ArchiveBloc, ArchiveState, List<ProfileModel>>(
+    return BlocSelector<FavoriteBloc, FavoriteState, List<ProfileModel>>(
       selector: (state) => state.favUserList,
       builder: (context, favData) {
         return PlatformScaffold(
@@ -29,7 +29,7 @@ class FetchedScreen extends StatelessWidget {
               icon: Icon(HugeIcons.strokeRoundedMultiplicationSign),
             ),
             title: Text(
-              EnumLocale.archive.name.tr,
+              EnumLocale.favorites.name.tr,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
@@ -57,10 +57,18 @@ class FetchedScreen extends StatelessWidget {
                           UserImage(Homedata: item),
                           CreatedDate(Homedata: item),
                           ButtonsList(Homedata: item),
-                          UserDetails(profileModel: item),
-                          Interests(profileModel: item),
-                          Description(profileModel: item),
-                          SizedBox(height: 3.h),
+                          UserDetails(
+                            profileModel: item,
+                          ),
+                          Interests(
+                            profileModel: item,
+                          ),
+                          Description(
+                            profileModel: item,
+                          ),
+                          SizedBox(
+                            height: 3.h,
+                          )
                         ],
                       ),
                     )

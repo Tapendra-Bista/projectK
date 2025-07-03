@@ -7,15 +7,14 @@ import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart'
 import 'package:afriqueen/features/create_profile/bloc/create_profile_event.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart';
 import 'package:afriqueen/routes/app_routes.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:choice/choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 //----------------------------Interest screen components------------------
 
 //-------------------Frienship inlineChoice---------------------------
@@ -24,6 +23,7 @@ class FriendshipInchoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocBuilder<CreateProfileBloc, CreateProfileState>(
       builder: (context, state) {
         return Card(
@@ -39,9 +39,9 @@ class FriendshipInchoice extends StatelessWidget {
                   value: state.friendship,
                   onChanged: (value) {
                     if (value.length <= 2) {
-                      getIt<CreateProfileBloc>().add(
-                        FriendsShipChanged(friendship: value),
-                      );
+                      context.read<CreateProfileBloc>().add(
+                            FriendsShipChanged(friendship: value),
+                          );
                     } else {
                       // Show warning when limit is exceeded
                       snackBarMessage(
@@ -66,7 +66,7 @@ class FriendshipInchoice extends StatelessWidget {
                           ? null // disables unselected items if limit reached
                           : state.onSelected(item),
                       title: ChoiceText(
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: theme.bodyMedium,
                         highlightColor: AppColors.floralWhite,
                         item,
                         highlight: state.search?.value,
@@ -83,7 +83,7 @@ class FriendshipInchoice extends StatelessWidget {
                           Text(
                             EnumLocale.chooseOption.name.tr,
                             style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                theme.bodyLarge!.copyWith(
                                       color: AppColors.primaryColor,
                                       fontSize: 19.sp,
                                     ),
@@ -123,7 +123,7 @@ class FriendshipInchoice extends StatelessWidget {
                                   : state.value.join(
                                       ', ',
                                     ), // or use .label if single select
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: theme.bodyMedium,
                             ),
                           ),
                         ),
@@ -146,9 +146,10 @@ class FriendshipText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.friendshipInterests.name.tr,
-      style: Theme.of(context).textTheme.bodyMedium,
+      style: theme.bodyMedium,
     );
   }
 }
@@ -159,9 +160,10 @@ class InterestTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.interestTitle.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 16),
+      style: theme.bodyLarge!.copyWith(fontSize: 16),
     );
   }
 }
@@ -172,6 +174,7 @@ class LoveInchoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocBuilder<CreateProfileBloc, CreateProfileState>(
       builder: (context, state) {
         return Card(
@@ -187,9 +190,9 @@ class LoveInchoice extends StatelessWidget {
                   value: state.love,
                   onChanged: (value) {
                     if (value.length <= 2) {
-                      getIt<CreateProfileBloc>().add(
-                        LoveChanged(love: value),
-                      );
+                      context.read<CreateProfileBloc>().add(
+                            LoveChanged(love: value),
+                          );
                     } else {
                       // Show warning when limit is exceeded
                       snackBarMessage(
@@ -214,7 +217,7 @@ class LoveInchoice extends StatelessWidget {
                           ? null // disables unselected items if limit reached
                           : state.onSelected(item),
                       title: ChoiceText(
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: theme.bodyMedium,
                         highlightColor: AppColors.floralWhite,
                         item,
                         highlight: state.search?.value,
@@ -231,7 +234,7 @@ class LoveInchoice extends StatelessWidget {
                           Text(
                             EnumLocale.chooseOption.name.tr,
                             style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                theme.bodyLarge!.copyWith(
                                       color: AppColors.primaryColor,
                                       fontSize: 19.sp,
                                     ),
@@ -271,7 +274,7 @@ class LoveInchoice extends StatelessWidget {
                                   : state.value.join(
                                       ', ',
                                     ), // or use .label if single select
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: theme.bodyMedium,
                             ),
                           ),
                         ),
@@ -294,9 +297,10 @@ class LoveText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.loveAndRomanceInterests.name.tr,
-      style: Theme.of(context).textTheme.bodyMedium,
+      style: theme.bodyMedium,
     );
   }
 }
@@ -307,8 +311,10 @@ class SportsInchoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocBuilder<CreateProfileBloc, CreateProfileState>(
       builder: (context, state) {
+
         return Card(
           color: AppColors.floralWhite,
           shape: RoundedRectangleBorder(
@@ -322,9 +328,9 @@ class SportsInchoice extends StatelessWidget {
                   value: state.sports,
                   onChanged: (value) {
                     if (value.length <= 2) {
-                      getIt<CreateProfileBloc>().add(
-                        SportChanged(sports: value),
-                      );
+                      context.read<CreateProfileBloc>().add(
+                            SportChanged(sports: value),
+                          );
                     } else {
                       // Show warning when limit is exceeded
                       snackBarMessage(
@@ -349,7 +355,7 @@ class SportsInchoice extends StatelessWidget {
                           ? null // disables unselected items if limit reached
                           : state.onSelected(item),
                       title: ChoiceText(
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: theme.bodyMedium,
                         highlightColor: AppColors.floralWhite,
                         item,
                         highlight: state.search?.value,
@@ -366,7 +372,7 @@ class SportsInchoice extends StatelessWidget {
                           Text(
                             EnumLocale.chooseOption.name.tr,
                             style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                theme.bodyLarge!.copyWith(
                                       color: AppColors.primaryColor,
                                       fontSize: 19.sp,
                                     ),
@@ -406,7 +412,7 @@ class SportsInchoice extends StatelessWidget {
                                   : state.value.join(
                                       ', ',
                                     ), // or use .label if single select
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: theme.bodyMedium,
                             ),
                           ),
                         ),
@@ -429,9 +435,10 @@ class SportsText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.sportsAndOutdoorsInterests.name.tr,
-      style: Theme.of(context).textTheme.bodyMedium,
+      style: theme.bodyMedium,
     );
   }
 }
@@ -442,6 +449,7 @@ class FoodInchoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocBuilder<CreateProfileBloc, CreateProfileState>(
       builder: (context, state) {
         return Card(
@@ -457,9 +465,9 @@ class FoodInchoice extends StatelessWidget {
                   value: state.food,
                   onChanged: (value) {
                     if (value.length <= 2) {
-                      getIt<CreateProfileBloc>().add(
-                        FoodChanged(food: value),
-                      );
+                      context.read<CreateProfileBloc>().add(
+                            FoodChanged(food: value),
+                          );
                     } else {
                       // Show warning when limit is exceeded
                       snackBarMessage(
@@ -484,7 +492,7 @@ class FoodInchoice extends StatelessWidget {
                           ? null // disables unselected items if limit reached
                           : state.onSelected(item),
                       title: ChoiceText(
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: theme.bodyMedium,
                         highlightColor: AppColors.floralWhite,
                         item,
                         highlight: state.search?.value,
@@ -501,7 +509,7 @@ class FoodInchoice extends StatelessWidget {
                           Text(
                             EnumLocale.chooseOption.name.tr,
                             style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                theme.bodyLarge!.copyWith(
                                       color: AppColors.primaryColor,
                                       fontSize: 19.sp,
                                     ),
@@ -541,7 +549,7 @@ class FoodInchoice extends StatelessWidget {
                                   : state.value.join(
                                       ', ',
                                     ), // or use .label if single select
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: theme.bodyMedium,
                             ),
                           ),
                         ),
@@ -564,9 +572,10 @@ class FoodText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.foodAndRestaurantsInterests.name.tr,
-      style: Theme.of(context).textTheme.bodyMedium,
+      style: theme.bodyMedium,
     );
   }
 }
@@ -577,6 +586,7 @@ class AdventureInchoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocBuilder<CreateProfileBloc, CreateProfileState>(
       builder: (context, state) {
         return Card(
@@ -592,9 +602,9 @@ class AdventureInchoice extends StatelessWidget {
                   value: state.adventure,
                   onChanged: (value) {
                     if (value.length <= 2) {
-                      getIt<CreateProfileBloc>().add(
-                        AdventureChanged(adventure: value),
-                      );
+                      context.read<CreateProfileBloc>().add(
+                            AdventureChanged(adventure: value),
+                          );
                     } else {
                       // Show warning when limit is exceeded
                       snackBarMessage(
@@ -619,7 +629,7 @@ class AdventureInchoice extends StatelessWidget {
                           ? null // disables unselected items if limit reached
                           : state.onSelected(item),
                       title: ChoiceText(
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: theme.bodyMedium,
                         highlightColor: AppColors.floralWhite,
                         item,
                         highlight: state.search?.value,
@@ -636,7 +646,7 @@ class AdventureInchoice extends StatelessWidget {
                           Text(
                             EnumLocale.chooseOption.name.tr,
                             style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                theme.bodyLarge!.copyWith(
                                       color: AppColors.primaryColor,
                                       fontSize: 19.sp,
                                     ),
@@ -676,7 +686,7 @@ class AdventureInchoice extends StatelessWidget {
                                   : state.value.join(
                                       ', ',
                                     ), // or use .label if single select
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: theme.bodyMedium,
                             ),
                           ),
                         ),
@@ -699,9 +709,10 @@ class AdventureText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.adventureAndTravelInterests.name.tr,
-      style: Theme.of(context).textTheme.bodyMedium,
+      style: theme.bodyMedium,
     );
   }
 }
@@ -742,9 +753,10 @@ class PassionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.passion.name.tr,
-      style: Theme.of(context).textTheme.bodyMedium,
+      style: theme.bodyMedium,
     );
   }
 }
@@ -755,6 +767,7 @@ class PassionChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Card(
       color: AppColors.floralWhite,
       shape: RoundedRectangleBorder(
@@ -768,9 +781,9 @@ class PassionChoice extends StatelessWidget {
               value: state.passion,
               onChanged: (value) {
                 if (value.length <= 2) {
-                  getIt<CreateProfileBloc>().add(
-                    PassionChanged(passion: value),
-                  );
+                  context.read<CreateProfileBloc>().add(
+                        PassionChanged(passion: value),
+                      );
                 } else {
                   // Show warning when limit is exceeded
                   snackBarMessage(
@@ -793,7 +806,7 @@ class PassionChoice extends StatelessWidget {
                       ? null // disables unselected items if limit reached
                       : state.onSelected(item),
                   title: ChoiceText(
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: theme.bodyMedium,
                     highlightColor: AppColors.floralWhite,
                     item,
                     highlight: state.search?.value,
@@ -809,7 +822,7 @@ class PassionChoice extends StatelessWidget {
                     children: [
                       Text(
                         EnumLocale.chooseOption.name.tr,
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        style: theme.bodyLarge!.copyWith(
                               color: AppColors.primaryColor,
                               fontSize: 19.sp,
                             ),
@@ -849,7 +862,7 @@ class PassionChoice extends StatelessWidget {
                               : state.value.join(
                                   ', ',
                                 ), // or use .label if single select
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: theme.bodyMedium,
                         ),
                       ),
                     ),

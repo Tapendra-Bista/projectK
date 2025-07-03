@@ -71,9 +71,17 @@ abstract class AppValidator {
   //-----------------Description validator--------------------------
   static String? validateDescription(String? value) {
     if (value == null || value.isEmpty) {
-      return EnumLocale.passwordRequiredText.name.tr;
+      return EnumLocale.descriptionRequired.name.tr;
     }
 
+    return null;
+  }
+
+  //-----------------reels caption validator---------
+  static String? validateReelCaption(String? value) {
+    if (value == null || value.isEmpty) {
+      return EnumLocale.descriptionRequired.name.tr;
+    }
     return null;
   }
 }

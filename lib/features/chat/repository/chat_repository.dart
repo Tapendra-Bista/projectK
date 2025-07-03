@@ -1,7 +1,9 @@
+import 'package:afriqueen/common/constant/constant_strings.dart';
 import 'package:afriqueen/features/chat/model/chat_message.dart';
 import 'package:afriqueen/features/chat/model/chat_room_model.dart';
 import 'package:afriqueen/services/base_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloudinary_public/cloudinary_public.dart';
 
 class ChatRepository extends BaseRepository {
   CollectionReference get _chatRooms => firestore.collection("chatRooms");
@@ -10,6 +12,26 @@ class ChatRepository extends BaseRepository {
     return _chatRooms.doc(chatRoomId).collection("messages");
   }
 
+//------- voice save in Cloudinary----------
+  Future<String> voiceMessage({required String voiceMessageUrl}) async {
+    try {
+      final CloudinaryPublic cloudinary =
+          CloudinaryPublic(AppStrings.cloudName, AppStrings.uploadPreset);
+
+      final CloudinaryResponse response =
+          await cloudinary.uploadFile(CloudinaryFile.fromFile(
+        voiceMessageUrl,
+        resourceType: CloudinaryResourceType.Video,
+        folder: "afriqueen/voice",
+        publicId: "${DateTime.now().millisecond}",
+      ));
+      print("✅ Uploaded successfully: ${response.secureUrl}");
+      return response.secureUrl;
+    } catch (e) {
+      print("Error in voiceMessage Cloudiary : ${e.toString()}");
+      rethrow;
+    }
+  }
 //----------- delete message--------------
 
   Future<void> deleteMessageByContentAndTimestamp({
@@ -187,7 +209,7 @@ class ChatRepository extends BaseRepository {
   Stream<int> getUnreadCount(String chatRoomId, String userId) {
     return getChatRoomMessages(chatRoomId)
         .where("receiverId", isEqualTo: userId)
-        .where('status', isEqualTo: MessageStatus.sent.toString())
+        .where('status', isEqualTo: MessageStatus.sent.name)
         .snapshots()
         .map((snapshot) => snapshot.docs.length);
   }
@@ -204,14 +226,14 @@ class ChatRepository extends BaseRepository {
             "receiverId",
             isEqualTo: userId,
           )
-          .where('status', isEqualTo: MessageStatus.sent.toString())
+          .where('status', isEqualTo: MessageStatus.sent.name)
           .get();
       print("found ${unreadMessages.docs.length} unread messages");
 
       for (final doc in unreadMessages.docs) {
         batch.update(doc.reference, {
           'readBy': FieldValue.arrayUnion([userId]),
-          'status': MessageStatus.read.toString(),
+          'status': MessageStatus.read.name,
         });
 
         await batch.commit();
@@ -220,9 +242,6 @@ class ChatRepository extends BaseRepository {
       }
     } catch (e) {}
   }
-
-
-
 
 // ---------------Update Typing Status-------------------------------------
   Future<void> updateTypingStatus(

@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:afriqueen/features/block/repository/block_repository.dart';
+import 'package:afriqueen/features/chat/model/chat_message.dart';
 import 'package:afriqueen/features/chat/model/chat_room_model.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../repository/chat_repository.dart';
 import 'chat_event.dart';
 import 'chat_state.dart';
+
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final ChatRepository _chatRepository;
@@ -27,6 +27,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         super(const ChatState()) {
     on<InitializeChatEvent>(_onEnterChat);
     on<SendMessage>(_onSendMessage);
+    on<SendVoiceMessage>(_onSendVoiceMessage);
     on<LoadMoreMessages>(_onLoadMoreMessages);
     on<StartTyping>(_onStartTyping);
     on<LeaveChat>(_onLeaveChat);
@@ -84,7 +85,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   Future<void> _onEnterChat(
       InitializeChatEvent event, Emitter<ChatState> emit) async {
     _isInChat = true;
-    emit(state.copyWith(status: ChatStatus.loading));
+    emit(state.copyWith(messages: state.messages));
     try {
       final chatRoom = await _chatRepository.getOrCreateChatRoom(
           FirebaseAuth.instance.currentUser!.uid, event.receiverId);
@@ -113,7 +114,26 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         senderId: FirebaseAuth.instance.currentUser!.uid,
         receiverId: event.receiverId,
         content: event.content,
+
       );
+    } catch (e) {
+      log(e.toString());
+      emit(state.copyWith(error: "Failed to send message"));
+    }
+  }
+
+  Future<void> _onSendVoiceMessage(
+      SendVoiceMessage event, Emitter<ChatState> emit) async {
+    if (state.chatRoomId == null) return;
+    try {
+      final voiceMessageUrl =
+          await _chatRepository.voiceMessage(voiceMessageUrl: event.rawUrl);
+      await _chatRepository.sendMessage(
+          chatRoomId: state.chatRoomId!,
+          senderId: FirebaseAuth.instance.currentUser!.uid,
+          receiverId: event.receiverId,
+          content: voiceMessageUrl,
+          type: MessageType.voice);
     } catch (e) {
       log(e.toString());
       emit(state.copyWith(error: "Failed to send message"));
@@ -213,6 +233,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   Future<void> _onLeaveChat(LeaveChat event, Emitter<ChatState> emit) async {
     _isInChat = false;
+    emit(state.copyWith(messages: [], error: null,));
   }
 
   void _onMessagesUpdated(MessagesUpdated event, Emitter<ChatState> emit) {

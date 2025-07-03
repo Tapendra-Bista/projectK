@@ -24,6 +24,7 @@ class CommonTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return PlatformTextFormField(
       keyboardType: keyboardType,
       onChanged: onChanged,
@@ -39,7 +40,7 @@ class CommonTextField extends StatelessWidget {
           suffixIcon: suffixIcon,
           errorMaxLines: 3,
           labelText: labelText,
-          labelStyle: Theme.of(context).textTheme.bodySmall,
+          labelStyle: theme.bodySmall,
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
             borderSide: BorderSide(width: 2.w, color: AppColors.red),

@@ -1,14 +1,13 @@
 import 'dart:io';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
-import 'package:afriqueen/common/widgets/circular_indicator.dart';
 import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
 import 'package:afriqueen/features/chat/bloc/chat_event.dart';
 import 'package:afriqueen/features/chat/bloc/chat_state.dart';
 import 'package:afriqueen/features/chat/model/chat_message.dart';
 import 'package:afriqueen/features/chat/widgets/chat_screen_widget.dart';
 import 'package:afriqueen/features/chat/widgets/message_bubble.dart';
+import 'package:afriqueen/features/chat/widgets/voice_recorder.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/status/bloc/status_bloc.dart';
 import 'package:afriqueen/services/status/bloc/status_event.dart';
@@ -16,8 +15,10 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:waveform_recorder/waveform_recorder.dart';
 
 // ----------individual chat screen ------------------
 class ChatScreen extends StatefulWidget {
@@ -38,7 +39,8 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-
+  final WaveformRecorderController _waveController =
+      WaveformRecorderController();
   bool _isComposing = false;
   bool _showEmoji = false;
 
@@ -47,8 +49,8 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    getIt<ChatBloc>().add(InitializeChatEvent(widget.receiverId));
-    getIt<StatusBloc>().add(GetStatus(uid: widget.receiverId));
+    context.read<ChatBloc>().add(InitializeChatEvent(widget.receiverId));
+    context.read<StatusBloc>().add(GetStatus(uid: widget.receiverId));
 
     messageController.addListener(_onTextChanged);
     _scrollController.addListener(_onScroll);
@@ -59,7 +61,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (isComposing != _isComposing) {
       setState(() => _isComposing = isComposing);
       if (isComposing) {
-        getIt<ChatBloc>().add(StartTyping());
+        context.read<ChatBloc>().add(StartTyping());
       }
     }
   }
@@ -67,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void _onScroll() {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
-      getIt<ChatBloc>().add(LoadMoreMessages());
+      context.read<ChatBloc>().add(LoadMoreMessages());
     }
   }
 
@@ -91,20 +93,53 @@ class _ChatScreenState extends State<ChatScreen> {
   void _handleSendMessage() {
     final text = messageController.text.trim();
     if (text.isNotEmpty) {
-      getIt<ChatBloc>().add(
-        SendMessage(content: text, receiverId: widget.receiverId),
-      );
+      context.read<ChatBloc>().add(
+            SendMessage(content: text, receiverId: widget.receiverId),
+          );
       messageController.clear();
     }
   }
 
   @override
   void dispose() {
+    _waveController.dispose();
     messageController.dispose();
     _scrollController.dispose();
     getIt<ChatBloc>().add(LeaveChat());
 
     super.dispose();
+  }
+
+  Future<void> _toggleRecording() async {
+    try {
+      if (_waveController.isRecording) {
+        await _waveController.stopRecording();
+        debugPrint("Stopped recording");
+      } else {
+        await _waveController.startRecording();
+        debugPrint("Started recording");
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint("Error in toggleRecording: $e");
+      // Optionally show a snackbar
+    }
+  }
+
+  Future<void> _cancelRecording() async {
+    try {
+      if (_waveController.isRecording || _waveController.isPaused) {
+        await _waveController.cancelRecording();
+
+        print("Cancel Record!");
+      } else {
+        print("Recording is not active. Nothing to cancel.");
+      }
+
+      setState(() {});
+    } catch (e) {
+      print("Error while canceling record: ${e.toString()}");
+    }
   }
 
   @override
@@ -125,9 +160,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child:
                     Text(" ${EnumLocale.defaultError.name.tr} ${state.error}"));
           }
-          if (state.status == ChatStatus.loading) {
-            return const Center(child: CustomCircularIndicator());
-          }
+
           return Column(
             children: [
               Expanded(
@@ -152,59 +185,84 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     Row(
                       children: [
-                        PlatformIconButton(
-                          icon: const Icon(Icons.emoji_emotions_outlined),
-                          onPressed: () {
-                            setState(() => _showEmoji = !_showEmoji);
-                            if (_showEmoji) {
-                              FocusScope.of(context).unfocus();
-                            }
-                          },
-                        ),
-                        Flexible(
-                          child: TextField(
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(color: AppColors.black),
-                            // Fills available vertical space
-                            maxLines: 5, // Must be null when expands is true
-                            minLines: 1,
-                            keyboardType: TextInputType.text,
-                            controller: messageController,
-                            onTap: () {
-                              if (_showEmoji) {
-                                setState(() => _showEmoji = false);
-                              }
-                            },
-                            decoration: InputDecoration(
-                              alignLabelWithHint: true,
-                              isDense: true,
-                              errorMaxLines: 3,
-                              hintText: EnumLocale.messagesHint.name.tr,
-                              hintStyle: Theme.of(context).textTheme.bodySmall,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.r),
-                                borderSide: BorderSide(
-                                    width: 1.w, color: AppColors.black),
+                        _waveController.isRecording
+                            ? SizedBox.shrink()
+                            : PlatformIconButton(
+                                icon: const Icon(Icons.emoji_emotions_outlined),
+                                onPressed: () {
+                                  setState(() => _showEmoji = !_showEmoji);
+                                  if (_showEmoji) {
+                                    FocusScope.of(context).unfocus();
+                                  }
+                                },
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.r),
-                                borderSide: BorderSide(
-                                    width: 1.w, color: AppColors.black),
-                              ),
-                              border: InputBorder.none,
-                            ),
+                        _waveController.isRecording
+                            ? VoiceRecord(
+                                receiverId: widget.receiverId,
+                                onCancel: _cancelRecording,
+                                waveformRecorderController: _waveController)
+                            : Flexible(
+                                child: TextField(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(color: AppColors.black),
+                                  // Fills available vertical space
+                                  maxLines:
+                                      5, // Must be null when expands is true
+                                  minLines: 1,
+                                  keyboardType: TextInputType.text,
+                                  controller: messageController,
+                                  onTap: () {
+                                    if (_showEmoji) {
+                                      setState(() => _showEmoji = false);
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    alignLabelWithHint: true,
+                                    isDense: true,
+                                    errorMaxLines: 3,
+                                    hintText: EnumLocale.messagesHint.name.tr,
+                                    hintStyle:
+                                        Theme.of(context).textTheme.bodySmall,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.r),
+                                      borderSide: BorderSide(
+                                          width: 1.w, color: AppColors.black),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.r),
+                                      borderSide: BorderSide(
+                                          width: 1.w, color: AppColors.black),
+                                    ),
+                                    border: InputBorder.none,
+                                  ),
 
-                            textCapitalization: TextCapitalization.sentences,
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                ),
+                              ),
+                        if (_isComposing)
+                          IconButton(
+                            style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                    AppColors.primaryColor)),
+                            icon:
+                                Icon(Icons.send, color: AppColors.floralWhite),
+                            onPressed: _handleSendMessage,
                           ),
-                        ),
-                        PlatformIconButton(
-                          icon: Icon(Icons.send,
-                              color:
-                                  _isComposing ? AppColors.blue : Colors.grey),
-                          onPressed: _isComposing ? _handleSendMessage : null,
-                        )
+                        if (!_isComposing)
+                          IconButton(
+                            onPressed: _toggleRecording,
+                            style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                    AppColors.primaryColor)),
+                            icon: Icon(
+                                _waveController.isRecording
+                                    ? Icons.send_outlined
+                                    : Icons.mic_outlined,
+                                color: AppColors.floralWhite),
+                          )
                       ],
                     ),
                     if (_showEmoji)

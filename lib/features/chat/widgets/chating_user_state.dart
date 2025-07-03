@@ -1,3 +1,4 @@
+import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/seniority.dart';
 import 'package:afriqueen/services/status/bloc/status_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:afriqueen/services/status/model/status_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+
 //----------- User state online or offline----------------
 class UserState extends StatelessWidget {
   const UserState({super.key});
@@ -19,7 +21,10 @@ class UserState extends StatelessWidget {
             DateTime.fromMillisecondsSinceEpoch(status.lastChanged);
         return status.state
             ? Text(EnumLocale.online.name.tr,
-                style: Theme.of(context).textTheme.bodySmall)
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: AppColors.green))
             : Text(
                 Seniority.formatChatTime(dateTime),
                 style: Theme.of(context)

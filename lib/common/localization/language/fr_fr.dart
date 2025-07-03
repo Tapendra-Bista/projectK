@@ -119,8 +119,8 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.genderTitle.name: "Comment vous identifiez-vous ?",
   EnumLocale.genderDescription.name:
       "Vous pourrez modifier ces informations ultérieurement en contactant notre service client.",
-   EnumLocale.genderMale.name: "Homme",
-   EnumLocale.genderFemale.name: "Femme",
+  EnumLocale.genderMale.name: "Homme",
+  EnumLocale.genderFemale.name: "Femme",
   EnumLocale.dobTitle.name: "Votre date de naissance",
   EnumLocale.dobDescription.name:
       "Veuillez indiquer votre âge correctement ; vous ne pourrez plus le modifier ultérieurement.",
@@ -284,7 +284,6 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.refreshToUpdatedData.name: "Tirez vers le bas pour actualiser !",
   EnumLocale.preferences.name: "Préférences",
   EnumLocale.likeToMeet.name: "J'aimerais rencontrer",
-
   EnumLocale.age.name: "Âge",
   EnumLocale.years.name: "ans",
   EnumLocale.sameCountry.name: "pays",
@@ -293,5 +292,36 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.saveChanges.name: "Enregistrer",
   EnumLocale.match.name: "Match",
   EnumLocale.deleteChat.name: "Supprimer",
-  EnumLocale.areYouSure.name: "Voulez-vous vraiment le supprimer ?"
+  EnumLocale.areYouSure.name: "Voulez-vous vraiment le supprimer ?",
+  EnumLocale.noProfileMatchYourFilters.name:
+      "Aucun profil ne correspond à vos filtres",
+  EnumLocale.newReel.name: "Nouveau Reel",
+  EnumLocale.selecteFromGallery.name: "Sélectionner depuis la galerie",
+  EnumLocale.lengthOfVideo.name: "Votre vidéo doit durer moins de 15 secondes.",
+  EnumLocale.reels.name: "Reels",
+  EnumLocale.voiceMessage.name: "Message vocal",
+  EnumLocale.postReels.name: "Publier",
+  EnumLocale.reelHintText.name: "Écrire une légende",
+  EnumLocale.descriptionRequired.name: "La description est requise",
+  EnumLocale.reelPosted.name: "Votre Reel est en ligne !",
+  EnumLocale.requests.name: "Demandes",
+  EnumLocale.messageRequestsText1.name: "Envoyez une demande de message à",
+  EnumLocale.messageRequestsText2.name:
+      "pour commencer à discuter ! Une fois qu'ils auront accepté, vous pourrez échanger des messages.",
+  EnumLocale.messageRequestsSend1.name: "Demande de message envoyée à",
+  EnumLocale.messageRequestsSend2.name:
+      "! Vous trouverez toutes les informations relatives à vos demandes dans la section « Demandes ».",
+  EnumLocale.sendRequest.name: "Envoyer la demande",
+  EnumLocale.messageRequests.name: "Demandes de messages",
+  EnumLocale.requestInfo.name:
+      "vous a envoyé une demande de message ! Faites glisser vers la gauche pour répondre.",
+  EnumLocale.accept.name: "Accepter",
+  EnumLocale.reject.name: "Rejeter",
+  EnumLocale.requestReject.name: "Demande rejetée",
+  EnumLocale.requestInitial.name: "Demande en cours de traitement...",
+  EnumLocale.requestInitialMessage.name:
+      "n'a pas encore répondu à votre demande de message.",
+  EnumLocale.requestRejectMessage.name: "a refusé votre demande de message.",
+  EnumLocale.toYou.name: "À vous",
+  EnumLocale.fromYou.name: "De vous"
 };

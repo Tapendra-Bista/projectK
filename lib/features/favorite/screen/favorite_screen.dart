@@ -3,7 +3,7 @@ import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_state.dart';
 import 'package:afriqueen/features/favorite/screen/empty_data_screen.dart';
 import 'package:afriqueen/features/favorite/screen/error_screen.dart';
-import 'package:afriqueen/features/favorite/screen/fetched_screen.dart';
+import 'package:afriqueen/features/favorite/screen/favorite_fetched_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

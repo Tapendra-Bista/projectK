@@ -35,8 +35,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     return PlatformScaffold(
       appBar: PlatformAppBar(automaticallyImplyLeading: false),
       body: SafeArea(
-        child: BlocProvider<EmailVerificationBloc>(
-          create: (context) => getIt<EmailVerificationBloc>(),
+        child: BlocProvider<EmailVerificationBloc>.value(
+          value: getIt<EmailVerificationBloc>(),
           child: BlocListener<EmailVerificationBloc, EmailVerificationState>(
             listener: _listener,
             child: SingleChildScrollView(

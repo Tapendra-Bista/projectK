@@ -7,15 +7,15 @@ import 'package:afriqueen/features/login/bloc/login_bloc.dart';
 import 'package:afriqueen/features/login/bloc/login_event.dart';
 import 'package:afriqueen/features/login/bloc/login_state.dart';
 import 'package:afriqueen/routes/app_routes.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+
 /// ---------------- Signup text ----------------
 class LoginText extends StatelessWidget {
   const LoginText({super.key});
@@ -54,7 +54,7 @@ class _LoginEmailInputState extends State<LoginEmailInput> {
       validator: AppValidator.validateEmail,
       obscureText: false,
       onChanged: (value) =>
-          getIt<LoginBloc>().add(LoginEmailChanged(email: value.trim())),
+          context.read<LoginBloc>().add(LoginEmailChanged(email: value.trim())),
       keyboardType: TextInputType.emailAddress,
     );
   }
@@ -86,11 +86,12 @@ class _LoginPasswordInputState extends State<LoginPasswordInput> {
           controller: _passwordController,
           validator: AppValidator.validateLoginPassword,
           obscureText: state.isLoginPasswordVisible,
-          onChanged: (value) => getIt<LoginBloc>().add(
-            LoginPasswordChanged(password: value.trim()),
-          ),
+          onChanged: (value) => context.read<LoginBloc>().add(
+                LoginPasswordChanged(password: value.trim()),
+              ),
           suffixIcon: PlatformIconButton(
-            onPressed: () => getIt<LoginBloc>().add(LoginPasswordVisibility()),
+            onPressed: () =>
+                context.read<LoginBloc>().add(LoginPasswordVisibility()),
             icon: Icon(
               state.isLoginPasswordVisible
                   ? Icons.visibility_off_outlined
@@ -119,10 +120,10 @@ class LoginButton extends StatelessWidget {
           // Using ElevatedButton for better default styling
           onPressed: () {
             if (formKey.currentState!.validate()) {
-              getIt<LoginBloc>().add(LoginSubmit(
-                city: _appGetStorage.getCity(),
-                country: _appGetStorage.getCountry(),
-              ));
+              context.read<LoginBloc>().add(LoginSubmit(
+                    city: _appGetStorage.getCity(),
+                    country: _appGetStorage.getCountry(),
+                  ));
             }
           },
           style: ElevatedButton.styleFrom(
@@ -198,7 +199,8 @@ class GoogleSignInButton extends StatelessWidget {
         width: 120.w,
         child: ElevatedButton(
           // Using ElevatedButton for better default styling
-          onPressed: () => getIt<LoginBloc>().add(GoogleSignInButtonClicked()),
+          onPressed: () =>
+              context.read<LoginBloc>().add(GoogleSignInButtonClicked()),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
             padding: EdgeInsets.zero,

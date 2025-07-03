@@ -39,6 +39,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     //------------------------User pressed LoginButton--------------------------
     on<LoginSubmit>((event, emit) async {
+      print("User Location ${event.country} and ${event.city}");
       emit(LoginLoading.fromState(state));
 
       UserCredential? userCredential = await _loginRepository.loginWithEmail(
@@ -60,11 +61,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       UserCredential? userCredential = await _loginRepository.loginWithGoogle();
 
       if (userCredential != null) {
-        bool isNewUser = await _loginRepository.checkUserAvaibility();
-        if (isNewUser == true) {
+        bool isUserAvailable = await _loginRepository.isUserAvailable();
+        if (isUserAvailable == false) {
           _app.setPageNumber(2);
           emit(GoogleLoginNewUser.fromState(state));
-        } else if (isNewUser == false) {
+        } else if (isUserAvailable == true) {
           emit(GoogleLoginOldUser.fromState(state));
         } else {
           emit(

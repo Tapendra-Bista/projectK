@@ -20,6 +20,16 @@ class SendMessage extends ChatEvent {
   });
 }
 
+class SendVoiceMessage extends ChatEvent {
+  final String receiverId;
+  final String rawUrl;
+
+  SendVoiceMessage({
+    required this.receiverId,
+    required this.rawUrl,
+  });
+}
+
 class LoadMoreMessages extends ChatEvent {}
 
 class StartTyping extends ChatEvent {}

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum MessageType { text, image, video }
+enum MessageType { text, image, video, voice }
+
 enum MessageStatus { sent, read }
 
 class ChatMessage {

@@ -26,4 +26,6 @@ class AppRoutes {
   static const sendReport = "/sendReport";
   static const report = "/report";
   static const preferences = "/preferences";
+  static const add = "/add";
+  static const requests = "/requests";
 }

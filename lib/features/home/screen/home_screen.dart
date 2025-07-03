@@ -2,7 +2,7 @@ import 'package:afriqueen/common/widgets/circular_indicator.dart';
 import 'package:afriqueen/features/favorite/screen/empty_data_screen.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_state.dart';
-import 'package:afriqueen/features/home/screen/data_fetched_screen.dart';
+import 'package:afriqueen/features/home/screen/home_data_fetched_screen.dart';
 import 'package:afriqueen/features/home/screen/error_home_screen.dart';
 
 import 'package:flutter/cupertino.dart';

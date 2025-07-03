@@ -9,15 +9,17 @@ import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+
 class FavoritesListTile extends StatelessWidget {
   const FavoritesListTile({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return ListTile(
       onTap: () => Get.toNamed(AppRoutes.favorite),
       trailing: SizedBox(
@@ -30,7 +32,7 @@ class FavoritesListTile extends StatelessWidget {
         width: 50.w,
         child: Text(
           EnumLocale.favorites.name.tr,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.bodyMedium,
           overflow: TextOverflow.ellipsis,
         ),
       ),
@@ -44,13 +46,14 @@ class ArchiveListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return ListTile(
       onTap: () => Get.toNamed(AppRoutes.archive),
       trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedArchive),
       title: Text(
         EnumLocale.archive.name.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: theme.bodyMedium,
         overflow: TextOverflow.ellipsis,
       ),
     );
@@ -63,13 +66,14 @@ class BlockedListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return ListTile(
       onTap: () => Get.toNamed(AppRoutes.block),
       trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedBlocked),
       title: Text(
         EnumLocale.blocked.name.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: theme.bodyMedium,
         overflow: TextOverflow.ellipsis,
       ),
     );
@@ -99,9 +103,10 @@ class SettingTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.settings.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18.sp),
+      style: theme.bodyLarge!.copyWith(fontSize: 18.sp),
       overflow: TextOverflow.ellipsis,
     );
   }
@@ -113,6 +118,7 @@ class LanguageListTile extends StatelessWidget {
   final app = AppGetStorage();
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return ListTile(
       onTap: () => showModalBottomSheet(
         context: context,
@@ -126,7 +132,7 @@ class LanguageListTile extends StatelessWidget {
             ListTile(
               title: Text(
                 EnumLocale.chooseOption.name.tr,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                style: theme.bodyLarge!.copyWith(
                       color: AppColors.primaryColor,
                       fontSize: 19.sp,
                     ),
@@ -143,13 +149,12 @@ class LanguageListTile extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 100.h,
+              height: 150.h,
               child: ListView.builder(
                 itemCount: AppStrings.language.length,
                 itemBuilder: (context, index) => Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 5.h,
                   children: [
                     SizedBox(height: 15.h),
                     InkWell(
@@ -163,15 +168,27 @@ class LanguageListTile extends StatelessWidget {
                         }
                         Navigator.pop(context);
                       },
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: Center(
-                          child: Text(
-                            AppStrings.language[index],
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                      ),
+                      child: Container(
+                          height: 40.h,
+                          padding: EdgeInsets.only(left: 40.w),
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                              color: AppColors.greyContainerColor),
+                          child: Row(
+                            spacing: 20.w,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                AppStrings.flag[index],
+                                height: 40.h,
+                                width: 40.w,
+                              ),
+                              Text(
+                                AppStrings.language[index],
+                                style: theme.bodyMedium,
+                              ),
+                            ],
+                          )),
                     ),
                     CustomDivider(),
                   ],
@@ -186,7 +203,7 @@ class LanguageListTile extends StatelessWidget {
       leading: Icon(HugeIcons.strokeRoundedLanguageSquare),
       title: Text(
         EnumLocale.changeLanguage.name.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: theme.bodyMedium,
         overflow: TextOverflow.ellipsis,
       ),
     );
@@ -199,13 +216,14 @@ class HelpListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return ListTile(
       onTap: () {},
       trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedHelpSquare),
       title: Text(
         EnumLocale.helpCenter.name.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: theme.bodyMedium,
         overflow: TextOverflow.ellipsis,
       ),
     );
@@ -218,13 +236,14 @@ class PrivacyListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return ListTile(
       onTap: () {},
       trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedLocked),
       title: Text(
         EnumLocale.privacySettings.name.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: theme.bodyMedium,
         overflow: TextOverflow.ellipsis,
       ),
     );
@@ -237,13 +256,14 @@ class NotificationListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return ListTile(
       onTap: () {},
       trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedNotification01),
       title: Text(
         EnumLocale.notifications.name.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: theme.bodyMedium,
         overflow: TextOverflow.ellipsis,
       ),
     );
@@ -256,11 +276,12 @@ class LogoutListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return ListTile(
       leading: Icon(HugeIcons.strokeRoundedLogoutSquare02),
       title: Text(
         EnumLocale.logout.name.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: theme.bodyMedium,
         overflow: TextOverflow.ellipsis,
       ),
       onTap: () async {

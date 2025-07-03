@@ -10,9 +10,9 @@ import 'package:afriqueen/features/archive/bloc/archive_event.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_event.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -55,6 +55,7 @@ class CreatedDate extends StatelessWidget {
   final ProfileModel? Homedata;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Padding(
       padding: EdgeInsets.only(left: 20.w),
       child: Container(
@@ -65,7 +66,7 @@ class CreatedDate extends StatelessWidget {
         ),
         child: Text(
           Seniority.formatJoinedTime(Homedata!.createdDate),
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.bodyMedium,
         ),
       ),
     );
@@ -100,10 +101,10 @@ class ButtonsList extends StatelessWidget {
             children: [
               PlatformIconButton(
                 onPressed: () {
-                  getIt<ArchiveBloc>().add(
-                    ArchiveUserRemoved(archiveId: Homedata!.id),
-                  );
-                  getIt<HomeBloc>().add(HomeUsersProfileList());
+                  context.read<ArchiveBloc>().add(
+                        ArchiveUserRemoved(archiveId: Homedata!.id),
+                      );
+                  context.read<HomeBloc>().add(HomeUsersProfileList());
                   snackBarMessage(
                     context,
                     EnumLocale.removedFromArchive.name.tr,
@@ -135,6 +136,7 @@ class UserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -145,10 +147,10 @@ class UserDetails extends StatelessWidget {
           ).textTheme.bodyLarge!.copyWith(color: AppColors.primaryColor),
         ),
         Text("${profileModel.age}",
-            style: Theme.of(context).textTheme.bodyMedium),
+            style: theme.bodyMedium),
         Text(
           profileModel.city,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.bodyMedium,
           overflow: TextOverflow.ellipsis,
         ),
       ],
@@ -164,6 +166,7 @@ class Description extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
       child: Container(
@@ -174,7 +177,7 @@ class Description extends StatelessWidget {
         ),
         child: Text(
           profileModel.description,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.bodyMedium,
         ),
       ),
     );

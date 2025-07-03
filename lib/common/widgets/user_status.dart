@@ -1,5 +1,4 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/status/bloc/status_bloc.dart';
 import 'package:afriqueen/services/status/bloc/status_event.dart';
 import 'package:afriqueen/services/status/bloc/status_state.dart';
@@ -25,7 +24,7 @@ class UserStatus extends StatefulWidget {
 class _UserStatusState extends State<UserStatus> {
   @override
   void initState() {
-    getIt<StatusBloc>().add(GetStatus(uid: widget.id));
+    context.read<StatusBloc>().add(GetStatus(uid: widget.id));
     super.initState();
   }
 

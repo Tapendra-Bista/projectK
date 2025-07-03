@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "Afriqueen",
+      "package_name": "com.example.afriqueen",
+      "sha256_cert_fingerprints": [
+      
+        "6b:df:cc:cb:28:c5:24:69:cd:c2:2a:bf:ca:5d:5c:3b:e4:96:f8:2f:20:be:7a:b1:c4:dd:c2:46:e8:46:da:a3"
+      ]
+    }
+  }
+]

@@ -5,7 +5,6 @@ import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart'
 import 'package:afriqueen/features/create_profile/bloc/create_profile_event.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart';
 import 'package:afriqueen/routes/app_routes.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -90,9 +89,9 @@ class Female extends StatelessWidget {
                     activeColor: AppColors.green,
                     value: EnumLocale.genderFemale.name.tr,
                     groupValue: state.gender,
-                    onChanged: (value) => getIt<CreateProfileBloc>().add(
-                      GenderChanged(gender: value!),
-                    ),
+                    onChanged: (value) => context.read<CreateProfileBloc>().add(
+                          GenderChanged(gender: value!),
+                        ),
                   );
                 },
               ),
@@ -134,9 +133,9 @@ class Male extends StatelessWidget {
                     activeColor: AppColors.green,
                     value: EnumLocale.genderMale.name.tr,
                     groupValue: state.gender,
-                    onChanged: (value) => getIt<CreateProfileBloc>().add(
-                      GenderChanged(gender: value!),
-                    ),
+                    onChanged: (value) => context.read<CreateProfileBloc>().add(
+                          GenderChanged(gender: value!),
+                        ),
                   );
                 },
               ),

@@ -9,6 +9,7 @@ import 'package:afriqueen/features/archive/bloc/archive_event.dart';
 import 'package:afriqueen/features/chat/screen/chat_screen.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_event.dart';
+import 'package:afriqueen/features/follow/screen/follow_screen.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_event.dart';
 import 'package:afriqueen/features/like/bloc/like_bloc.dart';
@@ -17,16 +18,16 @@ import 'package:afriqueen/features/like/bloc/like_state.dart';
 import 'package:afriqueen/features/like/model/like_model.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/features/user_details/screen/user_details_screen.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+
 //-----------Image and Status---------------------------
 class ImageAndStatus extends StatelessWidget {
   const ImageAndStatus({
@@ -45,7 +46,7 @@ class ImageAndStatus extends StatelessWidget {
         children: [
           Container(
             width: double.maxFinite,
-            height: 260.h,
+            height: 290.h,
             decoration: validUrl
                 ? BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -78,13 +79,14 @@ class CreatedDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Container(
         padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
             color: AppColors.greyContainerColor,
             borderRadius: BorderRadius.circular(12.r)),
         child: Text(Seniority.formatJoinedTime(user.createdDate),
-            style: Theme.of(context).textTheme.bodyMedium));
+            style: theme.bodyMedium));
   }
 }
 
@@ -118,26 +120,17 @@ class ListOfButtons extends StatelessWidget {
                   .add(FavoriteUserAdded(favId: user.id));
               snackBarMessage(context, EnumLocale.savedToFavorites.name.tr,
                   Theme.of(context));
-              getIt<HomeBloc>().add(HomeUsersProfileList());
+              context.read<HomeBloc>().add(HomeUsersProfileList());
               controller.swipe(CardSwiperDirection.right);
             },
             icon: Icon(Icons.favorite_border_outlined,
-                size: 20.r, color: AppColors.black),
+                size: 30.r, color: AppColors.black),
           ),
           // ------------------following-----------------
-          PlatformIconButton(
-              onPressed: () {
-                snackBarMessage(
-                    context,
-                    "${EnumLocale.following.name.tr} ${user.pseudo}",
-                    Theme.of(context));
-                controller.swipe(CardSwiperDirection.right);
-              },
-              icon: Icon(
-                Icons.person_add_outlined,
-                color: AppColors.black,
-                size: 20.r,
-              )),
+          FollowButton(
+            id: user.id,
+            color: AppColors.black.withValues(alpha: 0.9),
+          ),
 //----------Archive--------------------------
           PlatformIconButton(
             onPressed: () async {
@@ -146,13 +139,13 @@ class ListOfButtons extends StatelessWidget {
                   .add(ArchiveUserAdded(archiveId: user.id));
               snackBarMessage(context, EnumLocale.addedToArchive.name.tr,
                   Theme.of(context));
-              getIt<HomeBloc>().add(HomeUsersProfileList());
+              context.read<HomeBloc>().add(HomeUsersProfileList());
               controller.swipe(CardSwiperDirection.right);
             },
             icon: Icon(
               LineIcons.archive,
               color: AppColors.black,
-              size: 20.r,
+              size: 30.r,
             ),
           ),
         ],
@@ -174,10 +167,10 @@ class LikeButtonForMatch extends StatelessWidget {
         return PlatformIconButton(
           onPressed: () {
             if (likeData.likeId.contains(id)) {
-              getIt<LikeBloc>().add(LikeUserRemoved(likeId: id));
+              context.read<LikeBloc>().add(LikeUserRemoved(likeId: id));
               debugPrint("unLike  ${id}");
             } else {
-              getIt<LikeBloc>().add(LikeUserAdded(likeId: id));
+              context.read<LikeBloc>().add(LikeUserAdded(likeId: id));
               debugPrint("Like  ${id}");
             }
           },
@@ -187,7 +180,7 @@ class LikeButtonForMatch extends StatelessWidget {
                 : Icons.thumb_up_alt_outlined,
             color:
                 likeData.likeId.contains(id) ? AppColors.blue : AppColors.black,
-            size: 20.r,
+            size: 30.r,
           ),
         );
       },
@@ -216,7 +209,7 @@ class StartChatFromMatch extends StatelessWidget {
       icon: Icon(
         CupertinoIcons.chat_bubble,
         color: AppColors.black,
-        size: 20.r,
+        size: 30.r,
       ),
     );
   }
@@ -230,6 +223,7 @@ class UserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -241,11 +235,11 @@ class UserDetails extends StatelessWidget {
         ),
         Text(
           "${user.age}",
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.bodyMedium,
         ),
         Text(
           user.city,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.bodyMedium,
           overflow: TextOverflow.ellipsis,
         ),
       ],
@@ -256,9 +250,7 @@ class UserDetails extends StatelessWidget {
 //-----------------------Interest grid------------------------
 class Interests extends StatelessWidget {
   const Interests({super.key, required this.user});
-
   final ProfileModel user;
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -315,6 +307,7 @@ class Description extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 5.w,
@@ -326,7 +319,7 @@ class Description extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.r)),
         child: Text(
           user.description,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.bodyMedium,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),

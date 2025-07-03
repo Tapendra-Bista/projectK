@@ -17,7 +17,6 @@ import 'package:afriqueen/features/home/bloc/home_event.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/features/user_details/screen/user_details_screen.dart';
 import 'package:afriqueen/routes/app_routes.dart';
-import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,6 +78,7 @@ class CreatedDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return SliverPadding(
         padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 5.h),
         sliver: SliverToBoxAdapter(
@@ -92,7 +92,7 @@ class CreatedDate extends StatelessWidget {
                     color: AppColors.greyContainerColor,
                     borderRadius: BorderRadius.circular(12.r)),
                 child:
-                    Text(date, style: Theme.of(context).textTheme.bodyMedium)),
+                    Text(date, style: theme.bodyMedium)),
           ),
         )));
   }
@@ -106,6 +106,7 @@ class Description extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return SliverPadding(
         padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 5.h),
         sliver: SliverToBoxAdapter(
@@ -120,7 +121,7 @@ class Description extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12.r)),
               child: Text(
                 widget.data.description,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: theme.bodyMedium,
               ),
             ),
           ),
@@ -188,6 +189,7 @@ class UserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return SliverPadding(
         padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
         sliver: SliverToBoxAdapter(
@@ -202,11 +204,11 @@ class UserDetails extends StatelessWidget {
             ),
             Text(
               "${widget.data.age}",
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.bodyMedium,
             ),
             Text(
               widget.data.city,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.bodyMedium,
               overflow: TextOverflow.ellipsis,
             ),
           ],
@@ -252,7 +254,7 @@ class ButtonList extends StatelessWidget {
                           context,
                           EnumLocale.savedToFavorites.name.tr,
                           Theme.of(context));
-                      getIt<HomeBloc>().add(HomeUsersProfileList());
+                      context.read<HomeBloc>().add(HomeUsersProfileList());
 
                       Get.toNamed(AppRoutes.main);
                     },
@@ -280,7 +282,7 @@ class ButtonList extends StatelessWidget {
                       snackBarMessage(context,
                           EnumLocale.addedToArchive.name.tr, Theme.of(context));
 
-                      getIt<HomeBloc>().add(HomeUsersProfileList());
+                      context.read<HomeBloc>().add(HomeUsersProfileList());
                       Get.toNamed(AppRoutes.main);
                     },
                     icon: Icon(
@@ -316,12 +318,13 @@ class UserDetailsPlatformAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return SliverAppBar(
       pinned: true,
       centerTitle: true,
       title: Text(
         isScrollingUp ? '' : data.pseudo,
-        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 25.sp),
+        style: theme.bodyLarge!.copyWith(fontSize: 25.sp),
         overflow: TextOverflow.ellipsis,
       ),
       leading: PlatformIconButton(
@@ -353,7 +356,7 @@ class UserDetailsPlatformAppBar extends StatelessWidget {
                       )),
               child: Text(
                 EnumLocale.block.name.tr,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: theme.bodyMedium,
               ),
             ),
           ],
@@ -418,7 +421,7 @@ class BlockAlertDialog extends StatelessWidget {
                         Theme.of(newContext),
                       );
 
-                      getIt<HomeBloc>().add(HomeUsersProfileList());
+                      context.read<HomeBloc>().add(HomeUsersProfileList());
                       Get.toNamed(AppRoutes.main);
                     },
                     buttonText: EnumLocale.yesBlock.name.tr,

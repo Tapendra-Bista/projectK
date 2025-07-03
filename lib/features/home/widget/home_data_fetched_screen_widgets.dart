@@ -1,5 +1,6 @@
 //------------ main part of data fetched state-----------------
 import 'package:afriqueen/common/constant/constant_colors.dart';
+import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/user_status.dart';
 import 'package:afriqueen/features/home/bloc/filter_list_of_users.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
@@ -27,6 +28,19 @@ class UserImageGrid extends StatelessWidget {
             selector: (state) => state,
             builder: (context, state) {
               final profileList = getFilterData(profileListData, state);
+              if (profileList.isEmpty && isFilterActive(state)) {
+                return SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 150.h),
+                    child: Center(
+                      child: Text(
+                        EnumLocale.noProfileMatchYourFilters.name.tr,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                  ),
+                );
+              }
 
               return SliverGrid.builder(
                 itemCount: profileList.length,

@@ -6,21 +6,43 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_utils/get_utils.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart'
+    show GoogleSignIn, GoogleSignInAccount, GoogleSignInAuthentication;
 
 // -------------------------Login logic-----------------------------
 class LoginRepository extends BaseRepository {
-  final AppGetStorage appGetStorage = AppGetStorage();
+  final AppGetStorage _appGetStorage = AppGetStorage();
 
   String? error;
-  bool? isNewUser;
+
   LoginRepository({FirebaseAuth? firebaseauth});
 
+//-----------------Email Links (PasswordLess Auth)----------------
+  Future<void> sendSignInLink(String email) async {
+    try {
+      final ActionCodeSettings acs = ActionCodeSettings(
+        url:
+            'https://afriqueen-e0b18.web.app', // Your app’s domain or deep link route
+        handleCodeInApp: true,
+        androidPackageName: "com.example.afriqueen",
+        androidInstallApp: true,
+        androidMinimumVersion: '21',
+        iOSBundleId: "com.example.afriqueen",
+      );
+
+      await FirebaseAuth.instance.sendSignInLinkToEmail(
+        email: email,
+        actionCodeSettings: acs,
+      );
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   //------------------------------login with Email ------------------------------------------
   Future<UserCredential?> loginWithEmail(LoginModel loginModel) async {
     try {
-      await auth.setLanguageCode(appGetStorage.getLanguageCode());
+      await auth.setLanguageCode(_appGetStorage.getLanguageCode());
       final UserCredential credential = await auth.signInWithEmailAndPassword(
         email: loginModel.email,
         password: loginModel.password,
@@ -46,12 +68,12 @@ class LoginRepository extends BaseRepository {
   //----------------------login with google----------------------------
   Future<UserCredential?> loginWithGoogle() async {
     try {
-      GoogleSignInAccount? googleSignInAccount = await GoogleSignIn().signIn();
+      GoogleSignInAccount? googleSignInAccount =
+          await GoogleSignIn.instance.authenticate();
       GoogleSignInAuthentication? googleAuth =
-          await googleSignInAccount!.authentication;
+          await googleSignInAccount.authentication;
       final credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
-        accessToken: googleAuth.accessToken,
       );
       final userCredential = await FirebaseAuth.instance.signInWithCredential(
         credential,
@@ -69,24 +91,17 @@ class LoginRepository extends BaseRepository {
   }
 
   //-------------------- checking if user available or not---------------------
-  Future<bool> checkUserAvaibility() async {
+  Future<bool> isUserAvailable() async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
-      QuerySnapshot<Map<String, dynamic>> checkUserData =
-          await FirebaseFirestore.instance
-              .collection('profile')
-              .where('id', isEqualTo: user!.uid)
-              .get();
+      final DocumentSnapshot<Map<String, dynamic>> snapshot =
+          await firestore.collection('users').doc(currentUserId).get();
 
-      if (checkUserData.docs.isNotEmpty) {
-        isNewUser = true;
-      } else {
-        isNewUser = false;
+      if (snapshot.exists) {
+        return true;
       }
     } catch (e) {
       debugPrint(e.toString());
     }
-
-    return isNewUser!;
+    return false;
   }
 }

@@ -31,7 +31,7 @@ class CreateProfileRepository extends BaseRepository {
 
     // Use a transaction or just fetch the doc directly
     final documentSnapshot = await documentReference.get();
-
+    print("User Location value in updateLocation fun  ${city} and ${country}");
     if (documentSnapshot.exists) {
       final data = documentSnapshot.data() as Map<String, dynamic>;
       print("Current User Location : ${country} and ${city}");

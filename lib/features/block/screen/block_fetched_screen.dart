@@ -2,7 +2,7 @@ import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/divider.dart';
 import 'package:afriqueen/features/block/bloc/block_bloc.dart';
 import 'package:afriqueen/features/block/bloc/block_state.dart';
-import 'package:afriqueen/features/block/widgets/fetched_screen_widgets.dart';
+import 'package:afriqueen/features/block/widgets/block_fetched_screen_widgets.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +16,7 @@ class FetchedScreen extends StatelessWidget {
 //------------------Fetch Screen--------------------------
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocSelector<BlockBloc, BlockState, List<ProfileModel>>(
       selector: (state) => state.blockUserList,
       builder: (context, blockData) {
@@ -30,7 +31,7 @@ class FetchedScreen extends StatelessWidget {
               ),
               title: Text(
                 EnumLocale.block.name.tr,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: theme.bodyMedium,
               ),
             ),
             body: CustomScrollView(

@@ -49,7 +49,7 @@ class EmailVerificationButton extends StatelessWidget {
                 );
               }
             } else {
-              getIt<EmailVerificationBloc>().add(OnButtonClicked());
+              context.read<EmailVerificationBloc>().add(OnButtonClicked());
             }
           },
           buttonText: state.isVerified
@@ -121,7 +121,7 @@ class EmailVerificationDeleteAccount extends StatelessWidget {
                     ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    getIt<EmailVerificationBloc>().add(
+                    context.read<EmailVerificationBloc>().add(
                       OnClickedDeleteButton(),
                     );
                     GetStorage().remove('pageNumber');

@@ -7,7 +7,7 @@
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.729178992675-flmcpn5r3q0gvs4uo3d7taibo1q2sjdg</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>729178992675-gduf9ahnkhnn4daurqk234kjtjkr7421.apps.googleusercontent.com</string>
+	<string>729178992675-2dsdj87i6qmcga87kbe48snte05mgdmc.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAJj0uAA-sV7ejbS13EK92WCE2wnRiLSD4</string>
 	<key>GCM_SENDER_ID</key>
@@ -32,5 +32,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:729178992675:ios:972b382d4935c8c6a60196</string>
+	<key>DATABASE_URL</key>
+	<string>https://afriqueen-e0b18-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

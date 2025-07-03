@@ -15,9 +15,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Get stroage
+  // Get storage
   await GetStorage.init();
-
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorageDirectory.web
@@ -29,8 +28,10 @@ void main() async {
       statusBarIconBrightness: Brightness.dark,
     ),
   );
-
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(
     MyApp(),
   );
 }
+//---------------Important----------------
+//https://afriqueen-e0b18.web.app/.well-known/assetlinks.json

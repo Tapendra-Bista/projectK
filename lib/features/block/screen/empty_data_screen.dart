@@ -10,6 +10,7 @@ class NoData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return PlatformScaffold(
       appBar: PlatformAppBar(
         material: (context, platform) {
@@ -21,13 +22,13 @@ class NoData extends StatelessWidget {
         ),
         title: Text(
           EnumLocale.block.name.tr,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.bodyMedium,
         ),
       ),
       body: Center(
         child: Text(
           EnumLocale.noDataAvailable.name.tr,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.bodyMedium,
         ),
       ),
     );
