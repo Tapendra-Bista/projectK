@@ -11,16 +11,19 @@ class MatchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
-      return switch (state) {
-        // ----------Initial state ----------------
-        Loading() => CustomCircularIndicator(),
-        //----------------------Error Occure------------------------------
-        Error() => ErrorWhileFetching(),
+    return BlocBuilder<HomeBloc, HomeState>(
+        buildWhen: (previous, current) =>
+            previous.runtimeType != current.runtimeType,
+        builder: (context, state) {
+          return switch (state) {
+            // ----------Initial state ----------------
+            Loading() => CustomCircularIndicator(),
+            //----------------------Error Occure------------------------------
+            Error() => ErrorWhileFetching(),
 
-        //----------------------Swipe card------------------------------
-        _ => CardScreen(),
-      };
-    });
+            //----------------------Swipe card------------------------------
+            _ => CardScreen(),
+          };
+        });
   }
 }

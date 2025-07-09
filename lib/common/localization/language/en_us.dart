@@ -297,6 +297,7 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
   EnumLocale.newReel.name: "New reel",
   EnumLocale.reels.name: "Reels",
   EnumLocale.selecteFromGallery.name: "Select from gallery",
+  EnumLocale.selecteFromCamera.name: "Select from camera",
   EnumLocale.lengthOfVideo.name: "Your video must be under 15 seconds.",
   EnumLocale.voiceMessage.name: "Voice message",
   EnumLocale.postReels.name: "Post",
@@ -315,12 +316,25 @@ By using Afriqueen, you agree to the following terms and conditions. These terms
   EnumLocale.requestInfo.name:
       "sent you a message request! Slide left to respond.",
   EnumLocale.accept.name: "Accept",
+  EnumLocale.accepted.name: "Accepted",
   EnumLocale.reject.name: "Reject",
-  EnumLocale.requestReject.name: "Request reject",
+  EnumLocale.requestReject.name: "Request rejected",
   EnumLocale.requestInitial.name: "Request processing...",
   EnumLocale.requestInitialMessage.name:
       "hasn't responded to your message request yet.",
   EnumLocale.requestRejectMessage.name: "has declined your message request.",
-   EnumLocale.toYou.name: "To You",
+  EnumLocale.toYou.name: "To You",
   EnumLocale.fromYou.name: "From You",
+  EnumLocale.sendRequest.name: "Send request",
+  EnumLocale.messageRequestAccepted.name:
+      "You have accepted the message request of",
+  EnumLocale.messageRequestDelete.name:
+      "You have deleted the message request for",
+  EnumLocale.replaceProfilePic.name: "Replace profile picture",
+  EnumLocale.takePhoto.name: "Take photo",
+  EnumLocale.uploading.name: "Uploading...",
+  EnumLocale.uploaded.name: "Téléchargé...",
+  EnumLocale.uploaded.name: "Uploaded...",
+  EnumLocale.posting.name: "Posting...",
+  EnumLocale.posted.name: "Posted..."
 };

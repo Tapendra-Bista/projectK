@@ -21,10 +21,10 @@ class LoginText extends StatelessWidget {
   const LoginText({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.loginText.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: theme.bodyLarge,
     );
   }
 }
@@ -163,16 +163,16 @@ class DonotHaveAccount extends StatelessWidget {
   const DonotHaveAccount({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return Center(
       child: RichText(
         text: TextSpan(
           text: EnumLocale.doNotHaveAccount.name.tr,
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 16),
+          style: theme.bodySmall!.copyWith(fontSize: 16),
           children: [
             TextSpan(
               text: EnumLocale.signupText.name.tr,
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              style: theme.bodySmall!.copyWith(
                     color: AppColors.primaryColor,
                     fontSize: 16,
                   ),
@@ -189,8 +189,8 @@ class DonotHaveAccount extends StatelessWidget {
 //----------------------------Button for google login-----------------------------
 
 class GoogleSignInButton extends StatelessWidget {
-  const GoogleSignInButton({super.key});
-
+   GoogleSignInButton({super.key});
+  final AppGetStorage _appGetStorage = AppGetStorage();
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -200,7 +200,11 @@ class GoogleSignInButton extends StatelessWidget {
         child: ElevatedButton(
           // Using ElevatedButton for better default styling
           onPressed: () =>
-              context.read<LoginBloc>().add(GoogleSignInButtonClicked()),
+              context.read<LoginBloc>().add(GoogleSignInButtonClicked(
+
+                    city: _appGetStorage.getCity(),
+                    country: _appGetStorage.getCountry(),
+              )),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
             padding: EdgeInsets.zero,

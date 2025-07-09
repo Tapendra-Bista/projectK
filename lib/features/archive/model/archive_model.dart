@@ -1,43 +1,21 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'dart:convert';
+part 'archive_model.freezed.dart';
+part 'archive_model.g.dart';
 
-import 'package:equatable/equatable.dart';
-//---------------Archive model----------
-class ArchiveModel extends Equatable {
-  final String id;
-  final List<String> archiveId;
+@freezed
+abstract class ArchiveModel with _$ArchiveModel {
+  const factory ArchiveModel({
+    required String id,
+    required List<String> archiveId,
+  }) = _ArchiveModel;
 
-  ArchiveModel({required this.id, required this.archiveId});
+  factory ArchiveModel.fromJson(Map<String, dynamic> json) =>
+      _$ArchiveModelFromJson(json);
 
-  @override
-  List<Object> get props => [id, archiveId];
+  factory ArchiveModel.empty() => ArchiveModel(id: '', archiveId: []);
+}
 
-  ArchiveModel copyWith({String? id, List<String>? archiveId}) {
-    return ArchiveModel(
-      id: id ?? this.id,
-      archiveId: archiveId ?? this.archiveId,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{'id': id, 'archiveId': archiveId};
-  }
-
-  factory ArchiveModel.fromMap(Map<String, dynamic> map) {
-    return ArchiveModel(
-      id: map['id'] as String,
-      archiveId: List<String>.from(map['archiveId'] ?? []),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory ArchiveModel.fromJson(String source) =>
-      ArchiveModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  bool get stringify => true;
-
-  static ArchiveModel empty = ArchiveModel(id: '', archiveId: []);
+extension ArchiveModelToMap on ArchiveModel {
+  Map<String, dynamic> toMap() => toJson();
 }

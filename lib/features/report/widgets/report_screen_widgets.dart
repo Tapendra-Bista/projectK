@@ -9,10 +9,10 @@ class ReportDescriptionTwo extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.reportDescription2.name.tr,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: theme.bodySmall,
     );
   }
 }
@@ -23,10 +23,10 @@ class ReportDescriptionOne extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.reportDescription1.name.tr,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: theme.bodySmall,
     );
   }
 }
@@ -37,10 +37,10 @@ class MiniDescriptionText extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.notRevealIdentity.name.tr,
-      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+      style: theme.bodySmall!.copyWith(
             color: AppColors.black,
           ),
     );
@@ -53,10 +53,10 @@ class TitleText extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.whyAreYouReporting.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+      style: theme.bodyLarge!.copyWith(
             color: AppColors.red,
           ),
     );

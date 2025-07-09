@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -33,6 +32,217 @@ mixin _$AddEvent {
 /// @nodoc
 class $AddEventCopyWith<$Res> {
   $AddEventCopyWith(AddEvent _, $Res Function(AddEvent) __);
+}
+
+/// Adds pattern-matching-related methods to [AddEvent].
+extension AddEventPatterns on AddEvent {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(PickVideo value)? pickVideo,
+    TResult Function(RecordVideo value)? recordVideo,
+    TResult Function(PostReel value)? post,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started(_that);
+      case PickVideo() when pickVideo != null:
+        return pickVideo(_that);
+      case RecordVideo() when recordVideo != null:
+        return recordVideo(_that);
+      case PostReel() when post != null:
+        return post(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(PickVideo value) pickVideo,
+    required TResult Function(RecordVideo value) recordVideo,
+    required TResult Function(PostReel value) post,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started():
+        return started(_that);
+      case PickVideo():
+        return pickVideo(_that);
+      case RecordVideo():
+        return recordVideo(_that);
+      case PostReel():
+        return post(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(PickVideo value)? pickVideo,
+    TResult? Function(RecordVideo value)? recordVideo,
+    TResult? Function(PostReel value)? post,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started(_that);
+      case PickVideo() when pickVideo != null:
+        return pickVideo(_that);
+      case RecordVideo() when recordVideo != null:
+        return recordVideo(_that);
+      case PostReel() when post != null:
+        return post(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? pickVideo,
+    TResult Function(String videoPath)? recordVideo,
+    TResult Function(String trimVideoUrl, String description)? post,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started();
+      case PickVideo() when pickVideo != null:
+        return pickVideo();
+      case RecordVideo() when recordVideo != null:
+        return recordVideo(_that.videoPath);
+      case PostReel() when post != null:
+        return post(_that.trimVideoUrl, _that.description);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() pickVideo,
+    required TResult Function(String videoPath) recordVideo,
+    required TResult Function(String trimVideoUrl, String description) post,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started():
+        return started();
+      case PickVideo():
+        return pickVideo();
+      case RecordVideo():
+        return recordVideo(_that.videoPath);
+      case PostReel():
+        return post(_that.trimVideoUrl, _that.description);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? pickVideo,
+    TResult? Function(String videoPath)? recordVideo,
+    TResult? Function(String trimVideoUrl, String description)? post,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started();
+      case PickVideo() when pickVideo != null:
+        return pickVideo();
+      case RecordVideo() when recordVideo != null:
+        return recordVideo(_that.videoPath);
+      case PostReel() when post != null:
+        return post(_that.trimVideoUrl, _that.description);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc
@@ -230,6 +440,235 @@ mixin _$AddState {
 /// @nodoc
 class $AddStateCopyWith<$Res> {
   $AddStateCopyWith(AddState _, $Res Function(AddState) __);
+}
+
+/// Adds pattern-matching-related methods to [AddState].
+extension AddStatePatterns on AddState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_AddState value)? $default, {
+    TResult Function(AddReelLoading value)? loading,
+    TResult Function(AddReelSuccess value)? success,
+    TResult Function(PostingError value)? error,
+    TResult Function(ValidUrl value)? validUrl,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _AddState() when $default != null:
+        return $default(_that);
+      case AddReelLoading() when loading != null:
+        return loading(_that);
+      case AddReelSuccess() when success != null:
+        return success(_that);
+      case PostingError() when error != null:
+        return error(_that);
+      case ValidUrl() when validUrl != null:
+        return validUrl(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_AddState value) $default, {
+    required TResult Function(AddReelLoading value) loading,
+    required TResult Function(AddReelSuccess value) success,
+    required TResult Function(PostingError value) error,
+    required TResult Function(ValidUrl value) validUrl,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _AddState():
+        return $default(_that);
+      case AddReelLoading():
+        return loading(_that);
+      case AddReelSuccess():
+        return success(_that);
+      case PostingError():
+        return error(_that);
+      case ValidUrl():
+        return validUrl(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_AddState value)? $default, {
+    TResult? Function(AddReelLoading value)? loading,
+    TResult? Function(AddReelSuccess value)? success,
+    TResult? Function(PostingError value)? error,
+    TResult? Function(ValidUrl value)? validUrl,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _AddState() when $default != null:
+        return $default(_that);
+      case AddReelLoading() when loading != null:
+        return loading(_that);
+      case AddReelSuccess() when success != null:
+        return success(_that);
+      case PostingError() when error != null:
+        return error(_that);
+      case ValidUrl() when validUrl != null:
+        return validUrl(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function()? $default, {
+    TResult Function()? loading,
+    TResult Function()? success,
+    TResult Function(String errorMessage)? error,
+    TResult Function(String videoUrl)? validUrl,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _AddState() when $default != null:
+        return $default();
+      case AddReelLoading() when loading != null:
+        return loading();
+      case AddReelSuccess() when success != null:
+        return success();
+      case PostingError() when error != null:
+        return error(_that.errorMessage);
+      case ValidUrl() when validUrl != null:
+        return validUrl(_that.videoUrl);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function() $default, {
+    required TResult Function() loading,
+    required TResult Function() success,
+    required TResult Function(String errorMessage) error,
+    required TResult Function(String videoUrl) validUrl,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _AddState():
+        return $default();
+      case AddReelLoading():
+        return loading();
+      case AddReelSuccess():
+        return success();
+      case PostingError():
+        return error(_that.errorMessage);
+      case ValidUrl():
+        return validUrl(_that.videoUrl);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function()? $default, {
+    TResult? Function()? loading,
+    TResult? Function()? success,
+    TResult? Function(String errorMessage)? error,
+    TResult? Function(String videoUrl)? validUrl,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _AddState() when $default != null:
+        return $default();
+      case AddReelLoading() when loading != null:
+        return loading();
+      case AddReelSuccess() when success != null:
+        return success();
+      case PostingError() when error != null:
+        return error(_that.errorMessage);
+      case ValidUrl() when validUrl != null:
+        return validUrl(_that.videoUrl);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc

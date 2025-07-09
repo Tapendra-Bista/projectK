@@ -14,7 +14,7 @@ class Tab2 extends StatelessWidget {
     final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.fromYou.name.tr,
-      style: theme.bodyLarge!.copyWith(fontSize: 20.sp),
+      style: theme.bodyLarge!.copyWith(fontSize: 15.sp),
     );
   }
 }
@@ -30,7 +30,7 @@ class Tab1 extends StatelessWidget {
     final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.toYou.name.tr,
-      style: theme.bodyLarge!.copyWith(fontSize: 20.sp),
+      style: theme.bodyLarge!.copyWith(fontSize: 15.sp),
     );
   }
 }

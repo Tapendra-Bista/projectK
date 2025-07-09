@@ -30,28 +30,25 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
+
   get: ^4.7.2
+  reels:
+    path: ./local_packages/reels
   flutter_screenutil: ^5.9.3
-  chewie: ^1.11.3
-  firebase_core: ^3.13.0
-  firebase_auth: ^5.5.3
-  google_sign_in: ^7.0.0
-  permission_handler: ^11.0.0
+  google_sign_in: ^7.1.0
+  firebase_auth: ^5.6.2
+  firebase_core: ^3.15.1
+  permission_handler: ^12.0.1
   cloud_firestore: ^5.6.7
-  flutter_native_splash: ^2.4.6
   equatable: ^2.0.7
   flutter_bloc: ^9.1.1
-  firebase_app_check: ^0.3.2+5
   flutter_svg: ^2.1.0
   lottie: ^3.3.1
   cool_dropdown: ^2.1.1
   hydrated_bloc: ^10.0.0
   path_provider: ^2.1.5
-  shared_preferences: ^2.5.3
   geolocator: ^14.0.0
   geocoding: ^4.0.0
   step_progress_indicator: ^1.0.2
@@ -66,46 +63,28 @@ dependencies:
   cached_network_image: ^3.4.1
   firebase_database: ^11.3.6
   hugeicons: ^0.0.11
-  sliver_tools: ^0.2.12
-  bloc_lint: ^0.2.0-dev.4
   flutter_advanced_avatar: ^1.5.2
   flutter_story_view: ^0.0.4
-  skeletonizer: ^2.0.1
   flutter_card_swiper: ^7.0.2
-  firebase_storage: ^12.4.6
-  open_filex: ^4.7.0
-  in_memory_store: ^1.0.1
   emoji_picker_flutter: ^4.3.0
-  date_format: ^2.0.9
   intl: ^0.20.2
-  icon_badge: ^1.0.0
   badges: ^3.1.2
   chat_bubbles: ^1.7.0
   get_it: ^8.0.3
   json_annotation: ^4.9.0
   freezed_annotation: ^3.0.0
-  drop_down_list: ^2.0.0
   flutter_slidable: ^4.0.0
   flutter_platform_widgets: ^9.0.0
-  popup_menu: ^2.1.0
   confetti: ^0.8.0
   camerawesome: ^2.5.0
-  pigeon: ^25.5.0
-  file_picker: ^10.2.0
   google_fonts: ^6.2.1
   video_trimmer: ^5.0.0
   dropdown_button2: ^2.3.9
-  whitecodel_reels: ^0.0.9+4
   waveform_recorder: ^1.7.0
   voice_message_package: ^2.2.1
   uuid: ^4.5.1
   quickalert: ^1.1.0
   contained_tab_bar_view: ^0.8.0
-
-
-
-
-
 
 
 
@@ -123,6 +102,7 @@ dev_dependencies:
   freezed: ^3.0.6
   json_serializable: ^6.9.5
   build_runner:
+  bloc_lint: 0.2.0
 
 dependency_overrides:
   rxdart: ^0.27.7 # Or the version required by the latest story_view

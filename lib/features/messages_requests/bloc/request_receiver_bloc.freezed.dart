@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -34,6 +33,224 @@ mixin _$RequestReceiverEvent {
 class $RequestReceiverEventCopyWith<$Res> {
   $RequestReceiverEventCopyWith(
       RequestReceiverEvent _, $Res Function(RequestReceiverEvent) __);
+}
+
+/// Adds pattern-matching-related methods to [RequestReceiverEvent].
+extension RequestReceiverEventPatterns on RequestReceiverEvent {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(RequestReceiverGet value)? messagesRequestsGet,
+    TResult Function(RequestReceiverUnreadCount value)?
+        messagesRequestsUnreadCount,
+    TResult Function(AcceptRequest value)? acceptRequest,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started(_that);
+      case RequestReceiverGet() when messagesRequestsGet != null:
+        return messagesRequestsGet(_that);
+      case RequestReceiverUnreadCount()
+          when messagesRequestsUnreadCount != null:
+        return messagesRequestsUnreadCount(_that);
+      case AcceptRequest() when acceptRequest != null:
+        return acceptRequest(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(RequestReceiverGet value) messagesRequestsGet,
+    required TResult Function(RequestReceiverUnreadCount value)
+        messagesRequestsUnreadCount,
+    required TResult Function(AcceptRequest value) acceptRequest,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started():
+        return started(_that);
+      case RequestReceiverGet():
+        return messagesRequestsGet(_that);
+      case RequestReceiverUnreadCount():
+        return messagesRequestsUnreadCount(_that);
+      case AcceptRequest():
+        return acceptRequest(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(RequestReceiverGet value)? messagesRequestsGet,
+    TResult? Function(RequestReceiverUnreadCount value)?
+        messagesRequestsUnreadCount,
+    TResult? Function(AcceptRequest value)? acceptRequest,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started(_that);
+      case RequestReceiverGet() when messagesRequestsGet != null:
+        return messagesRequestsGet(_that);
+      case RequestReceiverUnreadCount()
+          when messagesRequestsUnreadCount != null:
+        return messagesRequestsUnreadCount(_that);
+      case AcceptRequest() when acceptRequest != null:
+        return acceptRequest(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? messagesRequestsGet,
+    TResult Function()? messagesRequestsUnreadCount,
+    TResult Function(String senderId, String receiverId)? acceptRequest,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started();
+      case RequestReceiverGet() when messagesRequestsGet != null:
+        return messagesRequestsGet();
+      case RequestReceiverUnreadCount()
+          when messagesRequestsUnreadCount != null:
+        return messagesRequestsUnreadCount();
+      case AcceptRequest() when acceptRequest != null:
+        return acceptRequest(_that.senderId, _that.receiverId);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() messagesRequestsGet,
+    required TResult Function() messagesRequestsUnreadCount,
+    required TResult Function(String senderId, String receiverId) acceptRequest,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started():
+        return started();
+      case RequestReceiverGet():
+        return messagesRequestsGet();
+      case RequestReceiverUnreadCount():
+        return messagesRequestsUnreadCount();
+      case AcceptRequest():
+        return acceptRequest(_that.senderId, _that.receiverId);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? messagesRequestsGet,
+    TResult? Function()? messagesRequestsUnreadCount,
+    TResult? Function(String senderId, String receiverId)? acceptRequest,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started();
+      case RequestReceiverGet() when messagesRequestsGet != null:
+        return messagesRequestsGet();
+      case RequestReceiverUnreadCount()
+          when messagesRequestsUnreadCount != null:
+        return messagesRequestsUnreadCount();
+      case AcceptRequest() when acceptRequest != null:
+        return acceptRequest(_that.senderId, _that.receiverId);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc
@@ -98,6 +315,79 @@ class RequestReceiverUnreadCount implements RequestReceiverEvent {
 }
 
 /// @nodoc
+
+class AcceptRequest implements RequestReceiverEvent {
+  const AcceptRequest({required this.senderId, required this.receiverId});
+
+  final String senderId;
+  final String receiverId;
+
+  /// Create a copy of RequestReceiverEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $AcceptRequestCopyWith<AcceptRequest> get copyWith =>
+      _$AcceptRequestCopyWithImpl<AcceptRequest>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is AcceptRequest &&
+            (identical(other.senderId, senderId) ||
+                other.senderId == senderId) &&
+            (identical(other.receiverId, receiverId) ||
+                other.receiverId == receiverId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, senderId, receiverId);
+
+  @override
+  String toString() {
+    return 'RequestReceiverEvent.acceptRequest(senderId: $senderId, receiverId: $receiverId)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $AcceptRequestCopyWith<$Res>
+    implements $RequestReceiverEventCopyWith<$Res> {
+  factory $AcceptRequestCopyWith(
+          AcceptRequest value, $Res Function(AcceptRequest) _then) =
+      _$AcceptRequestCopyWithImpl;
+  @useResult
+  $Res call({String senderId, String receiverId});
+}
+
+/// @nodoc
+class _$AcceptRequestCopyWithImpl<$Res>
+    implements $AcceptRequestCopyWith<$Res> {
+  _$AcceptRequestCopyWithImpl(this._self, this._then);
+
+  final AcceptRequest _self;
+  final $Res Function(AcceptRequest) _then;
+
+  /// Create a copy of RequestReceiverEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? senderId = null,
+    Object? receiverId = null,
+  }) {
+    return _then(AcceptRequest(
+      senderId: null == senderId
+          ? _self.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      receiverId: null == receiverId
+          ? _self.receiverId
+          : receiverId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
 mixin _$RequestReceiverState {
   @override
   bool operator ==(Object other) {
@@ -118,6 +408,235 @@ mixin _$RequestReceiverState {
 class $RequestReceiverStateCopyWith<$Res> {
   $RequestReceiverStateCopyWith(
       RequestReceiverState _, $Res Function(RequestReceiverState) __);
+}
+
+/// Adds pattern-matching-related methods to [RequestReceiverState].
+extension RequestReceiverStatePatterns on RequestReceiverState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(NoRequestsYet value)? noRequestsYet,
+    TResult Function(GetRequests value)? getRequests,
+    TResult Function(GetUnreadCount value)? getUnreadCount,
+    TResult Function(ErrorInRequests value)? errorInRequests,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case NoRequestsYet() when noRequestsYet != null:
+        return noRequestsYet(_that);
+      case GetRequests() when getRequests != null:
+        return getRequests(_that);
+      case GetUnreadCount() when getUnreadCount != null:
+        return getUnreadCount(_that);
+      case ErrorInRequests() when errorInRequests != null:
+        return errorInRequests(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(NoRequestsYet value) noRequestsYet,
+    required TResult Function(GetRequests value) getRequests,
+    required TResult Function(GetUnreadCount value) getUnreadCount,
+    required TResult Function(ErrorInRequests value) errorInRequests,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial(_that);
+      case NoRequestsYet():
+        return noRequestsYet(_that);
+      case GetRequests():
+        return getRequests(_that);
+      case GetUnreadCount():
+        return getUnreadCount(_that);
+      case ErrorInRequests():
+        return errorInRequests(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(NoRequestsYet value)? noRequestsYet,
+    TResult? Function(GetRequests value)? getRequests,
+    TResult? Function(GetUnreadCount value)? getUnreadCount,
+    TResult? Function(ErrorInRequests value)? errorInRequests,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial(_that);
+      case NoRequestsYet() when noRequestsYet != null:
+        return noRequestsYet(_that);
+      case GetRequests() when getRequests != null:
+        return getRequests(_that);
+      case GetUnreadCount() when getUnreadCount != null:
+        return getUnreadCount(_that);
+      case ErrorInRequests() when errorInRequests != null:
+        return errorInRequests(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? noRequestsYet,
+    TResult Function(List<Requestmodel> receiverData)? getRequests,
+    TResult Function(int count)? getUnreadCount,
+    TResult Function(String errorMessage)? errorInRequests,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial();
+      case NoRequestsYet() when noRequestsYet != null:
+        return noRequestsYet();
+      case GetRequests() when getRequests != null:
+        return getRequests(_that.receiverData);
+      case GetUnreadCount() when getUnreadCount != null:
+        return getUnreadCount(_that.count);
+      case ErrorInRequests() when errorInRequests != null:
+        return errorInRequests(_that.errorMessage);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() noRequestsYet,
+    required TResult Function(List<Requestmodel> receiverData) getRequests,
+    required TResult Function(int count) getUnreadCount,
+    required TResult Function(String errorMessage) errorInRequests,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial():
+        return initial();
+      case NoRequestsYet():
+        return noRequestsYet();
+      case GetRequests():
+        return getRequests(_that.receiverData);
+      case GetUnreadCount():
+        return getUnreadCount(_that.count);
+      case ErrorInRequests():
+        return errorInRequests(_that.errorMessage);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? noRequestsYet,
+    TResult? Function(List<Requestmodel> receiverData)? getRequests,
+    TResult? Function(int count)? getUnreadCount,
+    TResult? Function(String errorMessage)? errorInRequests,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Initial() when initial != null:
+        return initial();
+      case NoRequestsYet() when noRequestsYet != null:
+        return noRequestsYet();
+      case GetRequests() when getRequests != null:
+        return getRequests(_that.receiverData);
+      case GetUnreadCount() when getUnreadCount != null:
+        return getUnreadCount(_that.count);
+      case ErrorInRequests() when errorInRequests != null:
+        return errorInRequests(_that.errorMessage);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc

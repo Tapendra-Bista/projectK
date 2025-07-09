@@ -1,40 +1,23 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:equatable/equatable.dart';
+part 'block_model.freezed.dart';
+part 'block_model.g.dart';
+
 //---------------------Block model-----------------------
-class BlockModel extends Equatable {
-  final String id;
-  final List<String> blockId;
+@freezed
+abstract class BlockModel with _$BlockModel {
+  const factory BlockModel({
+    required String id,
+    required List<String> blockId,
+  }) = _BlockModel;
+  factory BlockModel.fromJson(Map<String, dynamic> json) =>
+      _$BlockModelFromJson(json);
 
-  BlockModel({required this.id, required this.blockId});
+  factory BlockModel.empty() => BlockModel(id: '', blockId: []);
+}
 
-  @override
-  List<Object> get props => [id, blockId];
-
-  BlockModel copyWith({String? id, List<String>? blockId}) {
-    return BlockModel(id: id ?? this.id, blockId: blockId ?? this.blockId);
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{'id': id, 'blockId': blockId};
-  }
-
-  factory BlockModel.fromMap(Map<String, dynamic> map) {
-    return BlockModel(
-      id: map['id'] as String,
-      blockId: List<String>.from(map['blockId'] ?? []),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory BlockModel.fromJson(String source) =>
-      BlockModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  bool get stringify => true;
-
-  static BlockModel empty = BlockModel(id: '', blockId: []);
+extension   BlockModelToMap on BlockModel{
+        Map<String,dynamic> toMap()  => toJson();
 }

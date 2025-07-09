@@ -4,8 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
 class FavoriteRepository extends BaseRepository {
-  FavoriteRepository({FirebaseFirestore? firestore});
-
+  FavoriteRepository({FirebaseFirestore? firestore}){
+    this.firestore  = firestore ?? FirebaseFirestore.instance;
+  }
   //-------------------------- Add Favorite --------------------------
   Future<void> addFavorite(String favId) async {
     final favouriteDocRef = firestore
@@ -67,6 +68,6 @@ class FavoriteRepository extends BaseRepository {
 
     if (!docSnapshot.exists || docSnapshot.data() == null) return null;
 
-    return FavoriteModel.fromMap(docSnapshot.data()!);
+    return FavoriteModel.fromJson(docSnapshot.data()!);
   }
 }

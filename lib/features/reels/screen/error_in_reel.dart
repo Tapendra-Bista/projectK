@@ -10,7 +10,7 @@ class ErrorInReel extends StatelessWidget {
   });
 //-----------Error While fetching------------
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return BlocSelector<ReelBloc, ReelState, String?>(
       selector: (state) {
         if (state is ReelError) return state.errorMessage;
@@ -21,7 +21,7 @@ class ErrorInReel extends StatelessWidget {
         return Center(
           child: Text(
             error ?? EnumLocale.defaultError.name.tr,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: theme.bodyMedium,
           ),
         );
       },

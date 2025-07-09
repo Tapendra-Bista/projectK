@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 //----------------Fetching current  user profile data
 class ProfileRepository extends BaseRepository {
-  ProfileRepository({FirebaseFirestore? firestore});
+  ProfileRepository({FirebaseFirestore? firestore}){
+    this.firestore = firestore ?? FirebaseFirestore.instance;
+  }
 
   Future<ProfileModel?> fetchProfileData() async {
     try {
@@ -14,7 +16,7 @@ class ProfileRepository extends BaseRepository {
           await firestore.collection('users').doc(currentUserId).get();
 
       if (snapshot.exists) {
-        return ProfileModel.fromMap(snapshot.data()!);
+        return ProfileModel.fromJson(snapshot.data()!);
       }
     } catch (e) {
       rethrow;

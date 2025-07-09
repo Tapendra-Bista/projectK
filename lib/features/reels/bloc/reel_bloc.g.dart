@@ -36,3 +36,11 @@ ReelEmpty _$ReelEmptyFromJson(Map<String, dynamic> json) => ReelEmpty(
 Map<String, dynamic> _$ReelEmptyToJson(ReelEmpty instance) => <String, dynamic>{
       'runtimeType': instance.$type,
     };
+
+Loading _$LoadingFromJson(Map<String, dynamic> json) => Loading(
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$LoadingToJson(Loading instance) => <String, dynamic>{
+      'runtimeType': instance.$type,
+    };

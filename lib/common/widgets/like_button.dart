@@ -4,6 +4,7 @@ import 'package:afriqueen/features/like/bloc/like_bloc.dart';
 import 'package:afriqueen/features/like/bloc/like_event.dart';
 import 'package:afriqueen/features/like/bloc/like_state.dart';
 import 'package:afriqueen/features/like/model/like_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -15,6 +16,7 @@ class LikeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocSelector<LikeBloc, LikeState, LikeModel>(
       selector: (state) => state.likeUserList,
       builder: (context, likeData) {
@@ -34,8 +36,8 @@ class LikeButton extends StatelessWidget {
               },
               icon: Icon(
                 likeData.likeId.contains(id)
-                    ? Icons.thumb_up_rounded
-                    : Icons.thumb_up_alt_outlined,
+                    ? CupertinoIcons.hand_thumbsup_fill
+                    : CupertinoIcons.hand_thumbsup,
                 color: likeData.likeId.contains(id)
                     ? AppColors.blue
                     : AppColors.black,
@@ -44,11 +46,11 @@ class LikeButton extends StatelessWidget {
             ),
             PlatformText(
               EnumLocale.like.name.tr,
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: likeData.likeId.contains(id)
-                        ? AppColors.blue
-                        : AppColors.black,
-                  ),
+              style: theme.bodySmall!.copyWith(
+                color: likeData.likeId.contains(id)
+                    ? AppColors.blue
+                    : AppColors.black,
+              ),
             )
           ],
         );

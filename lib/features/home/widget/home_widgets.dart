@@ -1,7 +1,6 @@
 //----------------PlatformAppBar -----------------------
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
-import 'package:afriqueen/features/profile/bloc/profile_state.dart';
-import 'package:afriqueen/features/profile/model/profile_model.dart';
+
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,10 +37,10 @@ class CityName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<ProfileBloc, ProfileState, ProfileModel>(
-        selector: (state) => state.data,
-        builder: (context, model) => PlatformText(
-              model.city,
+    return BlocSelector<ProfileBloc, ProfileState, String>(
+        selector: (state) => (state is ProfileLoaded) ? state.data.city : '',
+        builder: (context, city) => PlatformText(
+              city,
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!

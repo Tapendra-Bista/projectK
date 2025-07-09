@@ -33,4 +33,9 @@ final class LoginPasswordChanged extends LoginEvent {
 
 final class LoginPasswordVisibility extends LoginEvent {}
 
-final class GoogleSignInButtonClicked extends LoginEvent {}
+final class GoogleSignInButtonClicked extends LoginEvent {
+    final String city;
+  final String country;
+
+ GoogleSignInButtonClicked({required this.city, required this.country});
+}

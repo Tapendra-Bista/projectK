@@ -26,6 +26,7 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReportBloc, ReportState>(
+      
       buildWhen: (previous, current) {
         if (current is Violation || current is Illegal) {
           return _show = true;

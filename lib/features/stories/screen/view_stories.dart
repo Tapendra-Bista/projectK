@@ -19,19 +19,12 @@ class ViewStories extends StatefulWidget {
 }
 
 class _ViewStoriesState extends State<ViewStories> {
-  int currentIndex = 0;
-  bool initialized = false;
+  final ValueNotifier<int> _currentIndex = ValueNotifier(0); // track index
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        setState(() {
-          initialized = true;
-        });
-      }
-    });
+  void dispose() {
+    _currentIndex.dispose(); // always dispose notifiers
+    super.dispose();
   }
 
   @override
@@ -49,21 +42,13 @@ class _ViewStoriesState extends State<ViewStories> {
                   return StoryItem(
                     url: imgUrl,
                     type: StoryItemType.image,
-                    duration: 4,
+                    duration: 5,
                   );
                 }).toList(),
                 onComplete: () {
                   Get.back();
                 },
-                onPageChanged: (index) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    if (mounted) {
-                      setState(() {
-                        currentIndex = index;
-                      });
-                    }
-                  });
-                },
+                onPageChanged: (index) => _currentIndex.value = index ?? 0,
                 indicatorColor: Colors.grey[500],
                 indicatorHeight: 2,
                 indicatorValueColor: Colors.white,
@@ -96,15 +81,16 @@ class _ViewStoriesState extends State<ViewStories> {
                           style: theme.bodyMedium!
                               .copyWith(color: AppColors.floralWhite),
                         ),
-                        Text(
-                          (initialized &&
-                                  widget.data.createdDate.length > currentIndex)
-                              ? Seniority.formatStoriesTime(
-                                  widget.data.createdDate[currentIndex])
-                              : '',
-                          style: theme.bodySmall!
-                              .copyWith(color: AppColors.floralWhite),
-                        ),
+                        ValueListenableBuilder<int>(
+                            valueListenable: _currentIndex,
+                            builder: (context, value, _) {
+                              return Text(
+                                Seniority.formatStoriesTime(
+                                    widget.data.createdDate[value].toDate()),
+                                style: theme.bodySmall!
+                                    .copyWith(color: AppColors.floralWhite),
+                              );
+                            })
                       ],
                     ),
                   ],

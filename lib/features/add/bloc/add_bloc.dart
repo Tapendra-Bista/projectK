@@ -11,6 +11,7 @@ part 'add_bloc.freezed.dart';
 part 'add_event.dart';
 part 'add_state.dart';
 
+//--------- add bloc for reel post ---------
 class AddBloc extends Bloc<AddEvent, AddState> {
   final AddRepository _addRepository;
   final Uuid _uuid = Uuid();
@@ -21,7 +22,7 @@ class AddBloc extends Bloc<AddEvent, AddState> {
     on<RecordVideo>(_onRecordVideo);
     on<PostReel>(_onPostReel);
   }
-
+//-----------video picker--------------
   Future<void> _onVideoPicked(PickVideo event, Emitter<AddState> emit) async {
     final url = await _addRepository.videoPicker()?? '';
    if (url.isNotEmpty)

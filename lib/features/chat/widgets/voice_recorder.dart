@@ -51,6 +51,7 @@ class _VoiceRecordState extends State<VoiceRecord> {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return ListenableBuilder(
         listenable: widget.waveformRecorderController,
         builder: (context, _) {
@@ -72,7 +73,7 @@ class _VoiceRecordState extends State<VoiceRecord> {
                           child: WaveformRecorder(
                               waveColor: AppColors.black.withValues(alpha: 0.5),
                               durationTextStyle:
-                                  Theme.of(context).textTheme.bodyMedium!,
+                                  theme.bodyMedium!,
                               height: 50.h,
                               onRecordingStopped: _onRecordingStopped,
                               controller: widget.waveformRecorderController),

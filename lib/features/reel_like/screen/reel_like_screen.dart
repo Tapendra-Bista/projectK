@@ -3,6 +3,7 @@ import 'package:afriqueen/features/reel_like/bloc/reel_like_bloc.dart';
 import 'package:afriqueen/features/reel_like/bloc/reel_like_event.dart';
 import 'package:afriqueen/features/reel_like/bloc/reel_like_state.dart';
 import 'package:afriqueen/features/reel_like/model/reel_like_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,8 +36,8 @@ class ReelLikeScreen extends StatelessWidget {
               },
               icon: Icon(
                 reelLikeData.reelLikeId.contains(rid)
-                    ? Icons.favorite
-                    : Icons.favorite_outline,
+                    ? CupertinoIcons.heart_fill
+                    : CupertinoIcons.heart,
                 color: reelLikeData.reelLikeId.contains(rid)
                     ? Colors.red
                     : AppColors.white,

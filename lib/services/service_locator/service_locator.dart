@@ -8,6 +8,8 @@ import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
 import 'package:afriqueen/features/chat/repository/chat_repository.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart';
 import 'package:afriqueen/features/create_profile/repository/create_profile_repository.dart';
+import 'package:afriqueen/features/edit_profile/bloc/edit_profile_bloc.dart';
+import 'package:afriqueen/features/edit_profile/repository/edit_profile_repository.dart';
 import 'package:afriqueen/features/email_verification/bloc/email_verification_bloc.dart';
 import 'package:afriqueen/features/email_verification/repository/email_verification_repository.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
@@ -24,7 +26,6 @@ import 'package:afriqueen/features/login/bloc/login_bloc.dart';
 import 'package:afriqueen/features/login/repository/login_repository.dart';
 import 'package:afriqueen/features/messages_requests/bloc/request_receiver_bloc.dart';
 import 'package:afriqueen/features/messages_requests/bloc/request_sender_bloc.dart';
-
 import 'package:afriqueen/features/messages_requests/repository/request_repository.dart';
 import 'package:afriqueen/features/preferences/bloc/preferences_bloc.dart';
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
@@ -34,6 +35,7 @@ import 'package:afriqueen/features/reel_like/repository/reel_like_repository.dar
 import 'package:afriqueen/features/reels/bloc/reel_bloc.dart';
 import 'package:afriqueen/features/reels/repository/reel_repository.dart';
 import 'package:afriqueen/features/report/bloc/report_bloc.dart';
+import 'package:afriqueen/features/setting/bloc/setting_bloc.dart';
 import 'package:afriqueen/features/signup/bloc/signup_bloc.dart';
 import 'package:afriqueen/features/signup/repository/signup_repository.dart';
 import 'package:afriqueen/features/stories/bloc/stories_bloc.dart';
@@ -72,6 +74,8 @@ void setupLocator() {
   getIt.registerLazySingleton<ReelRepository>(() => ReelRepository());
   getIt.registerLazySingleton<ReelLikeRepository>(() => ReelLikeRepository());
   getIt.registerLazySingleton<RequestRepository>(() => RequestRepository());
+  getIt.registerLazySingleton<EditProfileRepository>(
+      () => EditProfileRepository());
   //---------------------Bloc-------------------------------------------------
   getIt.registerLazySingleton<SignupBloc>(
     () => SignupBloc(signupRepository: getIt<SignupRepository>()),
@@ -135,4 +139,8 @@ void setupLocator() {
 
   getIt.registerLazySingleton<RequestReceiverBloc>(
       () => RequestReceiverBloc(repository: getIt<RequestRepository>()));
+  getIt.registerLazySingleton<EditProfileBloc>(
+      () => EditProfileBloc(repository: getIt<EditProfileRepository>()));
+
+  getIt.registerLazySingleton<SettingBloc>(() => SettingBloc());
 }

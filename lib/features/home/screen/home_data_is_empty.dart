@@ -1,8 +1,11 @@
 import 'package:afriqueen/common/localization/enums/enums.dart';
+import 'package:afriqueen/features/home/widget/home_widgets.dart';
+import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hugeicons/hugeicons.dart';
+import 'package:line_icons/line_icons.dart';
 //------------------Empty Data widget---------------------
 
 class NoData extends StatelessWidget {
@@ -12,21 +15,27 @@ class NoData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return PlatformScaffold(
+
       appBar: PlatformAppBar(
+              material: (context, platform) => MaterialAppBarData(centerTitle: true) ,
+        trailingActions: [
+          PlatformIconButton(
+            onPressed: () => Get.toNamed(AppRoutes.preferences),
+            icon: Icon(Icons.tune_outlined, size: 35.r),
+          ),
+        ],
+        title: CityName(),
         leading: PlatformIconButton(
-          onPressed: () => Get.back(),
-          icon: Icon(HugeIcons.strokeRoundedMultiplicationSign),
-        ),
-        title: Text(
-          EnumLocale.favorites.name.tr,
-          style: Theme.of(context).textTheme.bodyMedium,
+          onPressed: () => Get.toNamed(AppRoutes.profile),
+          icon: Icon(LineIcons.user, size: 35.r),
         ),
       ),
       body: Center(
         child: Text(
           EnumLocale.noDataAvailable.name.tr,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.bodyMedium,
         ),
       ),
     );

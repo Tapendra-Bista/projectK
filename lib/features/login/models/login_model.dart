@@ -1,11 +1,13 @@
-class LoginModel {
-  final String email;
-  final String password;
-  LoginModel({required this.email, required this.password});
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  LoginModel copyWith({String? email, String? password}) => LoginModel(
-    password: password ?? this.password,
-    email: email ?? this.email,
-  );
+part 'login_model.freezed.dart';
+
+@freezed
+abstract class LoginModel with _$LoginModel {
+  const factory LoginModel({
+    required String email,
+    required String password,
+  }) = _LoginModel;
 }
+
 // ------------------------model for login--------------------------------

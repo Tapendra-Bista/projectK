@@ -13,6 +13,8 @@ class ArchiveScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ArchiveBloc, ArchiveState>(
+          buildWhen: (previous, current) =>
+          previous.runtimeType != current.runtimeType,
       builder: (context, state) {
         return switch (state) {
           //-----------initial loading---------------------------

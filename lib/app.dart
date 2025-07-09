@@ -5,6 +5,7 @@ import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
 import 'package:afriqueen/features/block/bloc/block_bloc.dart';
 import 'package:afriqueen/features/chat/bloc/chat_bloc.dart';
 import 'package:afriqueen/features/create_profile/bloc/create_profile_bloc.dart';
+import 'package:afriqueen/features/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:afriqueen/features/favorite/bloc/favorite_bloc.dart';
 import 'package:afriqueen/features/follow/bloc/follow_bloc.dart';
 import 'package:afriqueen/features/forgot_password/bloc/forgot_password_bloc.dart';
@@ -19,6 +20,7 @@ import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
 import 'package:afriqueen/features/reel_like/bloc/reel_like_bloc.dart';
 import 'package:afriqueen/features/reels/bloc/reel_bloc.dart';
 import 'package:afriqueen/features/report/bloc/report_bloc.dart';
+import 'package:afriqueen/features/setting/bloc/setting_bloc.dart';
 import 'package:afriqueen/features/signup/bloc/signup_bloc.dart';
 import 'package:afriqueen/features/stories/bloc/stories_bloc.dart';
 import 'package:afriqueen/features/wellcome/bloc/wellcome_bloc.dart';
@@ -91,6 +93,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<RequestReceiverBloc>.value(
           value: getIt<RequestReceiverBloc>(),
+        ),
+        BlocProvider<EditProfileBloc>.value(
+          value: getIt<EditProfileBloc>(),
+        ),
+        BlocProvider<SettingBloc>.value(
+          value: getIt<SettingBloc>(),
         ),
       ],
       child: ScreenUtilInit(

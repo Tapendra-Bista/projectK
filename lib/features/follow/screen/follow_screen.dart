@@ -17,6 +17,7 @@ class FollowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return BlocSelector<FollowBloc, FollowState, FollowModel>(
       selector: (state) => state.followUserList,
       builder: (context, followData) {
@@ -41,8 +42,7 @@ class FollowButton extends StatelessWidget {
                 followData.followId.contains(id)
                     ? EnumLocale.following.name.tr
                     : EnumLocale.follow.name.tr,
-                style: Theme.of(context)
-                    .textTheme
+                style: theme
                     .bodyMedium!
                     .copyWith(color: color, fontSize: 14.sp),
               ),

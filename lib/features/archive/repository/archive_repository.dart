@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
 class ArchiveRepository extends BaseRepository {
-  ArchiveRepository({FirebaseFirestore? firestore});
+  ArchiveRepository({FirebaseFirestore? firestore}){
+    this.firestore = firestore ?? FirebaseFirestore.instance;
+  }
 
   //-------------------------- Add Archive --------------------------
   Future<void> addArchive(String archiveId) async {
@@ -67,6 +69,6 @@ class ArchiveRepository extends BaseRepository {
 
     if (!docSnapshot.exists || docSnapshot.data() == null) return null;
 
-    return ArchiveModel.fromMap(docSnapshot.data()!);
+    return ArchiveModel.fromJson(docSnapshot.data()!);
   }
 }

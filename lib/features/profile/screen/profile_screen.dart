@@ -1,6 +1,5 @@
 import 'package:afriqueen/common/widgets/circular_indicator.dart';
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
-import 'package:afriqueen/features/profile/bloc/profile_state.dart';
 import 'package:afriqueen/features/profile/screen/error_screen.dart';
 import 'package:afriqueen/features/profile/screen/fetch_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,8 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
+      buildWhen: (previous, current) =>
+          previous.runtimeType != current.runtimeType,
       builder: (context, state) {
         return switch (state) {
           //----------Loading--------------------
@@ -19,7 +20,9 @@ class ProfileScreen extends StatelessWidget {
           //----------------- Get Error--------------------
           Error() => const ProfileErrorContent(),
           //---------------After Data Fetched--------------------
-          _ => const ProfileDataContent(),
+          ProfileLoaded() => const ProfileDataContent(),
+          //----- default----
+          _ => SizedBox.square()
         };
       },
     );

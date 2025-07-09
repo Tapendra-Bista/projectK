@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -34,6 +33,256 @@ mixin _$RequestSenderEvent {
 class $RequestSenderEventCopyWith<$Res> {
   $RequestSenderEventCopyWith(
       RequestSenderEvent _, $Res Function(RequestSenderEvent) __);
+}
+
+/// Adds pattern-matching-related methods to [RequestSenderEvent].
+extension RequestSenderEventPatterns on RequestSenderEvent {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RequestSenderSend value)? messagesRequestsSend,
+    TResult Function(TotalRequestSenderSend value)? totalRequestSenderSend,
+    TResult Function(RequestSenderDelete value)? messagesRequestsDelete,
+    TResult Function(CheckingUserAvailableEvent value)?
+        checkingUserAvailableEvent,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case RequestSenderSend() when messagesRequestsSend != null:
+        return messagesRequestsSend(_that);
+      case TotalRequestSenderSend() when totalRequestSenderSend != null:
+        return totalRequestSenderSend(_that);
+      case RequestSenderDelete() when messagesRequestsDelete != null:
+        return messagesRequestsDelete(_that);
+      case CheckingUserAvailableEvent() when checkingUserAvailableEvent != null:
+        return checkingUserAvailableEvent(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(RequestSenderSend value) messagesRequestsSend,
+    required TResult Function(TotalRequestSenderSend value)
+        totalRequestSenderSend,
+    required TResult Function(RequestSenderDelete value) messagesRequestsDelete,
+    required TResult Function(CheckingUserAvailableEvent value)
+        checkingUserAvailableEvent,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case RequestSenderSend():
+        return messagesRequestsSend(_that);
+      case TotalRequestSenderSend():
+        return totalRequestSenderSend(_that);
+      case RequestSenderDelete():
+        return messagesRequestsDelete(_that);
+      case CheckingUserAvailableEvent():
+        return checkingUserAvailableEvent(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(RequestSenderSend value)? messagesRequestsSend,
+    TResult? Function(TotalRequestSenderSend value)? totalRequestSenderSend,
+    TResult? Function(RequestSenderDelete value)? messagesRequestsDelete,
+    TResult? Function(CheckingUserAvailableEvent value)?
+        checkingUserAvailableEvent,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case RequestSenderSend() when messagesRequestsSend != null:
+        return messagesRequestsSend(_that);
+      case TotalRequestSenderSend() when totalRequestSenderSend != null:
+        return totalRequestSenderSend(_that);
+      case RequestSenderDelete() when messagesRequestsDelete != null:
+        return messagesRequestsDelete(_that);
+      case CheckingUserAvailableEvent() when checkingUserAvailableEvent != null:
+        return checkingUserAvailableEvent(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String senderProfile, String senderName, String senderId,
+            String receiverId, String receiverProfile, String receiverName)?
+        messagesRequestsSend,
+    TResult Function()? totalRequestSenderSend,
+    TResult Function(String senderId, String receiverId)?
+        messagesRequestsDelete,
+    TResult Function(String senderId, String receiverId)?
+        checkingUserAvailableEvent,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case RequestSenderSend() when messagesRequestsSend != null:
+        return messagesRequestsSend(
+            _that.senderProfile,
+            _that.senderName,
+            _that.senderId,
+            _that.receiverId,
+            _that.receiverProfile,
+            _that.receiverName);
+      case TotalRequestSenderSend() when totalRequestSenderSend != null:
+        return totalRequestSenderSend();
+      case RequestSenderDelete() when messagesRequestsDelete != null:
+        return messagesRequestsDelete(_that.senderId, _that.receiverId);
+      case CheckingUserAvailableEvent() when checkingUserAvailableEvent != null:
+        return checkingUserAvailableEvent(_that.senderId, _that.receiverId);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String senderProfile,
+            String senderName,
+            String senderId,
+            String receiverId,
+            String receiverProfile,
+            String receiverName)
+        messagesRequestsSend,
+    required TResult Function() totalRequestSenderSend,
+    required TResult Function(String senderId, String receiverId)
+        messagesRequestsDelete,
+    required TResult Function(String senderId, String receiverId)
+        checkingUserAvailableEvent,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case RequestSenderSend():
+        return messagesRequestsSend(
+            _that.senderProfile,
+            _that.senderName,
+            _that.senderId,
+            _that.receiverId,
+            _that.receiverProfile,
+            _that.receiverName);
+      case TotalRequestSenderSend():
+        return totalRequestSenderSend();
+      case RequestSenderDelete():
+        return messagesRequestsDelete(_that.senderId, _that.receiverId);
+      case CheckingUserAvailableEvent():
+        return checkingUserAvailableEvent(_that.senderId, _that.receiverId);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String senderProfile, String senderName, String senderId,
+            String receiverId, String receiverProfile, String receiverName)?
+        messagesRequestsSend,
+    TResult? Function()? totalRequestSenderSend,
+    TResult? Function(String senderId, String receiverId)?
+        messagesRequestsDelete,
+    TResult? Function(String senderId, String receiverId)?
+        checkingUserAvailableEvent,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case RequestSenderSend() when messagesRequestsSend != null:
+        return messagesRequestsSend(
+            _that.senderProfile,
+            _that.senderName,
+            _that.senderId,
+            _that.receiverId,
+            _that.receiverProfile,
+            _that.receiverName);
+      case TotalRequestSenderSend() when totalRequestSenderSend != null:
+        return totalRequestSenderSend();
+      case RequestSenderDelete() when messagesRequestsDelete != null:
+        return messagesRequestsDelete(_that.senderId, _that.receiverId);
+      case CheckingUserAvailableEvent() when checkingUserAvailableEvent != null:
+        return checkingUserAvailableEvent(_that.senderId, _that.receiverId);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc
@@ -344,6 +593,286 @@ mixin _$RequestSenderState {
 class $RequestSenderStateCopyWith<$Res> {
   $RequestSenderStateCopyWith(
       RequestSenderState _, $Res Function(RequestSenderState) __);
+}
+
+/// Adds pattern-matching-related methods to [RequestSenderState].
+extension RequestSenderStatePatterns on RequestSenderState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initial value)? initial,
+    TResult Function(NoRequestsYet value)? noRequestsYet,
+    TResult Function(TotalRequestSenderSendState value)?
+        totalRequestSenderSendState,
+    TResult Function(ErrorInRequests value)? errorInRequests,
+    TResult Function(RequestsLoading value)? requestLoading,
+    TResult Function(RequestSendSuccessfully value)? requestSendSuccessfully,
+    TResult Function(CheckingUserAvailableState value)?
+        checkingUserAvailableState,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial() when initial != null:
+        return initial(_that);
+      case NoRequestsYet() when noRequestsYet != null:
+        return noRequestsYet(_that);
+      case TotalRequestSenderSendState()
+          when totalRequestSenderSendState != null:
+        return totalRequestSenderSendState(_that);
+      case ErrorInRequests() when errorInRequests != null:
+        return errorInRequests(_that);
+      case RequestsLoading() when requestLoading != null:
+        return requestLoading(_that);
+      case RequestSendSuccessfully() when requestSendSuccessfully != null:
+        return requestSendSuccessfully(_that);
+      case CheckingUserAvailableState() when checkingUserAvailableState != null:
+        return checkingUserAvailableState(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initial value) initial,
+    required TResult Function(NoRequestsYet value) noRequestsYet,
+    required TResult Function(TotalRequestSenderSendState value)
+        totalRequestSenderSendState,
+    required TResult Function(ErrorInRequests value) errorInRequests,
+    required TResult Function(RequestsLoading value) requestLoading,
+    required TResult Function(RequestSendSuccessfully value)
+        requestSendSuccessfully,
+    required TResult Function(CheckingUserAvailableState value)
+        checkingUserAvailableState,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial():
+        return initial(_that);
+      case NoRequestsYet():
+        return noRequestsYet(_that);
+      case TotalRequestSenderSendState():
+        return totalRequestSenderSendState(_that);
+      case ErrorInRequests():
+        return errorInRequests(_that);
+      case RequestsLoading():
+        return requestLoading(_that);
+      case RequestSendSuccessfully():
+        return requestSendSuccessfully(_that);
+      case CheckingUserAvailableState():
+        return checkingUserAvailableState(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Initial value)? initial,
+    TResult? Function(NoRequestsYet value)? noRequestsYet,
+    TResult? Function(TotalRequestSenderSendState value)?
+        totalRequestSenderSendState,
+    TResult? Function(ErrorInRequests value)? errorInRequests,
+    TResult? Function(RequestsLoading value)? requestLoading,
+    TResult? Function(RequestSendSuccessfully value)? requestSendSuccessfully,
+    TResult? Function(CheckingUserAvailableState value)?
+        checkingUserAvailableState,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial() when initial != null:
+        return initial(_that);
+      case NoRequestsYet() when noRequestsYet != null:
+        return noRequestsYet(_that);
+      case TotalRequestSenderSendState()
+          when totalRequestSenderSendState != null:
+        return totalRequestSenderSendState(_that);
+      case ErrorInRequests() when errorInRequests != null:
+        return errorInRequests(_that);
+      case RequestsLoading() when requestLoading != null:
+        return requestLoading(_that);
+      case RequestSendSuccessfully() when requestSendSuccessfully != null:
+        return requestSendSuccessfully(_that);
+      case CheckingUserAvailableState() when checkingUserAvailableState != null:
+        return checkingUserAvailableState(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? noRequestsYet,
+    TResult Function(List<Requestmodel> senderData)?
+        totalRequestSenderSendState,
+    TResult Function(String errorMessage)? errorInRequests,
+    TResult Function()? requestLoading,
+    TResult Function()? requestSendSuccessfully,
+    TResult Function(Requestmodel? userData)? checkingUserAvailableState,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial() when initial != null:
+        return initial();
+      case NoRequestsYet() when noRequestsYet != null:
+        return noRequestsYet();
+      case TotalRequestSenderSendState()
+          when totalRequestSenderSendState != null:
+        return totalRequestSenderSendState(_that.senderData);
+      case ErrorInRequests() when errorInRequests != null:
+        return errorInRequests(_that.errorMessage);
+      case RequestsLoading() when requestLoading != null:
+        return requestLoading();
+      case RequestSendSuccessfully() when requestSendSuccessfully != null:
+        return requestSendSuccessfully();
+      case CheckingUserAvailableState() when checkingUserAvailableState != null:
+        return checkingUserAvailableState(_that.userData);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() noRequestsYet,
+    required TResult Function(List<Requestmodel> senderData)
+        totalRequestSenderSendState,
+    required TResult Function(String errorMessage) errorInRequests,
+    required TResult Function() requestLoading,
+    required TResult Function() requestSendSuccessfully,
+    required TResult Function(Requestmodel? userData)
+        checkingUserAvailableState,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial():
+        return initial();
+      case NoRequestsYet():
+        return noRequestsYet();
+      case TotalRequestSenderSendState():
+        return totalRequestSenderSendState(_that.senderData);
+      case ErrorInRequests():
+        return errorInRequests(_that.errorMessage);
+      case RequestsLoading():
+        return requestLoading();
+      case RequestSendSuccessfully():
+        return requestSendSuccessfully();
+      case CheckingUserAvailableState():
+        return checkingUserAvailableState(_that.userData);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? noRequestsYet,
+    TResult? Function(List<Requestmodel> senderData)?
+        totalRequestSenderSendState,
+    TResult? Function(String errorMessage)? errorInRequests,
+    TResult? Function()? requestLoading,
+    TResult? Function()? requestSendSuccessfully,
+    TResult? Function(Requestmodel? userData)? checkingUserAvailableState,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial() when initial != null:
+        return initial();
+      case NoRequestsYet() when noRequestsYet != null:
+        return noRequestsYet();
+      case TotalRequestSenderSendState()
+          when totalRequestSenderSendState != null:
+        return totalRequestSenderSendState(_that.senderData);
+      case ErrorInRequests() when errorInRequests != null:
+        return errorInRequests(_that.errorMessage);
+      case RequestsLoading() when requestLoading != null:
+        return requestLoading();
+      case RequestSendSuccessfully() when requestSendSuccessfully != null:
+        return requestSendSuccessfully();
+      case CheckingUserAvailableState() when checkingUserAvailableState != null:
+        return checkingUserAvailableState(_that.userData);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc

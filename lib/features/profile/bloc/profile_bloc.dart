@@ -1,43 +1,33 @@
-import 'package:afriqueen/features/profile/bloc/profile_event.dart';
-import 'package:afriqueen/features/profile/bloc/profile_state.dart';
+import 'dart:async';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/features/profile/repository/profile_repository.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class ProfileBloc extends HydratedBloc<ProfileEvent, ProfileState> {
+part 'profile_bloc.freezed.dart';
+part  'profile_event.dart';
+part  'profile_state.dart';
+class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ProfileRepository _repository;
   ProfileBloc({required ProfileRepository repo})
       : _repository = repo,
         super(ProfileInitial()) {
     on<ProfileFetch>((event, emit) async {
       try {
-        emit(Loading.fromState(state));
+        emit(Loading());
         final ProfileModel? data = await _repository.fetchProfileData();
-        if (data != null) return emit(ProfileState(data: data));
+        if (data != null) return emit(ProfileLoaded(data: data));
       } catch (e) {
-        emit(Error.fromState(state, error: e.toString()));
+        emit(Error(error: e.toString()));
       }
     });
+
+    on<ProfileUpdate>(_onProfileUpdate);
   }
 
-  @override
-  ProfileState? fromJson(Map<String, dynamic> json) {
-    try {
-      final data = ProfileModel.fromJson(json['data']);
-      return ProfileState(data: data);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  @override
-  Map<String, dynamic>? toJson(ProfileState state) {
-    try {
-      return {
-        'data': state.data.toJson(),
-      };
-    } catch (e) {
-      return null;
-    }
+  Future<void> _onProfileUpdate(
+      ProfileUpdate event, Emitter<ProfileState> emit) async {
+    final ProfileModel? data = await _repository.fetchProfileData();
+    if (data != null) return emit(ProfileLoaded(data: data));
   }
 }

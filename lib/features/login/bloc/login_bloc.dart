@@ -63,9 +63,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (userCredential != null) {
         bool isUserAvailable = await _loginRepository.isUserAvailable();
         if (isUserAvailable == false) {
+      await _createProfileRepository.updateLocation(
+            event.city, event.country);
           _app.setPageNumber(2);
           emit(GoogleLoginNewUser.fromState(state));
         } else if (isUserAvailable == true) {
+      await _createProfileRepository.updateLocation(
+            event.city, event.country);
           emit(GoogleLoginOldUser.fromState(state));
         } else {
           emit(
@@ -76,6 +80,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           );
         }
       } else {
+        
         emit(
           GoogleLoginError.fromState(state, error: _loginRepository.error!.tr),
         );

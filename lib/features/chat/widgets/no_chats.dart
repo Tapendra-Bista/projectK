@@ -10,11 +10,12 @@ class NoChats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return PlatformScaffold(
       body: Center(
         child: Text(
           EnumLocale.noRecentChats.name.tr,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.bodyMedium,
         ),
       ),
     );

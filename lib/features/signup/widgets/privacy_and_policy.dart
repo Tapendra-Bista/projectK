@@ -9,7 +9,7 @@ import 'package:get/get_utils/src/extensions/export.dart';
 class PrivacyAndPolicy extends StatelessWidget {
   const PrivacyAndPolicy({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return PlatformScaffold(
       appBar: PlatformAppBar(automaticallyImplyLeading: true),
       body: SafeArea(
@@ -25,14 +25,14 @@ class PrivacyAndPolicy extends StatelessWidget {
               children: [
                 Text(
                   EnumLocale.privacyTitle.name.tr,
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  style: theme.bodyLarge!.copyWith(
                         color: AppColors.primaryColor,
                         fontSize: 22,
                       ),
                 ),
                 Text(
                   EnumLocale.privacyBody.name.tr,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: theme.bodyMedium,
                 ),
               ],
             ),

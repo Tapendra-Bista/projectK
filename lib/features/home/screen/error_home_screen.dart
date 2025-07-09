@@ -29,6 +29,8 @@ class HomeErrorContent extends StatelessWidget {
       builder: (context, errorMessage) {
         return PlatformScaffold(
           appBar: PlatformAppBar(
+            material: (context, platform) =>
+                MaterialAppBarData(centerTitle: true),
             trailingActions: [
               PlatformIconButton(
                 onPressed: () => Get.toNamed(AppRoutes.preferences),

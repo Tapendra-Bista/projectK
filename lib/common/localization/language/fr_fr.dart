@@ -316,6 +316,7 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.requestInfo.name:
       "vous a envoyé une demande de message ! Faites glisser vers la gauche pour répondre.",
   EnumLocale.accept.name: "Accepter",
+  EnumLocale.accepted.name: "Accepté(e)",
   EnumLocale.reject.name: "Rejeter",
   EnumLocale.requestReject.name: "Demande rejetée",
   EnumLocale.requestInitial.name: "Demande en cours de traitement...",
@@ -323,5 +324,14 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
       "n'a pas encore répondu à votre demande de message.",
   EnumLocale.requestRejectMessage.name: "a refusé votre demande de message.",
   EnumLocale.toYou.name: "À vous",
-  EnumLocale.fromYou.name: "De vous"
+  EnumLocale.fromYou.name: "De vous",
+  EnumLocale.messageRequestAccepted.name:
+      "Vous avez accepté la demande de message de",
+  EnumLocale.messageRequestDelete.name:
+      "Vous avez supprimé la demande de message pour",
+  EnumLocale.replaceProfilePic.name: "Remplacer la photo de profil",
+  EnumLocale.takePhoto.name: "Prendre une photo",
+  EnumLocale.uploading.name: "Chargement en cours...",
+  EnumLocale.posting.name: "Publication en cours...",
+  EnumLocale.posted.name: "Publié..."
 };

@@ -1,10 +1,7 @@
-import 'package:equatable/equatable.dart';
+part of 'profile_bloc.dart';
 
-class ProfileEvent extends Equatable {
-  const ProfileEvent();
-
-  @override
-  List<Object> get props => [];
+@freezed
+   abstract  class ProfileEvent with _$ProfileEvent {
+  const factory ProfileEvent.fetch() = ProfileFetch;
+  const factory ProfileEvent.update() = ProfileUpdate;
 }
-
-final class ProfileFetch extends ProfileEvent {}

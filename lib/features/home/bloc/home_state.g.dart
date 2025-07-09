@@ -8,10 +8,14 @@ part of 'home_state.dart';
 
 HomeState _$HomeStateFromJson(Map<String, dynamic> json) => HomeState(
       data: (json['data'] as List<dynamic>)
-          .map((e) => e == null ? null : ProfileModel.fromJson(e as String))
+          .map((e) => e == null
+              ? null
+              : ProfileModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       profileList: (json['profileList'] as List<dynamic>)
-          .map((e) => e == null ? null : ProfileModel.fromJson(e as String))
+          .map((e) => e == null
+              ? null
+              : ProfileModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

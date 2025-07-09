@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/linear_indicator.dart';
@@ -59,6 +58,7 @@ class _TrimVideoState extends State<TrimVideo> {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Scaffold(
         appBar: AppBar(
           leading: PlatformIconButton(
@@ -81,7 +81,7 @@ class _TrimVideoState extends State<TrimVideo> {
             Padding(
               padding: EdgeInsets.all(18.w),
               child: Text(EnumLocale.lengthOfVideo.name.tr,
-                  style: Theme.of(context).textTheme.bodySmall),
+                  style: theme.bodySmall),
             ),
             Expanded(
               child: VideoViewer(trimmer: _trimmer),
@@ -89,7 +89,7 @@ class _TrimVideoState extends State<TrimVideo> {
             Center(
               child: TrimViewer(
                 durationStyle: DurationStyle.FORMAT_HH_MM_SS,
-                durationTextStyle: Theme.of(context).textTheme.bodyMedium!,
+                durationTextStyle: theme.bodyMedium!,
                 trimmer: _trimmer,
                 viewerHeight: 50.0,
                 viewerWidth: MediaQuery.of(context).size.width,

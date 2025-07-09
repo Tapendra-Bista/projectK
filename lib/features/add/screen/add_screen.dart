@@ -20,6 +20,8 @@ class AddScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<AddBloc, AddState>(
+            buildWhen: (previous, current) =>
+          previous.runtimeType != current.runtimeType,
         listener: (context, state) {
           if (state is ValidUrl) {
             Get.to(() => TrimVideo(videoUrl: state.videoUrl));

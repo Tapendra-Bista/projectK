@@ -1,5 +1,4 @@
 import 'package:afriqueen/features/wellcome/bloc/wellcome_bloc.dart';
-import 'package:afriqueen/features/wellcome/bloc/wellcome_state.dart';
 import 'package:afriqueen/features/wellcome/widget/wellcome_widget.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';

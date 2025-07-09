@@ -4,22 +4,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 //----------------Fetching current   profile data of all user
 class HomeRepository extends BaseRepository {
-  HomeRepository({FirebaseFirestore? firestore});
+  HomeRepository({FirebaseFirestore? firestore}) {
+    this.firestore = firestore ?? FirebaseFirestore.instance;
+  }
 
   Future<List<ProfileModel>> fetchAllExceptCurrentUser() async {
     try {
       if (currentUserId.isEmpty) return [];
 
-      final snapshot = await firestore.collection('users').get();
+      final snapshot = await firestore
+          .collection('users')
+          .where('id', isNotEqualTo: currentUserId)
+          .get();
 
       return snapshot.docs
-          .where((doc) =>
-              doc.id != currentUserId) // Exclude current user by doc ID
-          .map((doc) => ProfileModel.fromMap(
+          .map((doc) => ProfileModel.fromJson(
                 doc.data(),
                 // include doc ID if needed inside model
               ))
           .toList();
+      // Exclude current user by doc ID
     } catch (e) {
       rethrow;
     }

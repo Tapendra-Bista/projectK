@@ -1,7 +1,12 @@
 import 'package:afriqueen/features/messages_requests/model/request_model.dart';
 import 'package:afriqueen/services/base_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RequestRepository extends BaseRepository {
+
+    RequestRepository({FirebaseFirestore? firestore}){
+      this.firestore = firestore ?? FirebaseFirestore.instance;
+    }
   //-------------------------- send Requests --------------------------
   Future<void> sendRequests(Requestmodel obj) async {
     try {
@@ -39,6 +44,21 @@ class RequestRepository extends BaseRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+
+//----------accept request--------------
+  Future<void> acceptRequest({
+    required String senderId,
+    required String receiverId,
+  }) async {
+    final users = [senderId, receiverId]..sort();
+    final docId = users.join("_");
+    final requestsDocRef = firestore.collection('requests').doc(docId);
+    final docSnapshot = await requestsDocRef.get();
+
+    if (!docSnapshot.exists) return null;
+    requestsDocRef.update({'responseStatus': ResponseStatus.Accepted.name});
   }
 
   //-------------------------- delete Requests --------------------------
@@ -104,7 +124,7 @@ class RequestRepository extends BaseRepository {
 
       final querySnapshot = await requestsCollRef
           .where('receiverId', isEqualTo: currentUserId)
-          .where('requestStatus', isEqualTo: RequestStatus.send.name)
+          .where('requestStatus', isEqualTo: RequestStatus.Send.name)
           .get();
 
       if (querySnapshot.docs.isEmpty) return 0;
@@ -121,12 +141,12 @@ class RequestRepository extends BaseRepository {
       final requestsCollRef = firestore.collection('requests');
       final querySnapshot = await requestsCollRef
           .where('receiverId', isEqualTo: currentUserId)
-          .where('requestStatus', isEqualTo: RequestStatus.send.name)
+          .where('requestStatus', isEqualTo: RequestStatus.Send.name)
           .get();
 
       if (querySnapshot.docs.isEmpty) return;
       for (final doc in querySnapshot.docs) {
-        batch.update(doc.reference, {'requestStatus': RequestStatus.read.name});
+        batch.update(doc.reference, {'requestStatus': RequestStatus.Read.name});
       }
       await batch.commit();
       print("Requests are marked as Reaed");

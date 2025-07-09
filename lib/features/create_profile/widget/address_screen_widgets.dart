@@ -244,11 +244,10 @@ class CityText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       "${EnumLocale.cityName.name.tr} :",
-      style: Theme.of(
-        context,
-      ).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+      style: theme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
     );
   }
 }
@@ -259,11 +258,10 @@ class CountryText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       "${EnumLocale.countryName.name.tr} :",
-      style: Theme.of(
-        context,
-      ).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+      style: theme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
     );
   }
 }

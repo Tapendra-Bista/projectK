@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
 class FollowRepository extends BaseRepository {
+   FollowRepository({FirebaseFirestore ? firestore }){
+    this.firestore = firestore ?? FirebaseFirestore.instance;
+   }
   //-------------------------- Add Follow --------------------------
   Future<void> addFollow(String followId) async {
     final followDocRef = firestore
@@ -66,6 +69,6 @@ class FollowRepository extends BaseRepository {
 
     if (!docSnapshot.exists || docSnapshot.data() == null) return null;
 
-    return FollowModel.fromMap(docSnapshot.data()!);
+    return FollowModel.fromJson(docSnapshot.data()!);
   }
 }

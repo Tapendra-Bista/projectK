@@ -1,43 +1,22 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'dart:convert';
+part 'reel_like_model.freezed.dart';
+part 'reel_like_model.g.dart';
 
-import 'package:equatable/equatable.dart';
+@freezed
+abstract class ReelLikeModel with _$ReelLikeModel {
+  const factory ReelLikeModel({
+    required String id,
+    required List<String> reelLikeId ,
+  }) = _ReelLikeModel;
 
-class ReelLikeModel extends Equatable {
-  final String id;
-  final List<String> reelLikeId;
+  factory ReelLikeModel.fromJson(Map<String, dynamic> json) =>
+      _$ReelLikeModelFromJson(json);
 
-  ReelLikeModel({required this.id, required this.reelLikeId});
+  factory ReelLikeModel.empty() => ReelLikeModel(id: '', reelLikeId : []);
+}
 
-  @override
-  List<Object> get props => [id, reelLikeId];
-
-  ReelLikeModel copyWith({String? id, List<String>? reelLikeId}) {
-    return ReelLikeModel(
-      id: id ?? this.id,
-      reelLikeId: reelLikeId ?? this.reelLikeId,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{'id': id, 'reelLikeId': reelLikeId};
-  }
-
-  factory ReelLikeModel.fromMap(Map<String, dynamic> map) {
-    return ReelLikeModel(
-      id: map['id'] as String,
-      reelLikeId: List<String>.from(map['reelLikeId'] ?? []),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory ReelLikeModel.fromJson(String source) =>
-      ReelLikeModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  bool get stringify => true;
-
-  static ReelLikeModel empty = ReelLikeModel(id: '', reelLikeId: []);
+extension ReelLikeModelToMap on ReelLikeModel {
+  Map<String, dynamic> toMap() => toJson();
 }

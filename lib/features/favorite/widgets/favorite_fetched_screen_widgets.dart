@@ -11,6 +11,7 @@ import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_event.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -62,7 +63,7 @@ class CreatedDate extends StatelessWidget {
           decoration: BoxDecoration(
               color: AppColors.blue.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12.r)),
-          child: Text(Seniority.formatJoinedTime(Homedata!.createdDate),
+          child: Text(Seniority.formatJoinedTime(Homedata!.createdDate.toDate()),
               style: Theme.of(context).textTheme.bodyMedium)),
     );
   }
@@ -103,7 +104,7 @@ class ButtonsList extends StatelessWidget {
                         Theme.of(context));
                   },
                   icon: Icon(
-                    Icons.favorite,
+                    CupertinoIcons.heart_fill,
                     color: AppColors.red,
                     size: 30,
                   )),

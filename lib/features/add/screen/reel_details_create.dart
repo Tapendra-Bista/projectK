@@ -37,6 +37,7 @@ class _ReelDetailsCreateState extends State<ReelDetailsCreate> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: SizedBox(
@@ -60,8 +61,7 @@ class _ReelDetailsCreateState extends State<ReelDetailsCreate> {
           child: Center(
               child: Text(
             EnumLocale.postReels.name.tr,
-            style: Theme.of(context)
-                .textTheme
+            style: theme
                 .bodyMedium!
                 .copyWith(color: AppColors.white),
           )),
@@ -77,9 +77,7 @@ class _ReelDetailsCreateState extends State<ReelDetailsCreate> {
         ),
         title: Text(
           EnumLocale.newReel.name.tr,
-          style: Theme.of(
-            context,
-          ).textTheme.bodyLarge!.copyWith(
+          style: theme.bodyLarge!.copyWith(
                 fontSize: 20.sp,
               ),
           overflow: TextOverflow.ellipsis,
@@ -106,8 +104,7 @@ class _ReelDetailsCreateState extends State<ReelDetailsCreate> {
                       CustomDivider(),
                       TextFormField(
                         validator: AppValidator.validateDescription,
-                        style: Theme.of(context)
-                            .textTheme
+                        style: theme
                             .bodySmall!
                             .copyWith(color: AppColors.black),
                         // Fills available vertical space

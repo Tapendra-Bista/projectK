@@ -2,8 +2,6 @@ import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/constant/constant_strings.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/features/wellcome/bloc/wellcome_bloc.dart';
-import 'package:afriqueen/features/wellcome/bloc/wellcome_event.dart';
-import 'package:afriqueen/features/wellcome/bloc/wellcome_state.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
@@ -148,7 +146,7 @@ class DropDownForLanguage extends StatelessWidget {
             defaultItem: defaultItem,
             onChange: (value) {
               context.read<WellcomeBloc>().add(
-                    ChangeLanguageEvent(languageCode: value),
+                    ChangeLanguage(languageCode: value),
                   );
 
               controller.close();

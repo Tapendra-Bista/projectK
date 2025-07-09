@@ -14,11 +14,11 @@ class BlockState extends Equatable {
 }
 
 final class BlockInitial extends BlockState {
-  BlockInitial() : super(blockUserList: [], blockUserForChat: BlockModel.empty);
+  BlockInitial() : super(blockUserList: [], blockUserForChat: BlockModel.empty());
 }
 
 final class BlockUsersLoading extends BlockState {
-  BlockUsersLoading() : super(blockUserList: [], blockUserForChat:BlockModel.empty );
+  BlockUsersLoading() : super(blockUserList: [], blockUserForChat:BlockModel.empty ());
 }
 
 final class BlockUsersError extends BlockState {
@@ -32,5 +32,5 @@ final class BlockUsersError extends BlockState {
 }
 
 final class BlockDataEmpty extends BlockState {
-  BlockDataEmpty() : super(blockUserList: [],blockUserForChat: BlockModel.empty);
+  BlockDataEmpty() : super(blockUserList: [],blockUserForChat: BlockModel.empty());
 }

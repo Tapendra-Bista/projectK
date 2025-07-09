@@ -19,9 +19,10 @@ class DescriptionBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.descriptionBody.name.tr,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: theme.bodySmall,
     );
   }
 }
@@ -32,9 +33,10 @@ class DescriptionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.descriptionTitle.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: theme.bodyLarge,
     );
   }
 }
@@ -59,6 +61,7 @@ class _TextFieldForDescriptionState extends State<TextFieldForDescription> {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return SizedBox(
       height: 100.h,
       child: TextFormField(
@@ -81,7 +84,7 @@ class _TextFieldForDescriptionState extends State<TextFieldForDescription> {
           contentPadding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
           errorMaxLines: 3,
           labelText: EnumLocale.descriptionLabelText.name.tr,
-          labelStyle: Theme.of(context).textTheme.bodySmall,
+          labelStyle: theme.bodySmall,
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
             borderSide: BorderSide(width: 2.w, color: AppColors.red),

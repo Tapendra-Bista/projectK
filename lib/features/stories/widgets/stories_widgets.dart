@@ -3,17 +3,17 @@ import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/divider.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/features/stories/bloc/stories_bloc.dart';
-import 'package:afriqueen/features/stories/bloc/stories_event.dart';
-import 'package:afriqueen/features/stories/bloc/stories_state.dart';
 import 'package:afriqueen/features/stories/model/stories_model.dart';
 import 'package:afriqueen/features/stories/screen/view_stories.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 //---------------------Other user Stories--------------------------------
 class OtherUserStories extends StatelessWidget {
@@ -49,8 +49,7 @@ class OtherUserStories extends StatelessWidget {
         ),
         Text(
           data.userName,
-          style: theme
-              .bodySmall!
+          style: theme.bodySmall!
               .copyWith(color: AppColors.black, fontSize: 11.2.sp),
           overflow: TextOverflow.ellipsis,
         )
@@ -107,97 +106,121 @@ class OwnStories extends StatelessWidget {
                             right: -0.4,
                             bottom: -0.4,
                             child: SizedBox(
-                              width: 25,
-                              height: 25,
-                              child: PlatformIconButton(
-                                padding: EdgeInsets.zero,
-                                material: (context, platform) =>
-                                    MaterialIconButtonData(
-                                  constraints: const BoxConstraints(),
-                                  iconSize: 25.r,
-                                ),
-                                onPressed: () => showModalBottomSheet(
-                                    constraints: BoxConstraints(
-                                      minWidth: double.maxFinite,
-                                    ),
-                                    backgroundColor: AppColors.floralWhite,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(32.r),
-                                      ),
-                                    ),
-                                    context: context,
-                                    builder: (bottomSheetContext) => Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                vertical: 10.h,
-                                              ),
-                                              child: Text(
-                                                EnumLocale.addStory.name.tr,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge!
-                                                    .copyWith(
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                      fontSize: 25.sp,
+                                width: 25,
+                                height: 25,
+                                child: PlatformIconButton(
+                                  padding: EdgeInsets.zero,
+                                  material: (context, platform) =>
+                                      MaterialIconButtonData(
+                                    constraints: const BoxConstraints(),
+                                    iconSize: 25.r,
+                                  ),
+                                  onPressed: () =>
+                                  
+                                  
+                                   showPlatformModalSheet(
+                                      material: MaterialModalSheetData(
+                                          backgroundColor:
+                                              AppColors.transparent),
+                                      context: context,
+                                      builder: (context) => Padding(
+                                            padding: EdgeInsets.all(14.r),
+                                            child: Material(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.r),
+                                              elevation: 10,
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  ListTile(
+                                                    onTap: () {
+                                                      print(
+                                                          "Camera is Selected");
+                                                      context
+                                                          .read<StoriesBloc>()
+                                                          .add(
+                                                            StoriesImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .camera,
+                                                              name: profileData
+                                                                  .pseudo,
+                                                              img: profileData
+                                                                  .imgURL,
+                                                            ),
+                                                          );
+                                                      Get.back();
+                                                    },
+                                                    leading: Icon(
+                                                      CupertinoIcons
+                                                          .photo_camera,
+                                                      color: AppColors.black,
                                                     ),
-                                              ),
-                                            ),
-                                            const CustomDivider(),
-                                            InkWell(
-                                              onTap: () {
-                                                context.read<StoriesBloc>().add(
-                                                      StoriesImage(
-                                                        name:
-                                                            profileData.pseudo,
-                                                        img: profileData.imgURL,
-                                                      ),
-                                                    );
-
-                                                Navigator.pop(context);
-                                              },
-                                              child: Container(
-                                                width: double.maxFinite,
-                                                height: 60.h,
-                                                color: AppColors
-                                                    .greyContainerColor,
-                                                child: Center(
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    spacing: 15.w,
-                                                    children: [
-                                                      Icon(
-                                                        Icons
-                                                            .collections_outlined,
-                                                        size: 30.sp,
-                                                      ),
-                                                      Text(EnumLocale
-                                                          .addPhoto.name.tr),
-                                                    ],
+                                                    title: Text(
+                                                      EnumLocale
+                                                          .selecteFromCamera
+                                                          .name
+                                                          .tr,
+                                                      style: theme.bodyMedium,
+                                                    ),
                                                   ),
-                                                ),
+                                                  CustomDivider(),
+                                                  ListTile(
+                                                    onTap: () {
+                                                      print(
+                                                          "Gallery  is Selected");
+                                                      context
+                                                          .read<StoriesBloc>()
+                                                          .add(
+                                                            StoriesImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery,
+                                                              name: profileData
+                                                                  .pseudo,
+                                                              img: profileData
+                                                                  .imgURL,
+                                                            ),
+                                                          );
+                                                      Get.back();
+                                                    },
+                                                    leading: Icon(
+                                                      Icons
+                                                          .collections_outlined,
+                                                      color: AppColors.black,
+                                                    ),
+                                                    title: Text(
+                                                      EnumLocale
+                                                          .selecteFromGallery
+                                                          .name
+                                                          .tr,
+                                                      style: theme.bodyMedium,
+                                                    ),
+                                                  )
+                                                ],
                                               ),
                                             ),
-                                          ],
-                                        )),
-                                icon: Container(
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.primaryColor,
-                                    shape: BoxShape.circle,
+                                          )),
+
+
+
+
+                                          
+                                  icon: Container(
+                                    decoration: const BoxDecoration(
+                                      color: AppColors.primaryColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(
+                                      Icons.add,
+                                      color: AppColors.floralWhite,
+                                    ),
                                   ),
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: AppColors.floralWhite,
-                                  ),
-                                ),
-                              ),
-                            ),
+                                )),
                           ),
                         ],
                       ),

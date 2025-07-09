@@ -19,8 +19,8 @@ class SignUpText extends StatelessWidget {
   const SignUpText({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
+   
     return Text(
       EnumLocale.signupText.name.tr,
       style: theme.bodyLarge,
@@ -110,7 +110,7 @@ class RegisterDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
+     final theme = Theme.of(context).textTheme;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -202,7 +202,7 @@ class AlreadyHaveAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
+     final theme = Theme.of(context).textTheme;
     return Center(
       child: RichText(
         text: TextSpan(

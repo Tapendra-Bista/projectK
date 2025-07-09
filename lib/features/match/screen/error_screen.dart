@@ -14,7 +14,7 @@ class ErrorWhileFetching extends StatelessWidget {
   const ErrorWhileFetching({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return BlocSelector<HomeBloc, HomeState, String?>(
       bloc: getIt<HomeBloc>(),
       selector: (state) {
@@ -44,7 +44,7 @@ class ErrorWhileFetching extends StatelessWidget {
           ),
           body: Center(
             child:
-                Text(message!, style: Theme.of(context).textTheme.bodyMedium),
+                Text(message!, style: theme.bodyMedium),
           ),
         );
       },

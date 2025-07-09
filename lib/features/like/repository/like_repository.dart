@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
 class LikeRepository extends BaseRepository {
-  LikeRepository({FirebaseFirestore? firestore});
+  LikeRepository({FirebaseFirestore? firestore}) {
+    this.firestore = firestore ?? FirebaseFirestore.instance;
+  }
 
   //--------------------------adding like--------------------------
   Future<void> addLike(String likeId) async {
@@ -75,6 +77,6 @@ class LikeRepository extends BaseRepository {
 
     if (!docSnapshot.exists || docSnapshot.data() == null) return null;
 
-    return LikeModel.fromMap(docSnapshot.data()!);
+    return LikeModel.fromJson(docSnapshot.data()!);
   }
 }

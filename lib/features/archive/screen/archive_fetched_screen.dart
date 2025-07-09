@@ -16,6 +16,7 @@ class FetchedScreen extends StatelessWidget {
 //------------------------Fetch Screen---------------------------
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return BlocSelector<ArchiveBloc, ArchiveState, List<ProfileModel>>(
       selector: (state) => state.favUserList,
       builder: (context, favData) {
@@ -30,7 +31,7 @@ class FetchedScreen extends StatelessWidget {
             ),
             title: Text(
               EnumLocale.archive.name.tr,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.bodyMedium,
             ),
           ),
           body: ListView.builder(

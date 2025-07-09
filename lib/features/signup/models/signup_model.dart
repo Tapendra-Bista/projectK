@@ -1,19 +1,13 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:equatable/equatable.dart';
-//-----------model for signup-------------------
-class SignUpModel extends Equatable {
-  final String email;
-  final String password;
+part 'signup_model.freezed.dart';
 
-  const SignUpModel({required this.email, required this.password});
-
-  SignUpModel copyWith({String? email, String? password}) => SignUpModel(
-    email: email ?? this.email,
-    password: password ?? this.password,
-  );
-
-  @override
-  List<Object?> get props => [email, password];
+@freezed
+  abstract  class SignUpModel with _$SignUpModel {
+  const factory SignUpModel({
+    required String email,
+    required String password,
+  }) = _SignUpModel;
 }
 
 

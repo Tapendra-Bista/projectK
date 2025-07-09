@@ -17,13 +17,11 @@ import 'package:afriqueen/features/like/bloc/like_bloc.dart';
 import 'package:afriqueen/features/like/bloc/like_event.dart';
 import 'package:afriqueen/features/match/screen/match_screen.dart';
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
-import 'package:afriqueen/features/profile/bloc/profile_event.dart';
 import 'package:afriqueen/features/reel_like/bloc/reel_like_bloc.dart';
 import 'package:afriqueen/features/reel_like/bloc/reel_like_event.dart';
 import 'package:afriqueen/features/reels/bloc/reel_bloc.dart';
 import 'package:afriqueen/features/reels/screen/reels_screen.dart';
 import 'package:afriqueen/features/stories/bloc/stories_bloc.dart';
-import 'package:afriqueen/features/stories/bloc/stories_event.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/status/repository/status_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -80,9 +78,11 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Scaffold(
       body: _widgets[_selectedIndex],
       bottomNavigationBar: Container(
+        height: 60.h,
         decoration: BoxDecoration(
           color: AppColors.floralWhite,
           boxShadow: [
@@ -94,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.h),
+            padding: EdgeInsets.symmetric(vertical: 5.h),
             child: GNav(
               key: _bottomNavKey,
               rippleColor: AppColors.grey.withValues(alpha: 0.2),
@@ -102,47 +102,47 @@ class _MainScreenState extends State<MainScreen> {
               gap: 8.w,
               activeColor: AppColors.primaryColor,
               iconSize: 24.r,
-              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 3.h),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: AppColors.grey.withValues(alpha: 0.2),
               color: Colors.black,
               tabs: [
                 GButton(
-                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.primaryColor,
-                      ),
+                  textStyle: theme.bodySmall!.copyWith(
+                    color: AppColors.primaryColor,
+                  ),
                   iconSize: 27.r,
                   gap: 5.w,
                   icon: HugeIcons.strokeRoundedLocation01,
                 ),
                 GButton(
-                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.primaryColor,
-                      ),
+                  textStyle: theme.bodySmall!.copyWith(
+                    color: AppColors.primaryColor,
+                  ),
                   gap: 5.w,
                   iconSize: 27.r,
                   icon: HugeIcons.strokeRoundedCards01,
                 ),
                 GButton(
-                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.primaryColor,
-                      ),
+                  textStyle: theme.bodySmall!.copyWith(
+                    color: AppColors.primaryColor,
+                  ),
                   gap: 5.w,
                   iconSize: 27.r,
                   icon: CupertinoIcons.plus,
                 ),
                 GButton(
-                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.primaryColor,
-                      ),
+                  textStyle: theme.bodySmall!.copyWith(
+                    color: AppColors.primaryColor,
+                  ),
                   gap: 5.w,
                   iconSize: 27.r,
                   icon: CupertinoIcons.chat_bubble,
                 ),
                 GButton(
-                  textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColors.primaryColor,
-                      ),
+                  textStyle: theme.bodySmall!.copyWith(
+                    color: AppColors.primaryColor,
+                  ),
                   iconSize: 27.r,
                   gap: 5.w,
                   icon: CupertinoIcons.play_arrow,

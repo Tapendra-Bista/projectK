@@ -23,9 +23,10 @@ class AgeDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.dobDescription.name.tr,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: theme.bodySmall,
     );
   }
 }
@@ -36,9 +37,10 @@ class AgeTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.dobTitle.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: theme.bodyLarge,
     );
   }
 }
@@ -79,6 +81,7 @@ class SelectDob extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return InkWell(
       onTap: () => BottomPicker.date(
         height: 350.h,
@@ -119,7 +122,7 @@ class SelectDob extends StatelessWidget {
               debugPrint("${state.dob}");
               return Text(
                 state.dob.toString().split(' ').first,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: theme.bodyMedium,
               );
             },
           ),

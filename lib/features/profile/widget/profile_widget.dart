@@ -1,18 +1,19 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/widgets/seniority.dart';
 import 'package:afriqueen/common/widgets/user_status.dart';
+import 'package:afriqueen/features/edit_profile/widgets/edit_profile_screen.widgets.dart';
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
-import 'package:afriqueen/features/profile/bloc/profile_state.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+
 //----------------PlatformAppBar -----------------------
 class ProfilePlatformAppBar extends StatelessWidget {
   const ProfilePlatformAppBar({super.key});
@@ -22,6 +23,12 @@ class ProfilePlatformAppBar extends StatelessWidget {
     return SliverAppBar(
       centerTitle: true,
       actions: [
+        PlatformIconButton(
+          onPressed: () {},
+          icon: Icon(
+            HugeIcons.strokeRoundedEdit04,
+          ),
+        ),
         PlatformIconButton(
           onPressed: () => Get.toNamed(AppRoutes.setting),
           icon: Icon(HugeIcons.strokeRoundedSettings01),
@@ -43,7 +50,7 @@ class PlatformAppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<ProfileBloc, ProfileState, String>(
-      selector: (state) => state.data.pseudo,
+      selector: (state) => (state is ProfileLoaded) ? state.data.pseudo : "",
       builder: (context, data) {
         return Text(
           data,
@@ -63,11 +70,14 @@ class DescriptionText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocSelector<ProfileBloc, ProfileState, String>(
-      selector: (state) => state.data.description,
+      selector: (state) =>
+          (state is ProfileLoaded) ? state.data.description : "",
       builder: (context, data) {
         return SliverPadding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
+          padding:
+              EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 10.h),
           sliver: SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.w),
@@ -78,8 +88,7 @@ class DescriptionText extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: AppColors.greyContainerColor,
                         borderRadius: BorderRadius.circular(12.r)),
-                    child: Text(data,
-                        style: Theme.of(context).textTheme.bodyMedium)),
+                    child: Text(data, style: theme.bodyMedium)),
               ),
             ),
           ),
@@ -96,7 +105,7 @@ class UserInterestsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<ProfileBloc, ProfileState, List>(
-      selector: (state) => state.data.interests,
+      selector: (state) => (state is ProfileLoaded) ? state.data.interests : [],
       builder: (context, data) {
         return SliverPadding(
           padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
@@ -152,25 +161,24 @@ class UserSeniority extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocSelector<ProfileBloc, ProfileState, DateTime>(
-      selector: (state) => state.data.createdDate,
+      selector: (state) => (state is ProfileLoaded)
+          ? state.data.createdDate.toDate()
+          : DateTime.now(),
       builder: (context, data) {
         final date = Seniority.formatJoinedTime(data);
         return SliverPadding(
           padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
           sliver: SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.only(left: 20.w),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                    padding: EdgeInsets.all(8.r),
-                    decoration: BoxDecoration(
-                        color: AppColors.greyContainerColor,
-                        borderRadius: BorderRadius.circular(12.r)),
-                    child: Text(date,
-                        style: Theme.of(context).textTheme.bodyMedium)),
-              ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                  padding: EdgeInsets.all(8.r),
+                  decoration: BoxDecoration(
+                      color: AppColors.greyContainerColor,
+                      borderRadius: BorderRadius.circular(12.r)),
+                  child: Text(date, style: theme.bodyMedium)),
             ),
           ),
         );
@@ -185,14 +193,17 @@ class UserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocSelector<ProfileBloc, ProfileState, ProfileModel>(
-      selector: (state) => state.data,
+      selector: (state) =>
+          (state is ProfileLoaded) ? state.data : ProfileModel.empty(),
       builder: (context, data) {
         return SliverPadding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
+          padding:
+              EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 10.h),
           sliver: SliverToBoxAdapter(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   data.pseudo,
@@ -203,11 +214,10 @@ class UserDetails extends StatelessWidget {
                       .bodyLarge!
                       .copyWith(color: AppColors.primaryColor),
                 ),
-                Text("${data.age}",
-                    style: Theme.of(context).textTheme.bodyMedium),
+                Text("${data.age}", style: theme.bodyMedium),
                 Text(
                   data.city,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: theme.bodyMedium,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
@@ -226,7 +236,7 @@ class ProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<ProfileBloc, ProfileState, String>(
-      selector: (state) => state.data.imgURL,
+      selector: (state) => (state is ProfileLoaded) ? state.data.imgURL : "",
       builder: (context, url) {
         final hasValidUrl =
             url.isNotEmpty && Uri.tryParse(url)?.hasAbsolutePath == true;
@@ -235,30 +245,33 @@ class ProfileImage extends StatelessWidget {
           sliver: SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.only(bottom: 5.h),
-              child: Container(
-                height: 280.h,
-                width: double.maxFinite.w,
-                decoration: BoxDecoration(
-                  image: hasValidUrl
-                      ? DecorationImage(
-                          fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(url),
-                        )
-                      : null,
-                  color: AppColors.floralWhite,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12.r),
-                    topRight: Radius.circular(12.r),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 280.h,
+                    width: double.maxFinite.w,
+                    decoration: BoxDecoration(
+                      image: hasValidUrl
+                          ? DecorationImage(
+                              fit: BoxFit.cover,
+                              image: CachedNetworkImageProvider(url),
+                            )
+                          : null,
+                      color: AppColors.floralWhite,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(12.r),
+                        topRight: Radius.circular(12.r),
+                      ),
+                      shape: BoxShape.rectangle,
+                    ),
                   ),
-                  shape: BoxShape.rectangle,
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(8.0.r),
-                  child: Align(
-                    alignment: Alignment.topRight,
+                  Positioned(
+                    top: 10.h,
+                    right: 5.w,
                     child: UserStatus(id: auth.currentUser!.uid),
                   ),
-                ),
+                  ReplacePP()
+                ],
               ),
             ),
           ),

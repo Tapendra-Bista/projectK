@@ -13,6 +13,7 @@ class ErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocSelector<BlockBloc, BlockState, String?>(
       selector: (state) {
         if (state is BlockUsersError) {
@@ -33,11 +34,11 @@ class ErrorScreen extends StatelessWidget {
             ),
             title: Text(
               EnumLocale.block.name.tr,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.bodyMedium,
             ),
           ),
           body: Center(
-            child: Text(error!, style: Theme.of(context).textTheme.bodyMedium),
+            child: Text(error!, style: theme.bodyMedium),
           ),
         );
       },

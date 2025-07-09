@@ -1,4 +1,4 @@
-import 'package:afriqueen/common/localization/language/en_US.dart';
+import 'package:afriqueen/common/localization/language/en_us.dart';
 import 'package:afriqueen/common/localization/language/fr_fr.dart';
 import 'package:get/get.dart';
 // FRANCE FR   fr

@@ -13,11 +13,11 @@ class ReelLikeState extends Equatable {
 }
 
 final class ReelLikeInitial extends ReelLikeState {
-  ReelLikeInitial() : super(reelLikeUserList: ReelLikeModel.empty);
+  ReelLikeInitial() : super(reelLikeUserList: ReelLikeModel.empty());
 }
 
 final class ReelLikeUsersLoading extends ReelLikeState {
-  ReelLikeUsersLoading() : super(reelLikeUserList: ReelLikeModel.empty);
+  ReelLikeUsersLoading() : super(reelLikeUserList: ReelLikeModel.empty());
 }
 
 final class ReelLikeUsersError extends ReelLikeState {
@@ -33,5 +33,5 @@ final class ReelLikeUsersError extends ReelLikeState {
 }
 
 final class ReelLikeDataEmpty extends ReelLikeState {
-  ReelLikeDataEmpty() : super(reelLikeUserList: ReelLikeModel.empty);
+  ReelLikeDataEmpty() : super(reelLikeUserList: ReelLikeModel.empty());
 }

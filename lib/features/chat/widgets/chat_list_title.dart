@@ -66,6 +66,7 @@ class ChatListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     final isValideUrl = _getOtherUserimage().isNotEmpty &&
         Uri.tryParse(_getOtherUserimage())!.hasAbsolutePath == true;
     return Slidable(
@@ -112,7 +113,7 @@ class ChatListTile extends StatelessWidget {
           title: Text(
             _getOtherUsername(context),
             style:
-                Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 18),
+                theme.bodyMedium!.copyWith(fontSize: 18),
             overflow: TextOverflow.ellipsis,
           ),
           subtitle: Row(
@@ -157,7 +158,7 @@ class ChatListTile extends StatelessWidget {
                 child: Center(
                   child: Text(
                     snapshot.data.toString(),
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    style: theme.bodySmall!.copyWith(
                         fontSize: 10.sp, color: AppColors.floralWhite),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,

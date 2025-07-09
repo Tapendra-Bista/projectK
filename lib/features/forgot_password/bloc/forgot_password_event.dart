@@ -1,18 +1,9 @@
 
 
-import 'package:equatable/equatable.dart';
-//-----------------------------------Event-------------------------------
-sealed class ForgotPasswordEvent extends Equatable {
-  const ForgotPasswordEvent();
+part of 'forgot_password_bloc.dart';
 
-  @override
-  List<Object> get props => [];
+@freezed
+class ForgotPasswordEvent with _$ForgotPasswordEvent {
+  const factory ForgotPasswordEvent.userEmail({required String userEmail}) = UserEmail;
+  const factory ForgotPasswordEvent.sendButtonClicked() = SendButtonClicked;
 }
-
-
-
-final class UserEmail extends ForgotPasswordEvent {
-  final String userEmail;
-  const UserEmail({required this.userEmail});
-}
-final class SendButtonClicked extends ForgotPasswordEvent {}

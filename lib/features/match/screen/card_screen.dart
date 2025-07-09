@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
@@ -36,6 +35,7 @@ class _CardScreenState extends State<CardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return BlocSelector<HomeBloc, HomeState, List<ProfileModel?>>(
       selector: (state) => state.profileList,
       builder: (context, userData) {
@@ -210,7 +210,7 @@ class _CardScreenState extends State<CardScreen> {
                 : Center(
                     child: Text(
                       EnumLocale.atLeastTwoUsers.name.tr,
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: theme.bodySmall,
                     ),
                   ),
           ),

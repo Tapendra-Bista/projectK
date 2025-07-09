@@ -18,9 +18,10 @@ class NameDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.nameDescription.name.tr,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: theme.bodySmall,
     );
   }
 }
@@ -31,9 +32,10 @@ class NameTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.nameTitle.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: theme.bodyLarge,
     );
   }
 }

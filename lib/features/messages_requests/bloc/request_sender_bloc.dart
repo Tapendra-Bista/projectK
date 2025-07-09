@@ -32,8 +32,8 @@ class RequestSenderBloc extends Bloc<RequestSenderEvent, RequestSenderState> {
           senderProfile: event.senderProfile,
           senderName: event.senderName,
           senderId: event.senderId,
-          responseStatus: ResponseStatus.initial,
-          requestStatus: RequestStatus.send,
+          responseStatus: ResponseStatus.Initial,
+          requestStatus: RequestStatus.Send,
           receiverId: event.receiverId,
           receiverName: event.receiverName,
           receiverProfile: event.receiverProfile,
@@ -44,7 +44,7 @@ class RequestSenderBloc extends Bloc<RequestSenderEvent, RequestSenderState> {
       add(CheckingUserAvailableEvent(
           senderId: event.senderId, receiverId: event.receiverId));
     } catch (e) {
-      print("Error in Requests fetch !");
+      print("Error while sending requests  ${e.toString()}");
       emit(RequestSenderState.errorInRequests(errorMessage: e.toString()));
     }
   }
@@ -54,6 +54,8 @@ class RequestSenderBloc extends Bloc<RequestSenderEvent, RequestSenderState> {
       RequestSenderDelete event, Emitter<RequestSenderState> emit) async {
     await _requestsRepository.deleteRequests(
         senderId: event.senderId, receiverId: event.receiverId);
+
+    add(TotalRequestSenderSend());
   }
 
 //------------ check whether available or not---------------------
@@ -65,7 +67,7 @@ class RequestSenderBloc extends Bloc<RequestSenderEvent, RequestSenderState> {
 
       emit(RequestSenderState.checkingUserAvailableState(userData: data));
     } catch (e) {
-      print("Error in Requests fetch !");
+      print("Error in while checking  ${e.toString()}");
       emit(RequestSenderState.errorInRequests(errorMessage: e.toString()));
     }
   }
@@ -82,7 +84,7 @@ class RequestSenderBloc extends Bloc<RequestSenderEvent, RequestSenderState> {
             senderData: getSendRequests));
       }
     } catch (e) {
-      print("Error in Requests fetch !");
+      print("Error while fetching total sent requests");
       emit(RequestSenderState.errorInRequests(errorMessage: e.toString()));
     }
   }

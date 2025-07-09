@@ -107,9 +107,10 @@ class UploadImageDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.uploadImageDescription.name.tr,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: theme.bodySmall,
     );
   }
 }
@@ -120,9 +121,10 @@ class UploadImageTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.uploadImageTitle.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: theme.bodyLarge,
     );
   }
 }

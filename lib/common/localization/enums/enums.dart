@@ -243,6 +243,7 @@ enum EnumLocale {
   noProfileMatchYourFilters,
   newReel,
   selecteFromGallery,
+  selecteFromCamera,
   lengthOfVideo,
   reels,
   voiceMessage,
@@ -260,11 +261,22 @@ enum EnumLocale {
   requestInfo,
   accept,
   reject,
+  accepted,
   requestReject,
   requestRejectMessage,
-    requestInitial,
+  requestInitial,
   requestInitialMessage,
-  toYou,fromYou
+  toYou,
+  fromYou,
+  messageRequestAccepted,
+    messageRequestDelete,
+    replaceProfilePic,
+    takePhoto,
+    uploading,
+    uploaded,
+    posting,
+    posted,
+
 }
 
 // debug

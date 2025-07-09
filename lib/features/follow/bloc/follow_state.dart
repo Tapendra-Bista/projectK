@@ -15,11 +15,11 @@ class FollowState extends Equatable {
 }
 
 final class FollowInitial extends FollowState {
-  FollowInitial() : super(followUserList: FollowModel.empty);
+  FollowInitial() : super(followUserList: FollowModel.empty());
 }
 
 final class FollowUsersLoading extends FollowState {
-  FollowUsersLoading() : super(followUserList: FollowModel.empty);
+  FollowUsersLoading() : super(followUserList: FollowModel.empty());
 }
 
 final class FollowUsersError extends FollowState {
@@ -35,5 +35,5 @@ final class FollowUsersError extends FollowState {
 }
 
 final class FollowDataEmpty extends FollowState {
-  FollowDataEmpty() : super(followUserList: FollowModel.empty);
+  FollowDataEmpty() : super(followUserList: FollowModel.empty());
 }

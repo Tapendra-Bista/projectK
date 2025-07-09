@@ -1,130 +1,53 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'dart:convert';
+import 'package:afriqueen/common/utils/timestamp_converter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class StoriesModel extends Equatable {
-  final String uid;
-  final List<String> containUrl;
-  final List<DateTime> createdDate;
-  final String userName;
-  final String userImg;
+part 'stories_model.freezed.dart';
+part 'stories_model.g.dart';
 
-  const StoriesModel({
-    required this.uid,
-    required this.containUrl,
-    required this.createdDate,
-    required this.userName,
-    required this.userImg,
-  });
+@freezed
+abstract class StoriesModel with _$StoriesModel {
+  const factory StoriesModel({
+    required String uid,
+    required List<String> containUrl,
+    @TimestampConverter() required List<Timestamp> createdDate,
+    required userName,
+    required userImg,
+  }) = _StoriesModel;
+  factory StoriesModel.fromJson(Map<String, dynamic> json) =>
+      _$StoriesModelFromJson(json);
 
-  StoriesModel copyWith({
-    String? uid,
-    List<String>? containUrl,
-    List<DateTime>? createdDate,
-    String? userName,
-    String? userImg,
-  }) {
-    return StoriesModel(
-      uid: uid ?? this.uid,
-      containUrl: containUrl ?? this.containUrl,
-      createdDate: createdDate ?? this.createdDate,
-      userName: userName ?? this.userName,
-      userImg: userImg ?? this.userImg,
-    );
-  }
-
-  @override
-  List<Object> get props => [uid, containUrl, createdDate, userName, userImg];
-
-  static StoriesModel empty = StoriesModel(
-    uid: '',
-    containUrl: [],
-    createdDate: [],
-    userName: '',
-    userImg: '',
-  );
+  factory StoriesModel.empty() =>  StoriesModel(
+        uid: '',
+        containUrl: [],
+        createdDate: [],
+        userName: '',
+        userImg: '',
+      );
 }
 
-class StoriesFetchModel extends Equatable {
-  final String id;
-  final List<String> containUrl;
-  final List<DateTime> createdDate;
-  final String userName;
-  final String userImg;
+extension StoriesModelToMap on StoriesModel {
+  Map<String, dynamic> toMap() => toJson();
+}
 
-  const StoriesFetchModel({
-    required this.id,
-    required this.containUrl,
-    required this.createdDate,
-    required this.userName,
-    required this.userImg,
-  });
+@freezed
+abstract class StoriesFetchModel with _$StoriesFetchModel {
+  const factory StoriesFetchModel({
+    required String id,
+    required List<String> containUrl,
+    @TimestampConverter() required List<Timestamp> createdDate,
+    required String userName,
+    required String userImg,
+  }) = _StoriesFetchModel;
+  factory StoriesFetchModel.fromJson(Map<String, dynamic> json) =>
+      _$StoriesFetchModelFromJson(json);
 
-  StoriesFetchModel copyWith({
-    String? id,
-    List<String>? containUrl,
-    List<DateTime>? createdDate,
-    String? userName,
-    String? userImg,
-  }) {
-    return StoriesFetchModel(
-      id: id ?? this.id,
-      containUrl: containUrl ?? this.containUrl,
-      createdDate: createdDate ?? this.createdDate,
-      userName: userName ?? this.userName,
-      userImg: userImg ?? this.userImg,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'containUrl': containUrl,
-      'createdDate': createdDate.map((d) => d.millisecondsSinceEpoch).toList(),
-      'userName': userName,
-      'userImg': userImg,
-    };
-  }
-
-  factory StoriesFetchModel.fromMap(Map<String, dynamic> map) {
-    return StoriesFetchModel(
-      id: map['id'] as String,
-      containUrl: List<String>.from(map['containUrl'] ?? []),
-      createdDate: (map['createdDate'] as List<dynamic>?)?.map((e) {
-            if (e is Timestamp) {
-              return e.toDate();
-            } else if (e is int) {
-              return DateTime.fromMillisecondsSinceEpoch(e);
-            }
-            return DateTime.now(); // fallback
-          }).toList() ??
-          [],
-      userName: map['userName'] as String,
-      userImg: map['userImg'] as String,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory StoriesFetchModel.fromJson(String source) =>
-      StoriesFetchModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object> get props {
-    return [
-      id,
-      containUrl,
-      createdDate,
-      userName,
-      userImg,
-    ];
-  }
-
-  static StoriesFetchModel empty = StoriesFetchModel(
+  factory StoriesFetchModel.empty() =>  StoriesFetchModel(
       id: '', containUrl: [], createdDate: [], userName: '', userImg: '');
+}
+
+extension StoriesFetchModelToMap on StoriesFetchModel {
+  Map<String, dynamic> toMap() => toJson();
 }

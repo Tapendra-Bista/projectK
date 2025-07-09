@@ -65,7 +65,7 @@ class CreatedDate extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
         ),
         child: Text(
-          Seniority.formatJoinedTime(Homedata!.createdDate),
+          Seniority.formatJoinedTime(Homedata!.createdDate.toDate()),
           style: theme.bodyMedium,
         ),
       ),

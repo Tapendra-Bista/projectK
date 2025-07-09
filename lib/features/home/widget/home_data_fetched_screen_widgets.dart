@@ -19,7 +19,7 @@ class UserImageGrid extends StatelessWidget {
   const UserImageGrid({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return BlocSelector<HomeBloc, HomeState, List<ProfileModel?>>(
         selector: (state) => state.profileList,
         builder: (context, profileListData) {
@@ -35,7 +35,7 @@ class UserImageGrid extends StatelessWidget {
                     child: Center(
                       child: Text(
                         EnumLocale.noProfileMatchYourFilters.name.tr,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: theme.bodyMedium,
                       ),
                     ),
                   ),

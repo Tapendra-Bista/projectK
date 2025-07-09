@@ -18,13 +18,13 @@ import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/features/user_details/screen/user_details_screen.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:line_icons/line_icons.dart';
 
 //-------------------Image and status------------------------------
 class StackWidget extends StatelessWidget {
@@ -80,20 +80,16 @@ class CreatedDate extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
     return SliverPadding(
-        padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 5.h),
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 10.h),
         sliver: SliverToBoxAdapter(
-            child: Padding(
-          padding: EdgeInsets.only(left: 20.w),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-                padding: EdgeInsets.all(8.r),
-                decoration: BoxDecoration(
-                    color: AppColors.greyContainerColor,
-                    borderRadius: BorderRadius.circular(12.r)),
-                child:
-                    Text(date, style: theme.bodyMedium)),
-          ),
+            child: Align(
+          alignment: Alignment.centerLeft,
+          child: Container(
+              padding: EdgeInsets.all(8.r),
+              decoration: BoxDecoration(
+                  color: AppColors.greyContainerColor,
+                  borderRadius: BorderRadius.circular(12.r)),
+              child: Text(date, style: theme.bodyMedium)),
         )));
   }
 }
@@ -191,10 +187,10 @@ class UserDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
     return SliverPadding(
-        padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w),
+        padding: EdgeInsetsGeometry.symmetric(horizontal: 10.w, vertical: 10.h),
         sliver: SliverToBoxAdapter(
             child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               widget.data.pseudo,
@@ -258,8 +254,8 @@ class ButtonList extends StatelessWidget {
 
                       Get.toNamed(AppRoutes.main);
                     },
-                    icon: Icon(Icons.favorite_border_outlined,
-                        size: 30, color: AppColors.black),
+                    icon: Icon(CupertinoIcons.heart,
+                        size: 31, color: AppColors.black),
                   ),
                   Text(
                     EnumLocale.Favorite.name.tr,
@@ -275,7 +271,7 @@ class ButtonList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   PlatformIconButton(
-                    onPressed: () async {
+                    onPressed: () {
                       context
                           .read<ArchiveBloc>()
                           .add(ArchiveUserAdded(archiveId: model.id));
@@ -286,7 +282,7 @@ class ButtonList extends StatelessWidget {
                       Get.toNamed(AppRoutes.main);
                     },
                     icon: Icon(
-                      LineIcons.archive,
+                      HugeIcons.strokeRoundedArchive,
                       color: AppColors.black,
                       size: 30,
                     ),

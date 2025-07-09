@@ -1,15 +1,21 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
+import 'package:afriqueen/common/widgets/snackbar_message.dart';
+import 'package:afriqueen/features/archive/bloc/archive_bloc.dart';
+import 'package:afriqueen/features/archive/bloc/archive_event.dart';
+import 'package:afriqueen/features/chat/screen/chat_screen.dart';
 import 'package:afriqueen/features/messages_requests/bloc/request_receiver_bloc.dart';
 import 'package:afriqueen/features/messages_requests/bloc/request_sender_bloc.dart';
 import 'package:afriqueen/features/messages_requests/model/request_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:get/get.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 
 class RequestsReceiverScreen extends StatelessWidget {
@@ -33,41 +39,86 @@ class RequestsReceiverScreen extends StatelessWidget {
               final isValidPath = user.senderProfile.isNotEmpty &&
                   Uri.tryParse(user.senderProfile)!.hasAbsolutePath == true;
               return Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: EdgeInsets.only(top: 8.h),
                 child: Slidable(
-                  endActionPane: ActionPane(motion: ScrollMotion(), children: [
-                    SlidableAction(
-                      padding: EdgeInsets.zero,
-                      backgroundColor: AppColors.blue,
-                      foregroundColor: AppColors.white,
-                      onPressed: (context) {},
-                      label: EnumLocale.accept.name.tr,
-                      icon: Icons.check_circle,
-                    ),
-                    SlidableAction(
-                      padding: EdgeInsets.zero,
-                      backgroundColor: AppColors.greyContainerColor,
-                      foregroundColor: AppColors.black,
-                      onPressed: (context) {},
-                      label: EnumLocale.archive.name.tr,
-                      icon: Icons.archive_outlined,
-                    ),
-                    SlidableAction(
-                      padding: EdgeInsets.zero,
-                      backgroundColor: AppColors.red,
-                      foregroundColor: AppColors.white,
-                      onPressed: (context) {},
-                      label: EnumLocale.reject.name.tr,
-                      icon: Icons.cancel,
-                    ),
-                  ]),
+                  endActionPane: ActionPane(
+                      motion: ScrollMotion(),
+                      children: user.responseStatus.name ==
+                              ResponseStatus.Accepted.name
+                          ? [
+                              SlidableAction(
+                                padding: EdgeInsets.zero,
+                                backgroundColor: AppColors.blue,
+                                foregroundColor: AppColors.white,
+                                onPressed: (context) {},
+                                label: EnumLocale.accepted.name.tr,
+                              ),
+                              SlidableAction(
+                                padding: EdgeInsets.zero,
+                                backgroundColor: AppColors.greyContainerColor,
+                                foregroundColor: AppColors.black,
+                                onPressed: (context) {
+                                  Get.to(
+                                    () => ChatScreen(
+                                      imgURL: user.senderProfile,
+                                      receiverId: user.senderId,
+                                      receiverName: user.senderName,
+                                    ),
+                                  );
+                                },
+                                label: EnumLocale.message.name.tr,
+                                icon: CupertinoIcons.chat_bubble,
+                              ),
+                            ]
+                          : [
+                              SlidableAction(
+                                padding: EdgeInsets.zero,
+                                backgroundColor: AppColors.blue,
+                                foregroundColor: AppColors.white,
+                                onPressed: (context) {
+                                  context.read<RequestReceiverBloc>().add(
+                                      AcceptRequest(
+                                          senderId: user.senderId,
+                                          receiverId: user.receiverId));
+
+                                  context
+                                      .read<RequestReceiverBloc>()
+                                      .add(RequestReceiverGet());
+                                  snackBarMessage(
+                                      context,
+                                      "${EnumLocale.messageRequestAccepted.name.tr} ${user.senderName}",
+                                      Theme.of(context));
+                                },
+                                label: EnumLocale.accept.name.tr,
+                                icon: Icons.check_circle,
+                              ),
+                              SlidableAction(
+                                padding: EdgeInsets.zero,
+                                backgroundColor: AppColors.greyContainerColor,
+                                foregroundColor: AppColors.black,
+                                onPressed: (context) async {
+                                  context.read<ArchiveBloc>().add(
+                                      ArchiveUserAdded(
+                                          archiveId: user.senderId));
+                                  snackBarMessage(
+                                      context,
+                                      EnumLocale.addedToArchive.name.tr,
+                                      Theme.of(context));
+                                },
+                                label: EnumLocale.archive.name.tr,
+                                icon: HugeIcons.strokeRoundedArchive,
+                              ),
+                            ]),
                   dragStartBehavior: DragStartBehavior.down,
                   child: ListTile(
                     shape: RoundedRectangleBorder(
                         side: BorderSide(
                             color: AppColors.black.withValues(alpha: 0.6),
                             width: 0.5.w),
-                        borderRadius: BorderRadiusGeometry.circular(5.r)),
+                        borderRadius: BorderRadiusGeometry.only(
+                          topLeft: Radius.circular(5.r),
+                          bottomLeft: Radius.circular(5.r),
+                        )),
                     leading: CircleAvatar(
                       radius: 25.5.r,
                       backgroundImage: isValidPath
@@ -92,7 +143,7 @@ class RequestsReceiverScreen extends StatelessWidget {
                       ],
                     ),
                     subtitle: Text(
-                      EnumLocale.requestInfo.name.tr,
+                      "${user.senderName} ${EnumLocale.requestInfo.name.tr}",
                       style: theme.bodySmall!.copyWith(fontSize: 10.sp),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
@@ -130,32 +181,77 @@ class RequestsSenderScreen extends StatelessWidget {
         return ListView.builder(
             itemCount: data.length,
             reverse: false,
-            itemBuilder: (context, index) {
+            itemBuilder: (context, index) {                    
               final user = data[index];
               final isValidPath = user.receiverProfile.isNotEmpty &&
                   Uri.tryParse(user.receiverProfile)!.hasAbsolutePath == true;
               return Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0.h),
+                padding: EdgeInsets.only(top: 8.0.h),
                 child: Slidable(
-                  endActionPane: ActionPane(motion: ScrollMotion(), children: [
-                    SlidableAction(
-                      padding: EdgeInsets.symmetric(horizontal: 15.h),
-                      backgroundColor: AppColors.red,
-                      foregroundColor: AppColors.white,
-                      onPressed: (context) {},
-                      label: EnumLocale.deleteChat.name.tr,
-                      icon: Icons.delete_outline,
-                    ),
-                  ]),
+                  endActionPane: ActionPane(
+                      motion: ScrollMotion(),
+                      children: user.responseStatus.name ==
+                              ResponseStatus.Accepted.name
+                          ? [
+                              SlidableAction(
+                                padding: EdgeInsets.zero,
+                                backgroundColor: AppColors.greyContainerColor,
+                                foregroundColor: AppColors.black,
+                                onPressed: (context) {
+                                  Get.to(
+                                    () => ChatScreen(
+                                      imgURL: user.receiverProfile,
+                                      receiverId: user.receiverId,
+                                      receiverName: user.receiverName,
+                                    ),
+                                  );
+                                },
+                                label: EnumLocale.message.name.tr,
+                                icon: CupertinoIcons.chat_bubble,
+                              ),
+                            ]
+                          : [
+                              SlidableAction(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(5.r),
+                                    bottomRight: Radius.circular(5.r)),
+                                padding: EdgeInsets.symmetric(horizontal: 15.h),
+                                backgroundColor: AppColors.red,
+                                foregroundColor: AppColors.white,
+                                onPressed: (context) {
+                                  context.read<RequestSenderBloc>().add(
+                                      RequestSenderDelete(
+                                          senderId: user.senderId,
+                                          receiverId: user.receiverId));
+
+                                  context
+                                      .read<RequestSenderBloc>()
+                                      .add(TotalRequestSenderSend());
+
+                                  snackBarMessage(
+                                      context,
+                                      "${EnumLocale.messageRequestDelete.name.tr} ${user.receiverName}",
+                                      Theme.of(context));
+                                },
+                                label: EnumLocale.deleteChat.name.tr,
+                                icon: Icons.delete_outline,
+                              ),
+                            ]),
                   dragStartBehavior: DragStartBehavior.down,
                   child: ListTile(
                     shape: RoundedRectangleBorder(
                         side: BorderSide(
-                            color: AppColors.black.withValues(alpha: 0.6),
+                            color: user.responseStatus.name ==
+                                    ResponseStatus.Initial.name
+                                ? AppColors.black.withValues(alpha: 0.6)
+                                : AppColors.green,
                             width: 0.5.w),
-                        borderRadius: BorderRadiusGeometry.circular(5.r)),
+                        borderRadius: BorderRadiusGeometry.only(
+                          topLeft: Radius.circular(5.r),
+                          bottomLeft: Radius.circular(5.r),
+                        )),
                     leading: CircleAvatar(
-                      radius: 25.5.r,
+                      radius: 26.6.r,
                       backgroundImage: isValidPath
                           ? CachedNetworkImageProvider(user.receiverProfile)
                           : null,
@@ -194,7 +290,7 @@ class RequestsSenderScreen extends StatelessWidget {
                               "${user.requestStatus.name}",
                               style: theme.bodySmall!.copyWith(
                                   color: user.requestStatus.name ==
-                                          RequestStatus.send.name
+                                          RequestStatus.Send.name
                                       ? AppColors.black
                                       : AppColors.blue),
                             )
@@ -211,8 +307,11 @@ class RequestsSenderScreen extends StatelessWidget {
                             ),
                             Text(
                               "${user.responseStatus.name}",
-                              style: theme.bodySmall!
-                                  .copyWith(color: AppColors.black),
+                              style: theme.bodySmall!.copyWith(
+                                  color: user.responseStatus.name ==
+                                          ResponseStatus.Initial.name
+                                      ? AppColors.black
+                                      : AppColors.green),
                             )
                           ],
                         ),

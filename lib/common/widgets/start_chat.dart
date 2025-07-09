@@ -7,6 +7,7 @@ import 'package:afriqueen/features/chat/screen/chat_screen.dart';
 import 'package:afriqueen/features/messages_requests/bloc/request_sender_bloc.dart';
 import 'package:afriqueen/features/messages_requests/model/request_model.dart';
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
+
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,7 +56,8 @@ class _StartChatState extends State<StartChat> {
               return PlatformIconButton(
                 onPressed: () {
                   if (data == null) {
-                    final currentUserData = getIt<ProfileBloc>().state.data;
+                    final state = getIt<ProfileBloc>().state as ProfileLoaded;
+                    final currentUserData = state.data;
                     print("current user name ${currentUserData.pseudo}");
                     QuickAlert.show(
                       textAlignment: TextAlign.left,
@@ -92,7 +94,7 @@ class _StartChatState extends State<StartChat> {
                     print("User Avaible !");
                     print(data.responseStatus.toString());
                     if (data.responseStatus.name ==
-                        ResponseStatus.initial.name) {
+                        ResponseStatus.Initial.name) {
                       QuickAlert.show(
                         textAlignment: TextAlign.left,
                         widget: SizedBox.shrink(),
@@ -108,30 +110,13 @@ class _StartChatState extends State<StartChat> {
                         },
                       );
                     } else if (data.responseStatus.name ==
-                        ResponseStatus.accept.name) {
+                        ResponseStatus.Accepted.name) {
                       Get.to(
                         () => ChatScreen(
                           imgURL: widget.profileModel.imgURL,
                           receiverId: widget.profileModel.id,
                           receiverName: widget.profileModel.pseudo,
                         ),
-                      );
-                    } else if (data.responseStatus.name ==
-                        ResponseStatus.reject.name) {
-                      QuickAlert.show(
-                        textAlignment: TextAlign.left,
-                        widget: SizedBox.shrink(),
-                        text:
-                            "${widget.profileModel.pseudo} ${EnumLocale.requestRejectMessage.name.tr} ",
-                        headerBackgroundColor: AppColors.red,
-                        backgroundColor: AppColors.floralWhite,
-                        context: context,
-                        confirmBtnColor: AppColors.red,
-                        title: EnumLocale.requestReject.name.tr,
-                        type: QuickAlertType.warning,
-                        onConfirmBtnTap: () {
-                          Get.back();
-                        },
                       );
                     }
                   }

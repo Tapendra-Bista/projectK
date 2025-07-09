@@ -4,11 +4,14 @@ import 'package:afriqueen/common/constant/constant_strings.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/divider.dart';
 import 'package:afriqueen/common/widgets/loading.dart';
+import 'package:afriqueen/features/setting/bloc/setting_bloc.dart';
 import 'package:afriqueen/routes/app_routes.dart';
+import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -113,92 +116,113 @@ class SettingTitle extends StatelessWidget {
 }
 
 //-----------------Change Language--------------------
-class LanguageListTile extends StatelessWidget {
+class LanguageListTile extends StatefulWidget {
   LanguageListTile({super.key});
+
+  @override
+  State<LanguageListTile> createState() => _LanguageListTileState();
+}
+
+class _LanguageListTileState extends State<LanguageListTile> {
   final app = AppGetStorage();
+
+  bool englishLanBool = false;
+
+  bool franceBool = false;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
     return ListTile(
-      onTap: () => showModalBottomSheet(
-        context: context,
-        backgroundColor: AppColors.floralWhite,
-        isScrollControlled: false,
-        builder: (context) => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          spacing: 20.h,
-          children: [
-            ListTile(
-              title: Text(
-                EnumLocale.chooseOption.name.tr,
-                style: theme.bodyLarge!.copyWith(
-                      color: AppColors.primaryColor,
-                      fontSize: 19.sp,
-                    ),
-              ),
-              trailing: SizedBox(
-                width: 50.w,
-                child: PlatformIconButton(
-                  onPressed: () => Get.back(),
-                  icon: Icon(
-                    HugeIcons.strokeRoundedMultiplicationSignCircle,
-                    color: AppColors.primaryColor,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 150.h,
-              child: ListView.builder(
-                itemCount: AppStrings.language.length,
-                itemBuilder: (context, index) => Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 15.h),
-                    InkWell(
-                      onTap: () async {
-                        if (index == 0) {
+      onTap: () => showPlatformModalSheet(
+          material:
+              MaterialModalSheetData(backgroundColor: AppColors.transparent),
+          context: context,
+          builder: (context) => Padding(
+                padding: EdgeInsets.all(14.r),
+                child: Material(
+                  borderRadius: BorderRadius.circular(18.r),
+                  elevation: 10,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        onTap: () async {
+                          getIt<SettingBloc>().add(SetToEnglish());
                           await Get.updateLocale(Locale('en'));
                           app.setLanguageCode('en');
-                        } else {
-                          await Get.updateLocale(Locale('fr'));
-                          app.setLanguageCode('fr');
-                        }
-                        Navigator.pop(context);
-                      },
-                      child: Container(
+
+                          print("Language is set to  english ");
+
+                          Get.back();
+                        },
+                        leading: Image.asset(
+                          AppStrings.flag[0],
                           height: 40.h,
-                          padding: EdgeInsets.only(left: 40.w),
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                              color: AppColors.greyContainerColor),
-                          child: Row(
-                            spacing: 20.w,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                AppStrings.flag[index],
-                                height: 40.h,
-                                width: 40.w,
-                              ),
-                              Text(
-                                AppStrings.language[index],
-                                style: theme.bodyMedium,
-                              ),
-                            ],
-                          )),
-                    ),
-                    CustomDivider(),
-                  ],
+                          width: 40.w,
+                        ),
+                        title: Text(
+                          AppStrings.language[0],
+                          style: theme.bodyMedium,
+                        ),
+                        trailing: BlocSelector<SettingBloc, SettingState, bool>(
+                          selector: (state) =>
+                              (state is GetEnglish) ? true : false,
+                          builder: (context, value) {
+                            return value
+                                ? SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  )
+                                : SizedBox.shrink();
+                          },
+                        ),
+                      ),
+                      CustomDivider(),
+                      ListTile(
+                        onTap: () async {
+                          getIt<SettingBloc>().add(SetToFrance());
+                          await Get.updateLocale(Locale('fr'));
+
+                          print("Language is set to  French");
+                          app.setLanguageCode('fr');
+
+                          Get.back();
+                        },
+                        leading: Image.asset(
+                          AppStrings.flag[1],
+                          height: 40.h,
+                          width: 40.w,
+                        ),
+                        title: Text(
+                          AppStrings.language[1],
+                          style: theme.bodyMedium,
+                        ),
+                        trailing: BlocSelector<SettingBloc, SettingState, bool>(
+                          selector: (state) =>
+                              (state is GetFrance) ? true : false,
+                          builder: (context, value) {
+                            return value
+                                ? SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  )
+                                : SizedBox.shrink();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(height: 10.h),
-          ],
-        ),
-      ),
+              )),
       trailing: SizedBox(width: 50.w, child: Icon(CupertinoIcons.forward)),
       leading: Icon(HugeIcons.strokeRoundedLanguageSquare),
       title: Text(

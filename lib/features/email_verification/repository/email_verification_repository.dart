@@ -4,9 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class EmailVerificationRepository extends BaseRepository {
+  
   final AppGetStorage appGetStorage = AppGetStorage();
   //------------------To control delete , emailverification----------------------------
-  EmailVerificationRepository({FirebaseAuth? auth});
+  EmailVerificationRepository({FirebaseAuth? auth}){
+    this.auth = auth ?? FirebaseAuth.instance;
+  }
   //----------------------Sending link for email verification--------------------------
   Future<void> sendEmailVerificationLink() async {
     await auth.setLanguageCode(appGetStorage.getLanguageCode());

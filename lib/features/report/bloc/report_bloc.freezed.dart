@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -33,6 +32,217 @@ mixin _$ReportEvent {
 /// @nodoc
 class $ReportEventCopyWith<$Res> {
   $ReportEventCopyWith(ReportEvent _, $Res Function(ReportEvent) __);
+}
+
+/// Adds pattern-matching-related methods to [ReportEvent].
+extension ReportEventPatterns on ReportEvent {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(ViolationChoosen value)? violationChoosen,
+    TResult Function(IllegalChoosen value)? illegalChoosen,
+    TResult Function(AgreeCondition value)? agreeCondition,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started(_that);
+      case ViolationChoosen() when violationChoosen != null:
+        return violationChoosen(_that);
+      case IllegalChoosen() when illegalChoosen != null:
+        return illegalChoosen(_that);
+      case AgreeCondition() when agreeCondition != null:
+        return agreeCondition(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(ViolationChoosen value) violationChoosen,
+    required TResult Function(IllegalChoosen value) illegalChoosen,
+    required TResult Function(AgreeCondition value) agreeCondition,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started():
+        return started(_that);
+      case ViolationChoosen():
+        return violationChoosen(_that);
+      case IllegalChoosen():
+        return illegalChoosen(_that);
+      case AgreeCondition():
+        return agreeCondition(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(ViolationChoosen value)? violationChoosen,
+    TResult? Function(IllegalChoosen value)? illegalChoosen,
+    TResult? Function(AgreeCondition value)? agreeCondition,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started(_that);
+      case ViolationChoosen() when violationChoosen != null:
+        return violationChoosen(_that);
+      case IllegalChoosen() when illegalChoosen != null:
+        return illegalChoosen(_that);
+      case AgreeCondition() when agreeCondition != null:
+        return agreeCondition(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String violation)? violationChoosen,
+    TResult Function(String illegal)? illegalChoosen,
+    TResult Function(bool agree)? agreeCondition,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started();
+      case ViolationChoosen() when violationChoosen != null:
+        return violationChoosen(_that.violation);
+      case IllegalChoosen() when illegalChoosen != null:
+        return illegalChoosen(_that.illegal);
+      case AgreeCondition() when agreeCondition != null:
+        return agreeCondition(_that.agree);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(String violation) violationChoosen,
+    required TResult Function(String illegal) illegalChoosen,
+    required TResult Function(bool agree) agreeCondition,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started():
+        return started();
+      case ViolationChoosen():
+        return violationChoosen(_that.violation);
+      case IllegalChoosen():
+        return illegalChoosen(_that.illegal);
+      case AgreeCondition():
+        return agreeCondition(_that.agree);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(String violation)? violationChoosen,
+    TResult? Function(String illegal)? illegalChoosen,
+    TResult? Function(bool agree)? agreeCondition,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Started() when started != null:
+        return started();
+      case ViolationChoosen() when violationChoosen != null:
+        return violationChoosen(_that.violation);
+      case IllegalChoosen() when illegalChoosen != null:
+        return illegalChoosen(_that.illegal);
+      case AgreeCondition() when agreeCondition != null:
+        return agreeCondition(_that.agree);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc
@@ -268,6 +478,217 @@ mixin _$ReportState {
 /// @nodoc
 class $ReportStateCopyWith<$Res> {
   $ReportStateCopyWith(ReportState _, $Res Function(ReportState) __);
+}
+
+/// Adds pattern-matching-related methods to [ReportState].
+extension ReportStatePatterns on ReportState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initial value)? initial,
+    TResult Function(Violation value)? violation,
+    TResult Function(Illegal value)? illegal,
+    TResult Function(Agree value)? agree,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial() when initial != null:
+        return initial(_that);
+      case Violation() when violation != null:
+        return violation(_that);
+      case Illegal() when illegal != null:
+        return illegal(_that);
+      case Agree() when agree != null:
+        return agree(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initial value) initial,
+    required TResult Function(Violation value) violation,
+    required TResult Function(Illegal value) illegal,
+    required TResult Function(Agree value) agree,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial():
+        return initial(_that);
+      case Violation():
+        return violation(_that);
+      case Illegal():
+        return illegal(_that);
+      case Agree():
+        return agree(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Initial value)? initial,
+    TResult? Function(Violation value)? violation,
+    TResult? Function(Illegal value)? illegal,
+    TResult? Function(Agree value)? agree,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial() when initial != null:
+        return initial(_that);
+      case Violation() when violation != null:
+        return violation(_that);
+      case Illegal() when illegal != null:
+        return illegal(_that);
+      case Agree() when agree != null:
+        return agree(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String violation)? violation,
+    TResult Function(String illegal)? illegal,
+    TResult Function(bool agree)? agree,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial() when initial != null:
+        return initial();
+      case Violation() when violation != null:
+        return violation(_that.violation);
+      case Illegal() when illegal != null:
+        return illegal(_that.illegal);
+      case Agree() when agree != null:
+        return agree(_that.agree);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String violation) violation,
+    required TResult Function(String illegal) illegal,
+    required TResult Function(bool agree) agree,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial():
+        return initial();
+      case Violation():
+        return violation(_that.violation);
+      case Illegal():
+        return illegal(_that.illegal);
+      case Agree():
+        return agree(_that.agree);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String violation)? violation,
+    TResult? Function(String illegal)? illegal,
+    TResult? Function(bool agree)? agree,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case Initial() when initial != null:
+        return initial();
+      case Violation() when violation != null:
+        return violation(_that.violation);
+      case Illegal() when illegal != null:
+        return illegal(_that.illegal);
+      case Agree() when agree != null:
+        return agree(_that.agree);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc

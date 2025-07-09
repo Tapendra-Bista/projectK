@@ -7,22 +7,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ReelsScreen extends StatelessWidget {
+  
   const ReelsScreen({super.key});
 //-------------------Reels Screen------------------------
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(
+    return Scaffold(
+        body: SafeArea(
       child: BlocBuilder<ReelBloc, ReelState>(
+        buildWhen: (previous, current) =>
+            previous.runtimeType != current.runtimeType,
         builder: (context, state) {
           return switch (state) {
-            ReelError() => ErrorInReel(),
-            ReelEmpty() => NoReelAvailable(),
-            _ => Stack(
+            ReelError() => const ErrorInReel(),
+            ReelEmpty() => const NoReelAvailable(),
+            _ => const Stack(
                 children: [
                   //-----------Reel View-------------------
-                  ReelsView(),
+                  const ReelsView(),
                   //----------------Top Action----------
-                  TopActionWdgets(),
+                  const TopActionWdgets(),
                 ],
               )
           };

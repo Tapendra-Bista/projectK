@@ -144,6 +144,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     final isValideUrl = widget.imgURL.isNotEmpty &&
         Uri.tryParse(widget.imgURL)!.hasAbsolutePath == true;
     return Scaffold(
@@ -224,7 +225,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     errorMaxLines: 3,
                                     hintText: EnumLocale.messagesHint.name.tr,
                                     hintStyle:
-                                        Theme.of(context).textTheme.bodySmall,
+                                        theme.bodySmall,
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(20.r),
                                       borderSide: BorderSide(

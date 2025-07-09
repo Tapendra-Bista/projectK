@@ -1,5 +1,4 @@
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
-import 'package:afriqueen/features/profile/bloc/profile_state.dart';
 import 'package:afriqueen/features/profile/widget/profile_widget.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/material.dart';

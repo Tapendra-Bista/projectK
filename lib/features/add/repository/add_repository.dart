@@ -1,11 +1,16 @@
 import 'package:afriqueen/common/constant/constant_strings.dart';
 import 'package:afriqueen/features/reels/model/reel_model.dart';
 import 'package:afriqueen/services/base_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddRepository extends BaseRepository {
   final ImagePicker imagePicker = ImagePicker();
+    AddRepository({FirebaseFirestore? firestore}) {
+    this.firestore = firestore ?? FirebaseFirestore.instance;
+  }
+
 //------------------------Pick Video (reels) From Gallery----------------
   Future<String?> videoPicker() async {
     try {

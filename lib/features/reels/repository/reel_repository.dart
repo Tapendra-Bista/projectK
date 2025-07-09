@@ -4,9 +4,13 @@ import 'package:afriqueen/services/base_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReelRepository extends BaseRepository {
+  ReelRepository({FirebaseFirestore ? firestore}){
+       this.firestore = firestore ?? FirebaseFirestore.instance;
+  }
 //---------get/fetch reels--------------
   Future<List<ReelModel>> getReels() async {
     try {
+      
       final QuerySnapshot reels = await firestore.collection('reels').get();
       if (reels.docs.isEmpty) return [];
 

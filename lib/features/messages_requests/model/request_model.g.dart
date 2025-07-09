@@ -34,12 +34,11 @@ Map<String, dynamic> _$RequestmodelToJson(_Requestmodel instance) =>
     };
 
 const _$ResponseStatusEnumMap = {
-  ResponseStatus.initial: 'initial',
-  ResponseStatus.accept: 'accept',
-  ResponseStatus.reject: 'reject',
+  ResponseStatus.Initial: 'Initial',
+  ResponseStatus.Accepted: 'Accepted',
 };
 
 const _$RequestStatusEnumMap = {
-  RequestStatus.send: 'send',
-  RequestStatus.read: 'read',
+  RequestStatus.Send: 'Send',
+  RequestStatus.Read: 'Read',
 };

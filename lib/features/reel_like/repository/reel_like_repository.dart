@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
 class ReelLikeRepository extends BaseRepository {
-  ReelLikeRepository({FirebaseFirestore? firestore});
+  ReelLikeRepository({FirebaseFirestore? firestore}) {
+    this.firestore = firestore ?? FirebaseFirestore.instance;
+  }
 
   //--------------------------adding reelLike--------------------------
   Future<void> addReelLike(String reelLikeId) async {
@@ -75,6 +77,6 @@ class ReelLikeRepository extends BaseRepository {
 
     if (!docSnapshot.exists || docSnapshot.data() == null) return null;
 
-    return ReelLikeModel.fromMap(docSnapshot.data()!);
+    return ReelLikeModel.fromJson(docSnapshot.data()!);
   }
 }

@@ -6,6 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 
 class ChatRepository extends BaseRepository {
+  ChatRepository({FirebaseFirestore? firestore}) {
+    this.firestore = firestore ?? FirebaseFirestore.instance;
+  }
   CollectionReference get _chatRooms => firestore.collection("chatRooms");
 
   CollectionReference getChatRoomMessages(String chatRoomId) {
@@ -39,6 +42,7 @@ class ChatRepository extends BaseRepository {
     required String content,
     required Timestamp timestamp,
   }) async {
+    final batch = firestore.batch();
     final messagesRef = await getChatRoomMessages(chatRoomId);
 
     final querySnapshot = await messagesRef
@@ -47,8 +51,9 @@ class ChatRepository extends BaseRepository {
         .get();
 
     for (var doc in querySnapshot.docs) {
-      await doc.reference.delete();
+      batch.delete(doc.reference);
     }
+    batch.commit();
   }
 
 //------------------ delete ChatRoom--------------
@@ -56,21 +61,22 @@ class ChatRepository extends BaseRepository {
     try {
       final users = [currentUserId, otherUserId]..sort();
       final roomId = users.join("_");
-
+      final bacth = firestore.batch();
       // 1. Reference to messages subcollection
-      final messagesRef = _chatRooms.doc(roomId).collection("messages");
+      final messagesRef = _chatRooms
+          .doc(roomId)
+          .collection("messages")
+          .where('senderId', isEqualTo: currentUserId);
 
       // 2. Fetch all documents in messages subcollection
       final messagesSnapshot = await messagesRef.get();
 
       // 3. Delete each message document
       for (final doc in messagesSnapshot.docs) {
-        await doc.reference.delete();
+        bacth.delete(doc.reference);
       }
-
-      // 4. Delete the main chatRoom document
-      await _chatRooms.doc(roomId).delete();
-
+      bacth.delete(_chatRooms.doc(roomId));
+      bacth.commit();
       print("Chat room $roomId and all its messages deleted successfully.");
     } catch (e) {
       print("Failed to delete chat room: $e");

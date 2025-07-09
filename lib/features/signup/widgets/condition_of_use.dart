@@ -9,7 +9,7 @@ import 'package:get/get_utils/src/extensions/export.dart';
 class ConditionOfUse extends StatelessWidget {
   const ConditionOfUse({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return PlatformScaffold(
       appBar: PlatformAppBar(automaticallyImplyLeading: true),
       body: SafeArea(
@@ -25,14 +25,14 @@ class ConditionOfUse extends StatelessWidget {
               children: [
                 Text(
                   EnumLocale.conditionOfUseTitle.name.tr,
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  style: theme.bodyLarge!.copyWith(
                         color: AppColors.primaryColor,
                         fontSize: 22,
                       ),
                 ),
                 Text(
                   EnumLocale.conditionOfUseBody.name.tr,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: theme.bodyMedium,
                 ),
               ],
             ),

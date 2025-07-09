@@ -34,7 +34,7 @@ class Seniority {
     } else if (difference.inHours < 24) {
       return '${difference.inHours} ${EnumLocale.hoursAgo.name.tr}';
     } else {
-      return '';
+      return '${difference.inDays} ${EnumLocale.daysAgo.name.tr}';
     }
   }
 

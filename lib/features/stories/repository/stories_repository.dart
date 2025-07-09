@@ -6,33 +6,34 @@ import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:image_picker/image_picker.dart';
 
 class StoriesRepository extends BaseRepository {
-  final cloudinary = CloudinaryPublic(
-    AppStrings.cloudName,
-    AppStrings.uploadPreset,
-  );
-
   final ImagePicker _imagePicker = ImagePicker();
   StoriesRepository({FirebaseFirestore? fire});
 
   //--------------------------------Image adding to cloudinary-----------------------------
-  Future<String?> addStoriesImageToCloudinary() async {
+  Future<String?> imagePickerForStories(ImageSource source) async {
     try {
-      final image = await _imagePicker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        final response = await cloudinary.uploadFile(
-          CloudinaryFile.fromFile(
-            image.path,
-            resourceType: CloudinaryResourceType.Image,
-            folder: "afriqueen/stories",
-            publicId: "${DateTime.now().millisecondsSinceEpoch}",
-          ),
-        );
-        return response.secureUrl;
-      }
+      final image = await _imagePicker.pickImage(source: source);
+      if (image != null) return image.path;
     } catch (e) {
       rethrow;
     }
     return null;
+  }
+
+  Future<String> uploadStoriesToCloundinary({ required String imagePath}) async {
+    final cloudinary = CloudinaryPublic(
+      AppStrings.cloudName,
+      AppStrings.uploadPreset,
+    );
+    final response = await cloudinary.uploadFile(
+      CloudinaryFile.fromFile(
+        imagePath,
+        resourceType: CloudinaryResourceType.Image,
+        folder: "afriqueen/stories",
+        publicId: "${DateTime.now().millisecondsSinceEpoch}",
+      ),
+    );
+    return response.secureUrl;
   }
 
   //-------------------------- Upload or update user story in Firestore --------------------------
@@ -64,7 +65,7 @@ class StoriesRepository extends BaseRepository {
       final snapshot = await firestore.collection('stories').get();
 
       return snapshot.docs.map((doc) {
-        return StoriesFetchModel.fromMap(doc.data());
+        return StoriesFetchModel.fromJson(doc.data());
       }).toList();
     } catch (e) {
       print("Error fetching stories: $e");

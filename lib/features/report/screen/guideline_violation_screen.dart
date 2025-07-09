@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+
 //--------------- Guidelines Violation-----------------
 class GuidelinesViolation extends StatelessWidget {
   const GuidelinesViolation({
@@ -77,6 +78,7 @@ class BottomSheetContant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
@@ -90,10 +92,10 @@ class BottomSheetContant extends StatelessWidget {
           sliver: SliverToBoxAdapter(
             child: Text(
               EnumLocale.whyAreYouReporting.name.tr,
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontSize: 20.sp,
-                    color: AppColors.red,
-                  ),
+              style: theme.bodyLarge!.copyWith(
+                fontSize: 20.sp,
+                color: AppColors.red,
+              ),
             ),
           ),
         ),

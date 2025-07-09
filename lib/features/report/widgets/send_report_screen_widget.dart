@@ -17,7 +17,7 @@ class ConfirmInformation extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
       height: 84.h,
@@ -40,7 +40,7 @@ class ConfirmInformation extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: EnumLocale.sendReportTitle.name.tr,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    style: theme.bodySmall!.copyWith(
                         color: AppColors.black,
                         fontSize: 12.5.sp,
                         fontWeight: FontWeight.w100),
@@ -113,7 +113,7 @@ class BottomSheetContant extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,13 +136,13 @@ class BottomSheetContant extends StatelessWidget {
         Text(
           EnumLocale.thankForReport.name.tr,
           style:
-              Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 20.sp),
+              theme.bodyMedium!.copyWith(fontSize: 20.sp),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: Text(
             EnumLocale.thankForReportDescription.name.tr,
-            style: Theme.of(context).textTheme.bodySmall,
+            style: theme.bodySmall,
           ),
         ),
         Row(

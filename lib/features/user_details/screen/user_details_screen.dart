@@ -19,7 +19,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final date = Seniority.formatJoinedTime(widget.data.createdDate);
+    final date = Seniority.formatJoinedTime(widget.data.createdDate.toDate());
     final hasValidUrl = widget.data.imgURL.isNotEmpty &&
         Uri.tryParse(widget.data.imgURL)?.hasAbsolutePath == true;
     return PlatformScaffold(

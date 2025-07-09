@@ -8,8 +8,11 @@ import 'package:image_picker/image_picker.dart';
 
 //--------------------Profile repository ---------------------------------------------
 class CreateProfileRepository extends BaseRepository {
+
   final imgPicker = ImagePicker();
-  CreateProfileRepository({FirebaseFirestore? firestore});
+  CreateProfileRepository({FirebaseFirestore? firestore}){
+    this.firestore = firestore ?? FirebaseFirestore.instance;
+  }
 
   Future<void> uploadToFirebase(ProfileModel profile) async {
     try {

@@ -2,6 +2,7 @@ import 'package:afriqueen/features/create_profile/bloc/create_profile_event.dart
 import 'package:afriqueen/features/create_profile/bloc/create_profile_state.dart';
 import 'package:afriqueen/features/create_profile/repository/create_profile_repository.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
@@ -128,7 +129,7 @@ class CreateProfileBloc extends Bloc<CreateProfileEvent, CreateProfileState> {
             city: _box.read('city') ?? '',
             interests: _interests.toList(),
             imgURL: secureUrl,
-            createdDate: DateTime.now(),
+            createdDate: Timestamp.now(),
           );
           await _profileRepository.uploadToFirebase(createProfileModel);
           emit(Success.fromState(state));

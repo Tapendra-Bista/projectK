@@ -1,12 +1,16 @@
-import 'package:afriqueen/features/wellcome/bloc/wellcome_event.dart';
-import 'package:afriqueen/features/wellcome/bloc/wellcome_state.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+
+part 'wellcome_bloc.freezed.dart';
+part 'wellcome_bloc.g.dart';
+part 'wellcome_event.dart';
+part 'wellcome_state.dart';
 
 //-----------------------------Bloc for wellcome page-----------------------------------
 class WellcomeBloc extends HydratedBloc<WellcomeEvent, WellcomeState> {
-  WellcomeBloc() : super(WellcomeInitial()) {
-    on<ChangeLanguageEvent>((event, emit) {
-      emit(state.copyWith(languageCode: event.languageCode));
+  WellcomeBloc() : super(WellcomeState()) {
+    on<ChangeLanguage>((event, emit) {
+     emit(state.copyWith(languageCode: event.languageCode));
     });
   }
 
@@ -15,7 +19,7 @@ class WellcomeBloc extends HydratedBloc<WellcomeEvent, WellcomeState> {
     try {
       final languageCode = json['languageCode'] as String?;
 
-      return WellcomeState(languageCode: languageCode);
+      return WellcomeState(languageCode: languageCode!);
     } catch (_) {
       return null;
     }
@@ -30,3 +34,5 @@ class WellcomeBloc extends HydratedBloc<WellcomeEvent, WellcomeState> {
     }
   }
 }
+
+

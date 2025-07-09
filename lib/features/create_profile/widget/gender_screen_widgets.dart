@@ -20,22 +20,25 @@ class GenderDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.genderDescription.name.tr,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: theme.bodySmall,
     );
   }
 }
 
 //----------------Text Regarding gender Title--------------------------
 class GenderTitle extends StatelessWidget {
+  
   const GenderTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.genderTitle.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: theme.bodyLarge,
     );
   }
 }
@@ -48,6 +51,7 @@ class GenderNextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  
     return CommonButton(
       onPressed: () {
         app.setPageNumber(4);
@@ -65,6 +69,7 @@ class Female extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Center(
       child: Container(
         height: 60.h,
@@ -79,7 +84,7 @@ class Female extends StatelessWidget {
             leading: Icon(CupertinoIcons.person),
             title: Text(
               EnumLocale.genderFemale.name.tr,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.bodyMedium,
             ),
             trailing: SizedBox(
               width: 50.w,
@@ -109,6 +114,7 @@ class Male extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Center(
       child: Container(
         height: 60.h,
@@ -123,7 +129,7 @@ class Male extends StatelessWidget {
             leading: Icon(CupertinoIcons.person),
             title: Text(
               EnumLocale.genderMale.name.tr,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.bodyMedium,
             ),
             trailing: SizedBox(
               width: 50.w,

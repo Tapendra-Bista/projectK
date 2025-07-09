@@ -1,93 +1,90 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:afriqueen/common/constant/constant_colors.dart';
-import 'package:afriqueen/common/widgets/circular_indicator.dart';
 import 'package:afriqueen/features/reels/bloc/reel_bloc.dart';
 import 'package:afriqueen/features/reels/model/reel_model.dart';
 import 'package:afriqueen/features/reels/widget/reels_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whitecodel_reels/models/video_model.dart';
-import 'package:whitecodel_reels/whitecodel_reels.dart';
+import 'package:reels/model/video_model.dart';
+import 'package:reels/reels.dart';
 
 class ReelsView extends StatefulWidget {
-  const ReelsView({super.key});
+  const ReelsView({
+    super.key,
+  });
 
   @override
   State<ReelsView> createState() => _ReelsViewState();
 }
 
 class _ReelsViewState extends State<ReelsView> {
-  final videoProgressController = StreamController<double>.broadcast();
-  final videoBufferController = StreamController<double>.broadcast();
-  final random = Random();
-
-  VoidCallback? _videoListener;
-
-  @override
-  void dispose() {
-    // Clean up all stream controllers and listeners
-    videoProgressController.close();
-    videoBufferController.close();
-    _videoListener = null;
-    super.dispose();
-  }
-
+  List<String> videos = [
+    "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4",
+    "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_2mb.mp4",
+    "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_5mb.mp4",
+    "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_10mb.mp4",
+    "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_20mb.mp4",
+    "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_30mb.mp4",
+    "https://sample-videos.com/video321/mp4/480/big_buck_bunny_480p_1mb.mp4",
+    "https://sample-videos.com/video321/mp4/480/big_buck_bunny_480p_2mb.mp4",
+    "https://sample-videos.com/video321/mp4/480/big_buck_bunny_480p_5mb.mp4",
+    "https://sample-videos.com/video321/mp4/480/big_buck_bunny_480p_10mb.mp4",
+    "https://sample-videos.com/video321/mp4/480/big_buck_bunny_480p_20mb.mp4",
+    "https://sample-videos.com/video321/mp4/480/big_buck_bunny_480p_30mb.mp4",
+    "https://sample-videos.com/video321/mp4/360/big_buck_bunny_360p_1mb.mp4",
+    "https://sample-videos.com/video321/mp4/360/big_buck_bunny_360p_2mb.mp4",
+    "https://sample-videos.com/video321/mp4/360/big_buck_bunny_360p_5mb.mp4",
+    "https://sample-videos.com/video321/mp4/360/big_buck_bunny_360p_10mb.mp4",
+    "https://sample-videos.com/video321/mp4/360/big_buck_bunny_360p_20mb.mp4",
+    "https://sample-videos.com/video321/mp4/360/big_buck_bunny_360p_30mb.mp4",
+    "https://sample-videos.com/video321/mp4/240/big_buck_bunny_240p_1mb.mp4",
+    "https://sample-videos.com/video321/mp4/240/big_buck_bunny_240p_2mb.mp4",
+    "https://sample-videos.com/video321/mp4/240/big_buck_bunny_240p_5mb.mp4",
+    "https://sample-videos.com/video321/mp4/240/big_buck_bunny_240p_10mb.mp4",
+    "https://sample-videos.com/video321/mp4/240/big_buck_bunny_240p_20mb.mp4",
+    "https://sample-videos.com/video321/mp4/240/big_buck_bunny_240p_30mb.mp4"
+  ];
   @override
   Widget build(BuildContext context) {
     return BlocSelector<ReelBloc, ReelState, List<ReelModel>>(
       selector: (state) {
-        if (state is Initial) return state.reelModel;
+        if (state is Initial) {
+          return state.reelModel;
+        }
+        ;
 
         return [];
       },
       builder: (context, reelData) {
-        return WhiteCodelReels(
+        return Reels(
           videoList: reelData
               .map((item) => VideoModel(
                     url: item.reelUrl,
                   ))
               .toList(),
-          startIndex: reelData.isNotEmpty ? random.nextInt(reelData.length) : 0,
           isCaching: true,
           context: context,
-          loader: const CustomCircularIndicator(),
           builder:
               (context, index, child, videoPlayerController, pageController) {
-            // Prevent duplicate listener
-            if (_videoListener != null) {
-              videoPlayerController.removeListener(_videoListener!);
-            }
+            StreamController<double> videoProgressController =
+                StreamController<double>();
+            StreamController<double> videoPlayerBufferController =
+                StreamController<double>();
 
-            _videoListener = () {
-              final duration = videoPlayerController.value.duration;
-              final position = videoPlayerController.value.position;
-              final buffered = videoPlayerController.value.buffered;
-
-              if (duration.inMilliseconds == 0) return;
-
-              if (!videoProgressController.isClosed) {
-                videoProgressController.add(
-                  position.inMilliseconds / duration.inMilliseconds,
-                );
-              }
-
-              if (!videoBufferController.isClosed) {
-                final bufferEnd =
-                    buffered.isNotEmpty ? buffered.last.end.inMilliseconds : 0;
-                videoBufferController.add(
-                  bufferEnd / duration.inMilliseconds,
-                );
-              }
-            };
-
-            videoPlayerController.addListener(_videoListener!);
-
-            if (!videoPlayerController.value.isInitialized) {
-              return const Center(child: CustomCircularIndicator());
-            }
-
+            videoPlayerController.addListener(() {
+              double videoProgress =
+                  videoPlayerController.value.position.inMilliseconds /
+                      videoPlayerController.value.duration.inMilliseconds;
+              videoProgressController.add(videoProgress);
+              double videoBufferProgress =
+                  videoPlayerController.value.buffered.isNotEmpty
+                      ? videoPlayerController
+                              .value.buffered.last.end.inMilliseconds /
+                          videoPlayerController.value.duration.inMilliseconds
+                      : 0.0;
+              videoPlayerBufferController.add(videoBufferProgress);
+            });
             return Stack(
               children: [
                 child,
@@ -102,7 +99,7 @@ class _ReelsViewState extends State<ReelsView> {
                   left: 0,
                   right: 0,
                   child: StreamBuilder<double>(
-                    stream: videoBufferController.stream,
+                    stream: videoPlayerBufferController.stream,
                     builder: (_, snapshot) => SliderTheme(
                       data: SliderTheme.of(context).copyWith(
                         thumbShape: SliderComponentShape.noThumb,

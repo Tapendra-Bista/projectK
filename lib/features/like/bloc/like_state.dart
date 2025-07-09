@@ -12,11 +12,11 @@ class LikeState extends Equatable {
 }
 
 final class LikeInitial extends LikeState {
-  LikeInitial() : super(likeUserList: LikeModel.empty);
+  LikeInitial() : super(likeUserList: LikeModel.empty());
 }
 
 final class LikeUsersLoading extends LikeState {
-  LikeUsersLoading() : super(likeUserList: LikeModel.empty);
+  LikeUsersLoading() : super(likeUserList: LikeModel.empty());
 }
 
 final class LikeUsersError extends LikeState {
@@ -30,5 +30,5 @@ final class LikeUsersError extends LikeState {
 }
 
 final class LikeDataEmpty extends LikeState {
-  LikeDataEmpty() : super(likeUserList: LikeModel.empty);
+  LikeDataEmpty() : super(likeUserList: LikeModel.empty());
 }

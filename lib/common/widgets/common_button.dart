@@ -16,6 +16,7 @@ class CommonButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final theme = Theme.of(context).textTheme;
     return Center(
       child: SizedBox(
         height: 40.h, // Slightly increased height for better touch target
@@ -46,9 +47,7 @@ class CommonButton extends StatelessWidget {
               alignment: Alignment.center,
               child: PlatformText(
                 buttonText,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium!.copyWith(color: AppColors.white),
+                style: theme.bodyMedium!.copyWith(color: AppColors.white),
               ),
 
               // Show indicator if loading and it's the login button

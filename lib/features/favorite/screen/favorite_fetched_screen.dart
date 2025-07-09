@@ -15,7 +15,7 @@ class FetchedScreen extends StatelessWidget {
   const FetchedScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return BlocSelector<FavoriteBloc, FavoriteState, List<ProfileModel>>(
       selector: (state) => state.favUserList,
       builder: (context, favData) {
@@ -30,7 +30,7 @@ class FetchedScreen extends StatelessWidget {
             ),
             title: Text(
               EnumLocale.favorites.name.tr,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.bodyMedium,
             ),
           ),
           body: ListView.builder(

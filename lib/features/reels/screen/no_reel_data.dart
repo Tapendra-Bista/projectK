@@ -8,11 +8,11 @@ class NoReelAvailable extends StatelessWidget {
   });
 //--------- no reel available------------
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return Center(
       child: Text(
         EnumLocale.noDataAvailable.name.tr,
-        style: Theme.of(context).textTheme.bodyMedium,
+        style: theme.bodyMedium,
       ),
     );
   }

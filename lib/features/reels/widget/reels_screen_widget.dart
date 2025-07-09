@@ -1,4 +1,6 @@
 import 'package:afriqueen/common/constant/constant_colors.dart';
+import 'package:afriqueen/common/localization/enums/enums.dart';
+import 'package:afriqueen/common/widgets/divider.dart';
 import 'package:afriqueen/features/follow/screen/follow_screen.dart';
 import 'package:afriqueen/features/reel_like/screen/reel_like_screen.dart';
 import 'package:afriqueen/features/reels/model/reel_model.dart';
@@ -122,6 +124,7 @@ class VirticalActionWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Positioned(
       right: 10,
       bottom: -110,
@@ -202,43 +205,43 @@ class VirticalActionWidgets extends StatelessWidget {
               ],
             ),
             IconButton(
-              onPressed: () => showBottomSheet(
-                  shape: BeveledRectangleBorder(),
-                  backgroundColor: AppColors.floralWhite,
+              onPressed: () => showPlatformModalSheet(
+                  material: MaterialModalSheetData(
+                      backgroundColor: AppColors.transparent),
                   context: context,
-                  builder: (context) => SizedBox(
-                        width: double.maxFinite,
-                        height: 170.h,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          spacing: 15.h,
-                          children: [
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: PlatformIconButton(
-                                onPressed: () => Get.back(),
-                                icon: Icon(
-                                  HugeIcons.strokeRoundedMultiplicationSign,
-                                  color: AppColors.black,
+                  builder: (context) => Padding(
+                        padding: EdgeInsets.all(14.r),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(18.r),
+                          elevation: 10,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListTile(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                leading: Icon(HugeIcons.strokeRoundedArchive),
+                                title: Text(
+                                  EnumLocale.archive.name.tr,
+                                  style: theme.bodyMedium,
                                 ),
                               ),
-                            ),
-                            Text(
-                              "Archive",
-                              style: Theme.of(context).textTheme.bodyMedium!,
-                            ),
-                            Text(
-                              "Favorite",
-                              style: Theme.of(context).textTheme.bodyMedium!,
-                            ),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                          ],
+                              CustomDivider(),
+                              ListTile(
+                                onTap: () {
+                                  Get.back();
+                                },
+                                leading: Icon(Icons.favorite_outline),
+                                title: Text(
+                                  EnumLocale.favorites.name.tr,
+                                  style: theme.bodyMedium,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       )),
               icon: Icon(

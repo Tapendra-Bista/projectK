@@ -5,7 +5,6 @@ import 'package:afriqueen/common/utils/validators.dart';
 import 'package:afriqueen/common/widgets/common_button.dart';
 import 'package:afriqueen/common/widgets/common_textfield.dart';
 import 'package:afriqueen/features/forgot_password/bloc/forgot_password_bloc.dart';
-import 'package:afriqueen/features/forgot_password/bloc/forgot_password_event.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +19,10 @@ class BodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.passwordResetInstruction.name.tr,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: theme.bodySmall,
     );
   }
 }
@@ -33,9 +33,10 @@ class Heading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       "${EnumLocale.forgotPassword.name.tr}?",
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: theme.bodyLarge,
     );
   }
 }
@@ -79,18 +80,19 @@ class RememberPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Center(
       child: RichText(
         text: TextSpan(
           text: EnumLocale.rememberPassword.name.tr,
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
+          style: theme.bodySmall!.copyWith(fontSize: 14),
           children: [
             TextSpan(
               text: " ${EnumLocale.loginText.name.tr}",
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: AppColors.primaryColor,
-                    fontSize: 14,
-                  ),
+              style: theme.bodySmall!.copyWith(
+                color: AppColors.primaryColor,
+                fontSize: 14,
+              ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () => Get.offAllNamed(AppRoutes.login),
             ),
@@ -164,9 +166,10 @@ class BodyWidgetInSuccessedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.checkEmail.name.tr,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: theme.bodySmall,
     );
   }
 }
@@ -177,9 +180,10 @@ class HeadingInSuccessedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.emailSent.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: theme.bodyLarge,
     );
   }
 }
@@ -191,18 +195,19 @@ class DidnotRecieveTheLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Center(
       child: RichText(
         text: TextSpan(
           text: EnumLocale.didNotReceiveTheLink.name.tr,
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
+          style: theme.bodySmall!.copyWith(fontSize: 14),
           children: [
             TextSpan(
               text: " ${EnumLocale.resend.name.tr}",
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: AppColors.primaryColor,
-                    fontSize: 14,
-                  ),
+              style: theme.bodySmall!.copyWith(
+                color: AppColors.primaryColor,
+                fontSize: 14,
+              ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () =>
                     context.read<ForgotPasswordBloc>().add(SendButtonClicked()),

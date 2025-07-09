@@ -29,6 +29,6 @@ extension RequestmodelToMap on Requestmodel {
   Map<String, dynamic> toMap() => toJson();
 }
 
-enum ResponseStatus { initial, accept, reject }
+enum ResponseStatus { Initial, Accepted }
 
-enum RequestStatus { send, read }
+enum RequestStatus { Send, Read }

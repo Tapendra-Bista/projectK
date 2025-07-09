@@ -6,8 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_utils/get_utils.dart';
-import 'package:google_sign_in/google_sign_in.dart'
-    show GoogleSignIn, GoogleSignInAccount, GoogleSignInAuthentication;
+import 'package:google_sign_in/google_sign_in.dart';
 
 // -------------------------Login logic-----------------------------
 class LoginRepository extends BaseRepository {
@@ -15,7 +14,9 @@ class LoginRepository extends BaseRepository {
 
   String? error;
 
-  LoginRepository({FirebaseAuth? firebaseauth});
+  LoginRepository({FirebaseAuth? firebaseauth}) {
+    auth = firebaseauth ?? FirebaseAuth.instance;
+  }
 
 //-----------------Email Links (PasswordLess Auth)----------------
   Future<void> sendSignInLink(String email) async {
@@ -68,13 +69,23 @@ class LoginRepository extends BaseRepository {
   //----------------------login with google----------------------------
   Future<UserCredential?> loginWithGoogle() async {
     try {
-      GoogleSignInAccount? googleSignInAccount =
-          await GoogleSignIn.instance.authenticate();
-      GoogleSignInAuthentication? googleAuth =
-          await googleSignInAccount.authentication;
+      // Step 1: Initialize the singleton once
+      await GoogleSignIn.instance.initialize();
+
+      // Step 2: Authenticate the user
+      final googleUser = await GoogleSignIn.instance.authenticate(
+          // Optional: request additional scopes right here
+          // scopeHint: ['email', 'profile'],
+          );
+
+      // Step 3: Get GoogleAuth tokens
+      final googleAuth = await googleUser.authentication;
+
+      // Step 4: Build Firebase credential
       final credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
       );
+
       final userCredential = await FirebaseAuth.instance.signInWithCredential(
         credential,
       );

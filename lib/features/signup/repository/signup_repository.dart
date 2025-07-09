@@ -12,7 +12,9 @@ class SignupRepository extends BaseRepository {
 
   String? errorMessge;
 
-  SignupRepository({FirebaseAuth? firebaseAuth});
+  SignupRepository({FirebaseAuth? firebaseAuth}){
+      auth = firebaseAuth ?? FirebaseAuth.instance;
+  }
 
   ///-------------------- Sign up a user with email and password----------------------------
   Future<UserCredential?> signupWithEmail(SignUpModel signupModel) async {

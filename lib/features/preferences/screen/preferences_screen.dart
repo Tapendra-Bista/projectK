@@ -5,7 +5,6 @@ import 'package:afriqueen/features/home/bloc/home_bloc.dart';
 import 'package:afriqueen/features/home/bloc/home_event.dart';
 import 'package:afriqueen/features/preferences/bloc/preferences_bloc.dart';
 import 'package:afriqueen/features/profile/bloc/profile_bloc.dart';
-import 'package:afriqueen/features/profile/bloc/profile_state.dart';
 import 'package:afriqueen/features/profile/model/profile_model.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +21,7 @@ class PreferencesScreen extends StatelessWidget {
   final _homeBloc = getIt<HomeBloc>();
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return PlatformScaffold(
       appBar: PlatformAppBar(
         material: (context, platform) {
@@ -29,18 +29,19 @@ class PreferencesScreen extends StatelessWidget {
         },
         title: Text(
           EnumLocale.preferences.name.tr,
-          style:
-              Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 22.sp),
+          style: theme.bodyMedium!.copyWith(fontSize: 22.sp),
         ),
         leading: PlatformIconButton(
             onPressed: () => Get.back(),
             icon: Icon(HugeIcons.strokeRoundedMultiplicationSign)),
       ),
       body: BlocBuilder<PreferencesBloc, PreferencesState>(
+        buildWhen: (previous, current) =>
+            previous.runtimeType != current.runtimeType,
         builder: (context, state) {
-    
           return BlocSelector<ProfileBloc, ProfileState, ProfileModel>(
-            selector: (state) => state.data,
+            selector: (state) =>
+                (state is ProfileLoaded) ? state.data : ProfileModel.empty(),
             builder: (context, CurrentUserData) {
               return SafeArea(
                   child: Padding(

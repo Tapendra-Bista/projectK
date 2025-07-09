@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -34,6 +33,228 @@ mixin _$PreferencesEvent {
 class $PreferencesEventCopyWith<$Res> {
   $PreferencesEventCopyWith(
       PreferencesEvent _, $Res Function(PreferencesEvent) __);
+}
+
+/// Adds pattern-matching-related methods to [PreferencesEvent].
+extension PreferencesEventPatterns on PreferencesEvent {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GenderPreferencesRequested value)?
+        genderPreferencesRequested,
+    TResult Function(AgePreferencesRequested value)? agePreferencesRequested,
+    TResult Function(LocationPreferencesRequested value)?
+        locationPreferencesRequested,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case GenderPreferencesRequested() when genderPreferencesRequested != null:
+        return genderPreferencesRequested(_that);
+      case AgePreferencesRequested() when agePreferencesRequested != null:
+        return agePreferencesRequested(_that);
+      case LocationPreferencesRequested()
+          when locationPreferencesRequested != null:
+        return locationPreferencesRequested(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GenderPreferencesRequested value)
+        genderPreferencesRequested,
+    required TResult Function(AgePreferencesRequested value)
+        agePreferencesRequested,
+    required TResult Function(LocationPreferencesRequested value)
+        locationPreferencesRequested,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case GenderPreferencesRequested():
+        return genderPreferencesRequested(_that);
+      case AgePreferencesRequested():
+        return agePreferencesRequested(_that);
+      case LocationPreferencesRequested():
+        return locationPreferencesRequested(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GenderPreferencesRequested value)?
+        genderPreferencesRequested,
+    TResult? Function(AgePreferencesRequested value)? agePreferencesRequested,
+    TResult? Function(LocationPreferencesRequested value)?
+        locationPreferencesRequested,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case GenderPreferencesRequested() when genderPreferencesRequested != null:
+        return genderPreferencesRequested(_that);
+      case AgePreferencesRequested() when agePreferencesRequested != null:
+        return agePreferencesRequested(_that);
+      case LocationPreferencesRequested()
+          when locationPreferencesRequested != null:
+        return locationPreferencesRequested(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            String men, bool isMenClicked, String women, bool isWomenClicked)?
+        genderPreferencesRequested,
+    TResult Function(double start, double end)? agePreferencesRequested,
+    TResult Function(String country, bool isCountryClicked, String city,
+            bool isCityClicked)?
+        locationPreferencesRequested,
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case GenderPreferencesRequested() when genderPreferencesRequested != null:
+        return genderPreferencesRequested(
+            _that.men, _that.isMenClicked, _that.women, _that.isWomenClicked);
+      case AgePreferencesRequested() when agePreferencesRequested != null:
+        return agePreferencesRequested(_that.start, _that.end);
+      case LocationPreferencesRequested()
+          when locationPreferencesRequested != null:
+        return locationPreferencesRequested(_that.country,
+            _that.isCountryClicked, _that.city, _that.isCityClicked);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String men, bool isMenClicked, String women, bool isWomenClicked)
+        genderPreferencesRequested,
+    required TResult Function(double start, double end) agePreferencesRequested,
+    required TResult Function(String country, bool isCountryClicked,
+            String city, bool isCityClicked)
+        locationPreferencesRequested,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case GenderPreferencesRequested():
+        return genderPreferencesRequested(
+            _that.men, _that.isMenClicked, _that.women, _that.isWomenClicked);
+      case AgePreferencesRequested():
+        return agePreferencesRequested(_that.start, _that.end);
+      case LocationPreferencesRequested():
+        return locationPreferencesRequested(_that.country,
+            _that.isCountryClicked, _that.city, _that.isCityClicked);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            String men, bool isMenClicked, String women, bool isWomenClicked)?
+        genderPreferencesRequested,
+    TResult? Function(double start, double end)? agePreferencesRequested,
+    TResult? Function(String country, bool isCountryClicked, String city,
+            bool isCityClicked)?
+        locationPreferencesRequested,
+  }) {
+    final _that = this;
+    switch (_that) {
+      case GenderPreferencesRequested() when genderPreferencesRequested != null:
+        return genderPreferencesRequested(
+            _that.men, _that.isMenClicked, _that.women, _that.isWomenClicked);
+      case AgePreferencesRequested() when agePreferencesRequested != null:
+        return agePreferencesRequested(_that.start, _that.end);
+      case LocationPreferencesRequested()
+          when locationPreferencesRequested != null:
+        return locationPreferencesRequested(_that.country,
+            _that.isCountryClicked, _that.city, _that.isCityClicked);
+      case _:
+        return null;
+    }
+  }
 }
 
 /// @nodoc
@@ -456,6 +677,226 @@ class _$PreferencesStateCopyWithImpl<$Res>
           : isCountryClicked // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [PreferencesState].
+extension PreferencesStatePatterns on PreferencesState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PreferencesState value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PreferencesState() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PreferencesState value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PreferencesState():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PreferencesState value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PreferencesState() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String men,
+            bool isMenClicked,
+            String women,
+            bool isWomenClicked,
+            double start,
+            double end,
+            String country,
+            String city,
+            bool isCityClicked,
+            bool isCountryClicked)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PreferencesState() when $default != null:
+        return $default(
+            _that.men,
+            _that.isMenClicked,
+            _that.women,
+            _that.isWomenClicked,
+            _that.start,
+            _that.end,
+            _that.country,
+            _that.city,
+            _that.isCityClicked,
+            _that.isCountryClicked);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String men,
+            bool isMenClicked,
+            String women,
+            bool isWomenClicked,
+            double start,
+            double end,
+            String country,
+            String city,
+            bool isCityClicked,
+            bool isCountryClicked)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PreferencesState():
+        return $default(
+            _that.men,
+            _that.isMenClicked,
+            _that.women,
+            _that.isWomenClicked,
+            _that.start,
+            _that.end,
+            _that.country,
+            _that.city,
+            _that.isCityClicked,
+            _that.isCountryClicked);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String men,
+            bool isMenClicked,
+            String women,
+            bool isWomenClicked,
+            double start,
+            double end,
+            String country,
+            String city,
+            bool isCityClicked,
+            bool isCountryClicked)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PreferencesState() when $default != null:
+        return $default(
+            _that.men,
+            _that.isMenClicked,
+            _that.women,
+            _that.isWomenClicked,
+            _that.start,
+            _that.end,
+            _that.country,
+            _that.city,
+            _that.isCityClicked,
+            _that.isCountryClicked);
+      case _:
+        return null;
+    }
   }
 }
 

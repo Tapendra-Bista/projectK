@@ -81,9 +81,10 @@ class EmailVerificationBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.verifyEmailBody.name.tr,
-      style: Theme.of(context).textTheme.bodySmall,
+      style: theme.bodySmall,
     );
   }
 }
@@ -94,9 +95,10 @@ class EmailVerificationTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Text(
       EnumLocale.verifyEmailTitle.name.tr,
-      style: Theme.of(context).textTheme.bodyLarge,
+      style: theme.bodyLarge,
     );
   }
 }
@@ -107,23 +109,24 @@ class EmailVerificationDeleteAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     return Center(
       child: RichText(
         text: TextSpan(
           text: EnumLocale.deleteAccountText.name.tr,
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
+          style: theme.bodySmall!.copyWith(fontSize: 14),
           children: [
             TextSpan(
                 text: EnumLocale.delete.name.tr,
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: AppColors.primaryColor,
-                      fontSize: 14,
-                    ),
+                style: theme.bodySmall!.copyWith(
+                  color: AppColors.primaryColor,
+                  fontSize: 14,
+                ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     context.read<EmailVerificationBloc>().add(
-                      OnClickedDeleteButton(),
-                    );
+                          OnClickedDeleteButton(),
+                        );
                     GetStorage().remove('pageNumber');
                     getIt.resetLazySingleton<EmailVerificationBloc>();
                   }),

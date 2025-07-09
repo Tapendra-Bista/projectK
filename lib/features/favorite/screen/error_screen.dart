@@ -14,7 +14,7 @@ class ErrorScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    final theme = Theme.of(context).textTheme;
     return BlocSelector<FavoriteBloc, FavoriteState, String?>(
       selector: (state) {
         if (state is FavoriteUsersError) {
@@ -35,13 +35,13 @@ class ErrorScreen extends StatelessWidget {
             ),
             title: Text(
               EnumLocale.favorites.name.tr,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.bodyMedium,
             ),
           ),
           body: Center(
             child: Text(
               error!,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.bodyMedium,
             ),
           ),
         );
