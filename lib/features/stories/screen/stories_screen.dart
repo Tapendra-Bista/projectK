@@ -10,49 +10,45 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+
+
+
+
 class StoriesScreen extends StatelessWidget {
   const StoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<StoriesBloc, StoriesState>(
-        listener: _onListener,
-        child: SliverToBoxAdapter(
-            child: BlocSelector<StoriesBloc, StoriesState,
-                List<StoriesFetchModel>>(
+      listener: _onListener,
+      child: SliverToBoxAdapter(
+        child: BlocSelector<StoriesBloc, StoriesState, List<StoriesFetchModel>>(
           selector: (state) => state.storiesData,
           builder: (context, storiesData) {
-            print(" stories value : ${storiesData.length}");
             return SizedBox(
-              height: 90.h,
-              child: GridView.builder(
-                padding: EdgeInsets.zero,
+              height: 100.h, // Slightly more space to avoid pixel clipping
+              child: ListView.separated(
                 scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
                 itemCount: 1 + storiesData.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    mainAxisSpacing: 0,
-                    childAspectRatio: 1.25,
-                    crossAxisSpacing: 0),
+                separatorBuilder: (_, __) => SizedBox(width: 10.w),
                 itemBuilder: (context, index) {
                   if (index == 0) {
-                    // ----------------- "Add Story" Avatar -------------------
-                    return OwnStories();
+                    return const OwnStories();
                   }
-
-                  //---------------------Other user Stories--------------------------------
                   return GestureDetector(
-                    onTap: () =>
-                        Get.to(() => ViewStories(data: storiesData[index - 1])),
-                    child: OtherUserStories(
-                      data: storiesData[index - 1],
-                    ),
+                    onTap: () => Get.to(() => ViewStories(
+                          data: storiesData[index - 1],
+                        )),
+                    child: OtherUserStories(data: storiesData[index - 1]),
                   );
                 },
               ),
             );
           },
-        )));
+        ),
+      ),
+    );
   }
 }
 

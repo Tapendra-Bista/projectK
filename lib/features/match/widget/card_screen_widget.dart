@@ -53,7 +53,7 @@ class ImageAndStatus extends StatelessWidget {
         children: [
           Container(
             width: double.maxFinite,
-            height: 290.h,
+            height: 300.h,
             decoration: validUrl
                 ? BoxDecoration(
                     borderRadius: BorderRadius.only(

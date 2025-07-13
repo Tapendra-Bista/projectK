@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:afriqueen/common/constant/constant_colors.dart';
 import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/features/home/bloc/home_bloc.dart';
@@ -93,11 +94,11 @@ class _CardScreenState extends State<CardScreen> {
                               isDisabled: false,
                               controller: controller,
                               duration: Duration(milliseconds: 500),
-                              numberOfCardsDisplayed: 2,
+                              numberOfCardsDisplayed: 1,
                               padding: EdgeInsets.only(
                                   left: 5.w,
                                   right: 5.w,
-                                  top: 40.h,
+                                  top: 10.h,
                                   bottom: 33.h),
                               cardBuilder: (
                                 context,
@@ -133,6 +134,9 @@ class _CardScreenState extends State<CardScreen> {
                                         UserDetails(user: item),
                                         ListOfButtons(
                                             user: item, controller: controller),
+                                        SizedBox(
+                                          height: 5.h,
+                                        )
                                       ],
                                     ),
                                   ),

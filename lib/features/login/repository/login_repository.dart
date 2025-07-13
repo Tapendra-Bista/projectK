@@ -1,34 +1,31 @@
-import 'package:afriqueen/common/localization/enums/enums.dart';
-import 'package:afriqueen/services/base_repository.dart';
-import 'package:afriqueen/features/login/models/login_model.dart';
-import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:timirama/common/localization/enums/enums.dart';
+import 'package:timirama/features/login/models/login_model.dart';
+import 'package:timirama/services/base_repository.dart';
 
 // -------------------------Login logic-----------------------------
 class LoginRepository extends BaseRepository {
-  final AppGetStorage _appGetStorage = AppGetStorage();
-
   String? error;
 
   LoginRepository({FirebaseAuth? firebaseauth}) {
     auth = firebaseauth ?? FirebaseAuth.instance;
   }
 
-//-----------------Email Links (PasswordLess Auth)----------------
+  //-----------------Email Links (PasswordLess Auth)----------------
   Future<void> sendSignInLink(String email) async {
     try {
       final ActionCodeSettings acs = ActionCodeSettings(
         url:
-            'https://afriqueen-e0b18.web.app', // Your app’s domain or deep link route
+            'https://timirama-e0b18.web.app', // Your app’s domain or deep link route
         handleCodeInApp: true,
-        androidPackageName: "com.example.afriqueen",
+        androidPackageName: "com.example.timirama",
         androidInstallApp: true,
         androidMinimumVersion: '21',
-        iOSBundleId: "com.example.afriqueen",
+        iOSBundleId: "com.example.timirama",
       );
 
       await FirebaseAuth.instance.sendSignInLinkToEmail(
@@ -43,7 +40,6 @@ class LoginRepository extends BaseRepository {
   //------------------------------login with Email ------------------------------------------
   Future<UserCredential?> loginWithEmail(LoginModel loginModel) async {
     try {
-      await auth.setLanguageCode(_appGetStorage.getLanguageCode());
       final UserCredential credential = await auth.signInWithEmailAndPassword(
         email: loginModel.email,
         password: loginModel.password,
@@ -67,7 +63,7 @@ class LoginRepository extends BaseRepository {
   }
 
   //----------------------login with google----------------------------
-  Future<UserCredential?> loginWithGoogle() async {
+  Future<String?> loginWithGoogle() async {
     try {
       // Step 1: Initialize the singleton once
       await GoogleSignIn.instance.initialize();
@@ -90,9 +86,9 @@ class LoginRepository extends BaseRepository {
         credential,
       );
 
-      return userCredential;
+      return userCredential.user!.uid;
     } catch (e) {
-      error = EnumLocale.defaultError.name.tr;
+      error = e.toString();
 
       debugPrint(e.toString());
 
@@ -102,17 +98,15 @@ class LoginRepository extends BaseRepository {
   }
 
   //-------------------- checking if user available or not---------------------
-  Future<bool> isUserAvailable() async {
+  Future<bool> isUserAvailable(String uid) async {
     try {
-      final DocumentSnapshot<Map<String, dynamic>> snapshot =
-          await firestore.collection('users').doc(currentUserId).get();
+      final snapshot =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
-      if (snapshot.exists) {
-        return true;
-      }
+      return snapshot.exists;
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('isUserAvailable error: $e');
+      return false;
     }
-    return false;
   }
 }

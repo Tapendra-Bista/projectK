@@ -13,6 +13,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 //------------------------Next Button ----------------------------------
+// pure isolate-safe function
+Future<void> simpleDelay(_) async {
+  await Future.delayed(Duration(milliseconds: 1500));
+}
+
 class NextButton extends StatefulWidget {
   NextButton({super.key});
 
@@ -34,9 +39,14 @@ class _NextButtonState extends State<NextButton> {
             setState(() {
               isClicked = true;
             });
-            await Future.delayed(Duration(milliseconds: 1500));
+
+            await compute(simpleDelay, null); // isolate-safe
+
+            // This runs on the main isolate (safe)
             _appGetStorage.setHasOpenedApp();
-            Get.offAllNamed(AppRoutes.login);
+            if (context.mounted) {
+              Get.offAllNamed(AppRoutes.login);
+            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
@@ -54,9 +64,7 @@ class _NextButtonState extends State<NextButton> {
             child: Container(
               alignment: Alignment.center,
               child: isClicked
-                  ? CircularProgressIndicator(
-                      color: AppColors.floralWhite,
-                    )
+                  ? CircularProgressIndicator(color: AppColors.floralWhite)
                   : PlatformText(
                       EnumLocale.next.name.tr,
                       style: Theme.of(
@@ -97,10 +105,7 @@ class WellcomeTextAndDropDown extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          EnumLocale.welcome.name.tr,
-          style: theme.bodyLarge,
-        ),
+        Text(EnumLocale.welcome.name.tr, style: theme.bodyLarge),
         DropDownForLanguage(),
       ],
     );
@@ -146,8 +151,8 @@ class DropDownForLanguage extends StatelessWidget {
             defaultItem: defaultItem,
             onChange: (value) {
               context.read<WellcomeBloc>().add(
-                    ChangeLanguage(languageCode: value),
-                  );
+                ChangeLanguage(languageCode: value),
+              );
 
               controller.close();
             },
