@@ -20,27 +20,36 @@ class StoriesBloc extends Bloc<StoriesEvent, StoriesState> {
 
   StoriesBloc({required StoriesRepository repo})
       : _storiesRepository = repo,
-        super(StoriesState.initial(
+        super(
+          StoriesState.initial(
             storiesData: [],
             currentUserStoriesData: StoriesFetchModel.empty(),
-            profileData: ProfileModel.empty())) {
+            profileData: ProfileModel.empty(),
+          ),
+        ) {
     on<StoriesImage>(_onStoriesImage);
     on<StoriesFetching>(_onFetching);
   }
 
   Future<void> _onStoriesImage(
-      StoriesImage event, Emitter<StoriesState> emit) async {
+    StoriesImage event,
+    Emitter<StoriesState> emit,
+  ) async {
     final image = await _storiesRepository.imagePickerForStories(event.source);
     if (image != null) {
-      emit(StoriesState.posting(
+      emit(
+        StoriesState.posting(
           storiesData: state.storiesData,
           currentUserStoriesData: state.currentUserStoriesData,
-          profileData: state.profileData)); // equivalent of Posting
-      final cloudinaryPath =
-          await _storiesRepository.uploadStoriesToCloundinary(imagePath: image);
+          profileData: state.profileData,
+        ),
+      );
+
+      final cloudinaryPath = await _storiesRepository.uploadStoriesToCloundinary(imagePath: image);
       final id = _auth.currentUser!.uid;
       Set<String> images = {cloudinaryPath};
       Set<Timestamp> date = {Timestamp.now()};
+
       _model = _model.copyWith(
         uid: id,
         userName: event.name,
@@ -48,16 +57,23 @@ class StoriesBloc extends Bloc<StoriesEvent, StoriesState> {
         createdDate: date.toList(),
         containUrl: images.toList(),
       );
+
       await _storiesRepository.uploadStoriesToFirebase(_model);
-      emit(StoriesState.posted(
+
+      emit(
+        StoriesState.posted(
           storiesData: state.storiesData,
           currentUserStoriesData: state.currentUserStoriesData,
-          profileData: state.profileData)); // equivalent of Posted
+          profileData: state.profileData,
+        ),
+      );
     }
   }
 
   Future<void> _onFetching(
-      StoriesFetching event, Emitter<StoriesState> emit) async {
+    StoriesFetching event,
+    Emitter<StoriesState> emit,
+  ) async {
     try {
       final currentUserId = _auth.currentUser!.uid;
       if (currentUserId.isEmpty) return;
@@ -73,13 +89,23 @@ class StoriesBloc extends Bloc<StoriesEvent, StoriesState> {
       final fetchAllExceptCurrentUser = storiesData
           .where((item) => item.id.isNotEmpty && item.id != currentUserId)
           .toList();
-      print(fetchAllExceptCurrentUser.first.userImg);
-      print(currentUserStoriesData.userImg);
-      print(profileData!.pseudo);
-      emit(StoriesState.storiesLoaded(
+
+      if (fetchAllExceptCurrentUser.isNotEmpty) {
+        print("First user image: ${fetchAllExceptCurrentUser.first.userImg}");
+      } else {
+        print("No other user stories available.");
+      }
+
+      print("Current user story image: ${currentUserStoriesData.userImg}");
+      print("Current user pseudo: ${profileData?.pseudo}");
+
+      emit(
+        StoriesState.storiesLoaded(
           storiesData: fetchAllExceptCurrentUser,
           currentUserStoriesData: currentUserStoriesData,
-          profileData: profileData));
+          profileData: profileData ?? ProfileModel.empty(),
+        ),
+      );
     } catch (e) {
       print("Error in Stories ................. ${e.toString()}");
     }

@@ -2,6 +2,7 @@ import 'package:afriqueen/common/localization/enums/enums.dart';
 import 'package:afriqueen/common/widgets/snackbar_message.dart';
 import 'package:afriqueen/features/email_verification/bloc/email_verification_bloc.dart';
 import 'package:afriqueen/features/email_verification/bloc/email_verification_state.dart';
+import 'package:afriqueen/features/email_verification/repository/email_verification_repository.dart';
 import 'package:afriqueen/features/email_verification/widget/email_verification_widget.dart';
 import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/service_locator/service_locator.dart';
@@ -19,24 +20,15 @@ class EmailVerificationScreen extends StatefulWidget {
 }
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
-  @override
-  void dispose() {
-    _dispose();
-    super.dispose();
-  }
 
-  _dispose() async {
-    getIt<EmailVerificationBloc>().close();
-    await getIt.resetLazySingleton<EmailVerificationBloc>();
-  }
 
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
       appBar: PlatformAppBar(automaticallyImplyLeading: false),
       body: SafeArea(
-        child: BlocProvider<EmailVerificationBloc>.value(
-          value: getIt<EmailVerificationBloc>(),
+      child: BlocProvider<EmailVerificationBloc>(
+        create: (context)=> EmailVerificationBloc(repository: getIt<EmailVerificationRepository>()) ,
           child: BlocListener<EmailVerificationBloc, EmailVerificationState>(
             listener: _listener,
             child: SingleChildScrollView(

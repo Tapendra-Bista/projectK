@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:timirama/common/localization/enums/enums.dart';
-import 'package:timirama/features/login/models/login_model.dart';
-import 'package:timirama/services/base_repository.dart';
+import 'package:afriqueen/common/localization/enums/enums.dart';
+import 'package:afriqueen/features/login/models/login_model.dart';
+import 'package:afriqueen/services/base_repository.dart';
 
 // -------------------------Login logic-----------------------------
 class LoginRepository extends BaseRepository {

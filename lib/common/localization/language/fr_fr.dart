@@ -296,6 +296,7 @@ En utilisant Afriqueen, vous acceptez les conditions générales suivantes. Ces 
   EnumLocale.noProfileMatchYourFilters.name:
       "Aucun profil ne correspond à vos filtres",
   EnumLocale.newReel.name: "Nouveau Reel",
+  EnumLocale.selecteFromCamera.name: "Sélectionner depuis l'appareil photo",
   EnumLocale.selecteFromGallery.name: "Sélectionner depuis la galerie",
   EnumLocale.lengthOfVideo.name: "Votre vidéo doit durer moins de 15 secondes.",
   EnumLocale.reels.name: "Reels",

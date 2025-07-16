@@ -6,6 +6,7 @@ import 'package:afriqueen/routes/app_routes.dart';
 import 'package:afriqueen/services/storage/get_storage.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
@@ -151,8 +152,8 @@ class DropDownForLanguage extends StatelessWidget {
             defaultItem: defaultItem,
             onChange: (value) {
               context.read<WellcomeBloc>().add(
-                ChangeLanguage(languageCode: value),
-              );
+                    ChangeLanguage(languageCode: value),
+                  );
 
               controller.close();
             },

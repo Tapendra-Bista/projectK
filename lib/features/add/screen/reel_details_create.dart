@@ -15,8 +15,11 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:video_trimmer/video_trimmer.dart';
 
 class ReelDetailsCreate extends StatefulWidget {
-  const ReelDetailsCreate(
-      {super.key, required this.url, required this.trimmer});
+  const ReelDetailsCreate({
+    super.key,
+    required this.url,
+    required this.trimmer,
+  });
   final String url;
   final Trimmer trimmer;
 
@@ -48,23 +51,25 @@ class _ReelDetailsCreateState extends State<ReelDetailsCreate> {
           tooltip: EnumLocale.postReels.name.tr,
           heroTag: 'heroPost',
           shape: RoundedRectangleBorder(
-              side:
-                  BorderSide(color: AppColors.greyContainerColor, width: 0.5.w),
-              borderRadius: BorderRadiusGeometry.circular(8.r)),
+            side: BorderSide(color: AppColors.greyContainerColor, width: 0.5.w),
+            borderRadius: BorderRadiusGeometry.circular(8.r),
+          ),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              context.read<AddBloc>().add(PostReel(
+              context.read<AddBloc>().add(
+                PostReel(
                   trimVideoUrl: widget.url,
-                  description: reelsDescriptionController.text.trim()));
+                  description: reelsDescriptionController.text.trim(),
+                ),
+              );
             }
           },
           child: Center(
-              child: Text(
-            EnumLocale.postReels.name.tr,
-            style: theme
-                .bodyMedium!
-                .copyWith(color: AppColors.white),
-          )),
+            child: Text(
+              EnumLocale.postReels.name.tr,
+              style: theme.bodyMedium!.copyWith(color: AppColors.white),
+            ),
+          ),
         ),
       ),
       appBar: AppBar(
@@ -77,53 +82,51 @@ class _ReelDetailsCreateState extends State<ReelDetailsCreate> {
         ),
         title: Text(
           EnumLocale.newReel.name.tr,
-          style: theme.bodyLarge!.copyWith(
-                fontSize: 20.sp,
-              ),
+          style: theme.bodyLarge!.copyWith(fontSize: 20.sp),
           overflow: TextOverflow.ellipsis,
         ),
       ),
       body: BlocListener<AddBloc, AddState>(
-          listener: _listener,
-          child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: SingleChildScrollView(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 10.h,
-                    children: [
-                      SizedBox(
-                        width: double.maxFinite,
-                        height: 400.h,
-                        child: Expanded(
-                          child: VideoViewer(trimmer: widget.trimmer),
-                        ),
-                      ),
-                      CustomDivider(),
-                      TextFormField(
-                        validator: AppValidator.validateDescription,
-                        style: theme
-                            .bodySmall!
-                            .copyWith(color: AppColors.black),
-                        // Fills available vertical space
-                        maxLines: 5, // Must be null when expands is true
-                        minLines: 1,
-                        keyboardType: TextInputType.text,
-                        controller: reelsDescriptionController,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: EnumLocale.reelHintText.name.tr),
-                        textCapitalization: TextCapitalization.sentences,
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      )
-                    ],
+        listener: _listener,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: 10.h,
+                children: [
+                  SizedBox(
+                    width: double.maxFinite,
+                    height: 400.h,
+                    child: VideoViewer(
+                      trimmer: widget.trimmer,
+                    ), // ✅ No Expanded
                   ),
-                ),
-              ))),
+
+                  CustomDivider(),
+                  TextFormField(
+                    validator: AppValidator.validateDescription,
+                    style: theme.bodySmall!.copyWith(color: AppColors.black),
+                    // Fills available vertical space
+                    maxLines: 5, // Must be null when expands is true
+                    minLines: 1,
+                    keyboardType: TextInputType.text,
+                    controller: reelsDescriptionController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: EnumLocale.reelHintText.name.tr,
+                    ),
+                    textCapitalization: TextCapitalization.sentences,
+                  ),
+                  SizedBox(height: 20.h),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -140,7 +143,10 @@ class _ReelDetailsCreateState extends State<ReelDetailsCreate> {
     if (state is AddReelSuccess) {
       Get.back();
       snackBarMessage(
-          context, EnumLocale.reelPosted.name.tr, Theme.of(context));
+        context,
+        EnumLocale.reelPosted.name.tr,
+        Theme.of(context),
+      );
       Get.offAllNamed(AppRoutes.main);
     }
   }

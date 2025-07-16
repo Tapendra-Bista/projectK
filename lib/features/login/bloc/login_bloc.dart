@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:timirama/features/create_profile/repository/create_profile_repository.dart';
-import 'package:timirama/features/login/bloc/login_event.dart';
-import 'package:timirama/features/login/bloc/login_state.dart';
-import 'package:timirama/features/login/models/login_model.dart';
-import 'package:timirama/features/login/repository/login_repository.dart';
-import 'package:timirama/services/storage/get_storage.dart';
+import 'package:afriqueen/features/create_profile/repository/create_profile_repository.dart';
+import 'package:afriqueen/features/login/bloc/login_event.dart';
+import 'package:afriqueen/features/login/bloc/login_state.dart';
+import 'package:afriqueen/features/login/models/login_model.dart';
+import 'package:afriqueen/features/login/repository/login_repository.dart';
+import 'package:afriqueen/services/storage/get_storage.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginRepository _loginRepository;
@@ -68,12 +68,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         // Update location regardless
         await _createProfileRepository.updateLocation(
             event.city, event.country);
-        _app.setPageNumber(2);
+   
 
         if (userExists) {
           emit(GoogleLoginOldUser.fromState(state));
         } else {
           emit(GoogleLoginNewUser.fromState(state));
+               _app.setPageNumber(2);
         }
       } else {
         emit(GoogleLoginError.fromState(

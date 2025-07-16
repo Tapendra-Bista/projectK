@@ -18,6 +18,8 @@ import 'package:get/get.dart';
 
 //--------------- Address page components------------------------------
 
+//--------------- Address page components------------------------------
+
 //--------------------Next Button------------------------
 class AddressNextButton extends StatelessWidget {
   AddressNextButton({super.key});
@@ -26,7 +28,6 @@ class AddressNextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     return BlocBuilder<CreateProfileBloc, CreateProfileState>(
       builder: (context, state) {
         return CommonButton(
@@ -62,11 +63,8 @@ class AddressDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final theme = Theme.of(context).textTheme;
-    return Text(
-      EnumLocale.addressDescription.name.tr,
-      style: theme.bodySmall,
-    );
+    final theme = Theme.of(context).textTheme;
+    return Text(EnumLocale.addressDescription.name.tr, style: theme.bodySmall);
   }
 }
 
@@ -76,55 +74,38 @@ class AddressTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final theme = Theme.of(context).textTheme;
-    return Text(
-      EnumLocale.addressTitle.name.tr,
-      style: theme.bodyLarge,
-    );
+    final theme = Theme.of(context).textTheme;
+    return Text(EnumLocale.addressTitle.name.tr, style: theme.bodyLarge);
   }
 }
 
 //-------------------User Location----------------------------
-class Location extends StatefulWidget {
+class Location extends StatelessWidget {
   const Location({super.key});
 
   @override
-  State<Location> createState() => _LocationState();
-}
-
-class _LocationState extends State<Location> {
-  Future<List<Placemark>?>? _locationFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    _locationFuture = _getLocation();
-  }
-
-  Future<List<Placemark>?> _getLocation() async {
-    bool isGranted = await AppPermission.requestLocationPermission();
-
-    if (!isGranted) {
-      await AppPermission.requestLocationPermission();
-      return null;
-    } else {
-      final Position position = await UserLocation.determinePosition();
-      return await UserLocation.geoCoding(position);
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Future<List<Placemark>?> _getLocation() async {
+      bool isGranted = await AppPermission.requestLocationPermission();
+
+      if (!isGranted) {
+        await AppPermission.requestLocationPermission();
+        return null;
+      } else {
+        final Position position = await UserLocation.determinePosition();
+        return await UserLocation.geoCoding(position);
+      }
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 8.h,
       children: [
         CountryText(),
-        Country(locationFuture: _locationFuture),
+        Country(locationFuture: _getLocation()), // call fresh each time
         SizedBox(height: 5.h),
         CityText(),
-        City(locationFuture: _locationFuture),
+        City(locationFuture: _getLocation()), // call fresh each time
       ],
     );
   }
@@ -139,7 +120,7 @@ class City extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final theme = Theme.of(context).textTheme;
+    final theme = Theme.of(context).textTheme;
     return FutureBuilder<List<Placemark>?>(
       future: _locationFuture,
       builder: (context, snapshot) {
@@ -149,10 +130,7 @@ class City extends StatelessWidget {
             style: theme.bodySmall,
           ); // Show loading indicator
         } else if (snapshot.hasError) {
-          return Text(
-            EnumLocale.defaultError.name.tr,
-            style: theme.bodySmall,
-          );
+          return Text("${snapshot.error}", style: theme.bodySmall);
         } else if (snapshot.hasData && snapshot.data != null) {
           final currentLocation = snapshot.data!;
           return Container(
@@ -170,12 +148,8 @@ class City extends StatelessWidget {
               ),
             ),
           );
-        } else {
-          return Text(
-            EnumLocale.defaultError.name.tr,
-            style: theme.bodySmall,
-          ); // Handle null data
         }
+        return SizedBox.shrink();
       },
     );
   }
@@ -190,7 +164,7 @@ class Country extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final theme = Theme.of(context).textTheme;
+    final theme = Theme.of(context).textTheme;
     return FutureBuilder<List<Placemark>?>(
       future: _locationFuture,
       builder: (context, snapshot) {
@@ -200,10 +174,7 @@ class Country extends StatelessWidget {
             style: theme.bodySmall,
           ); // Show loading indicator
         } else if (snapshot.hasError) {
-          return Text(
-            EnumLocale.defaultError.name.tr,
-            style: theme.bodySmall,
-          );
+          return Text(" ${snapshot.error}", style: theme.bodySmall);
         } else if (snapshot.hasData && snapshot.data != null) {
           final currentLocation = snapshot.data!;
           context.read<CreateProfileBloc>().add(
@@ -227,12 +198,9 @@ class Country extends StatelessWidget {
               ),
             ),
           );
-        } else {
-          return Text(
-            EnumLocale.defaultError.name.tr,
-            style: theme.bodySmall,
-          ); // Handle null data
         }
+
+        return SizedBox.shrink();
       },
     );
   }
@@ -244,7 +212,7 @@ class CityText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        final theme = Theme.of(context).textTheme;
+    final theme = Theme.of(context).textTheme;
     return Text(
       "${EnumLocale.cityName.name.tr} :",
       style: theme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
@@ -258,7 +226,7 @@ class CountryText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        final theme = Theme.of(context).textTheme;
+    final theme = Theme.of(context).textTheme;
     return Text(
       "${EnumLocale.countryName.name.tr} :",
       style: theme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
